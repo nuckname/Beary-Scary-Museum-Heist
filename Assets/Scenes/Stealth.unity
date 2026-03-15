@@ -661,7 +661,8 @@ GameObject:
   - component: {fileID: 152894697}
   - component: {fileID: 152894696}
   - component: {fileID: 152894698}
-  m_Layer: 0
+  - component: {fileID: 152894699}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -675,7 +676,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152894691}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &152894695
 Transform:
   m_ObjectHideFlags: 0
@@ -685,8 +686,8 @@ Transform:
   m_GameObject: {fileID: 152894691}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.23, y: 2.048, z: -11.1}
-  m_LocalScale: {x: 1, y: 2.5771105, z: 1}
+  m_LocalPosition: {x: -27.95, y: 2.22, z: -8.49}
+  m_LocalScale: {x: 1, y: 1.2607, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1035575896}
@@ -749,6 +750,55 @@ MonoBehaviour:
   playerHasPickedUpObject: 0
   throwForce: 2
   dropOffCooldown: 10
+--- !u!23 &152894699
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152894691}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 0d428455509bce445b5c05f5b9eec587, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &213562190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,13 +2924,13 @@ GameObject:
   - component: {fileID: 1035575896}
   - component: {fileID: 1035575898}
   - component: {fileID: 1035575897}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Mesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1035575896
 Transform:
   m_ObjectHideFlags: 0
@@ -5122,7 +5172,7 @@ Transform:
   m_GameObject: {fileID: 1647143438}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 0, z: 0.83}
+  m_LocalPosition: {x: -0.16, y: 0, z: 0.955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6385,7 +6435,7 @@ Transform:
   m_GameObject: {fileID: 1987939393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.068, y: 0.276, z: 0.264}
+  m_LocalPosition: {x: 0.068, y: 0.669, z: 0.275}
   m_LocalScale: {x: 0.52247, y: 0.07362, z: 0.69166}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7009,7 +7059,7 @@ GameObject:
   - component: {fileID: 2143705578}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: EnemyFOV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

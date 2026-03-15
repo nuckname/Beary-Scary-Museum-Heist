@@ -30,7 +30,6 @@ public class FieldOfView : MonoBehaviour {
 		StartCoroutine ("FindTargetsWithDelay", .2f);
 	}
 
-
 	IEnumerator FindTargetsWithDelay(float delay) {
 		while (true) {
 			yield return new WaitForSeconds (delay);
@@ -172,6 +171,29 @@ public class FieldOfView : MonoBehaviour {
 		public EdgeInfo(Vector3 _pointA, Vector3 _pointB) {
 			pointA = _pointA;
 			pointB = _pointB;
+		}
+	}
+	
+	// A temp floating text solution to show when the player is spotted by the guard, this is not the best way to do this but it works for now.
+	// gets called too many times per hit
+	void OnGUI() {
+		GUI.color = Color.red;
+		GUI.skin.label.fontSize = 20;
+		GUI.skin.label.fontStyle = FontStyle.Bold;
+
+		foreach (Transform target in visibleTargets) {
+			if (target.CompareTag("Player")) {
+				Vector3 worldPos = target.position + Vector3.up * 2.0f;
+                
+				Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+
+				if (screenPos.z > 0) {
+					float guiX = screenPos.x;
+					float guiY = Screen.height - screenPos.y;
+
+					GUI.Label(new Rect(guiX - 50, guiY, 150, 30), "SPOTTED!");
+				}
+			}
 		}
 	}
 
