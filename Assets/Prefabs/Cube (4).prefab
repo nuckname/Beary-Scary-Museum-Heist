@@ -171,14 +171,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
   dropSound: {fileID: 0}
-  rangePerKg: 2
-  minImpactForce: 1
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
+  showVisibleRadius: 1
+  visualDuration: 1.5
+  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
 --- !u!82 &8453200104703548179
 AudioSource:
   m_ObjectHideFlags: 0
