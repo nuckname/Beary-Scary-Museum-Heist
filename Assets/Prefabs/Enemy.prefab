@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8779069409812356271}
   - component: {fileID: 2832639710450931804}
+  - component: {fileID: 1523291737050807841}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -34,6 +35,7 @@ Transform:
   - {fileID: 3269095590096205032}
   - {fileID: 8866816931264410936}
   - {fileID: 5853207852897309559}
+  - {fileID: 8985063047070636209}
   - {fileID: 1540967942747251490}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55,6 +57,73 @@ MonoBehaviour:
   doesGuardTurnAroundAtEachWaypoint: 1
   waitTime: 2
   turnSpeed: 90
+--- !u!65 &1523291737050807841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458527298132620225}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4777365647662509784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8985063047070636209}
+  - component: {fileID: 3721795527429797650}
+  m_Layer: 0
+  m_Name: Ears
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8985063047070636209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777365647662509784}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8779069409812356271}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3721795527429797650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777365647662509784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f566f5c91a5454cb1f8a41dbef6c830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuardHearing
+  hearingSensitivity: 1
+  suspicionDuration: 3
 --- !u!1 &4983840213030546581
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,9 +322,8 @@ GameObject:
   - component: {fileID: 5853207852897309559}
   - component: {fileID: 996159363660338502}
   - component: {fileID: 6176304708878431874}
-  - component: {fileID: 5804693357844958184}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Body
   m_TagString: EnemyFOV
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,27 +401,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5804693357844958184
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6982605526775248571}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8973028270107236394
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +414,7 @@ GameObject:
   - component: {fileID: 465441073528747827}
   - component: {fileID: 5923849597907233756}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

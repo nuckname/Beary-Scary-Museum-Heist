@@ -30,7 +30,9 @@ public class DropSound : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(!useDropSound) return;
-            
+
+        if (collision.gameObject.CompareTag("Player")) return;
+        
         dropSoundDisntance = boxData.boxWeight * dropSoundMultiplier;
         audioSource.maxDistance = dropSoundDisntance;
         
@@ -46,23 +48,51 @@ public class DropSound : MonoBehaviour
         BroadcastSound(dropSoundDisntance);
     }
     
-    private void BroadcastSound(float range)
-    {
-        // Find potential listeners in a radius
-        Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, range, enemyLayer);
+private void BroadcastSound(float baseRange)
+{
+    // Find potential listeners in a radius
+    Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, baseRange, enemyLayer);
 
-        // Raycast to check for walls
-        foreach (Collider entity in entitiesInHearingRange)
+    // Raycast to check for walls
+    foreach (Collider entity in entitiesInHearingRange)
+    {
+        if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
         {
+            float finalRange = baseRange;
+            
+            if(entity.GetComponentInChildren<GuardHearing>() is GuardHearing ear)
+            {
+                finalRange *= ear.hearingSensitivity;
+            }
+
             Vector3 directionToEntity = entity.transform.position - transform.position;
             float distanceToEntity = directionToEntity.magnitude;
 
-            if (!Physics.Raycast(transform.position, directionToEntity.normalized, distanceToEntity, obstacleLayer))
+            // Make sure they are within their specific modified hearing range
+            if (distanceToEntity <= finalRange)
             {
-                Debug.Log($"Sound reached {entity.name} through clear line of sight!");
+                // Line of sight / acoustic occlusion check
+                if (!Physics.Raycast(transform.position, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
+                {
+                    // reached the guard
+                    Debug.DrawLine(transform.position, entity.transform.position, Color.green, 2f);
+
+                    listener.OnSoundHeard(transform.position, transform);
+                }
+                else
+                {
+                    // hit an obstacle. 
+                    Debug.DrawLine(transform.position, hit.point, Color.red, 2f);
+                }
+            }
+            else
+            {
+                // out of range
+                Debug.DrawLine(transform.position, entity.transform.position, Color.yellow, 2f);
             }
         }
     }
+}
     
     //AI
     //https://gemini.google.com/share/cb1a8c33333e
