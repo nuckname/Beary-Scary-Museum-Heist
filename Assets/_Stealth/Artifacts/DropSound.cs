@@ -2,21 +2,33 @@ using UnityEngine;
 
 public class DropSound : MonoBehaviour
 {
-    [SerializeField] private bool useDropSound = true;
-    
-    [Header("Stealth Propagation")]
     public LayerMask obstacleLayer; 
     public LayerMask enemyLayer;    
 
     private AudioSource audioSource;
     private BoxCollision boxData;
 
+    [Tooltip("Multi for the sound radius, calculated against how much the object weights.")]
     [SerializeField] private float dropSoundMultiplier = 1f;
+    
     private float dropSoundDisntance = 0f;
     
+    [Header("2D Visual Circle")]
+    [Tooltip("Show the flat circle.")]
     public bool showVisibleRadius = true;
+
+    [Tooltip("duration of the flat circle before it disappears.")]
     public float visualDuration = 1.5f;
+    
+    [Tooltip("Material of the flat circle.")]
     public Material radiusMaterial;
+    
+    [Header("Velocity Settings")]
+    [SerializeField] private bool useVelocityScaling = true;
+    [Tooltip("How much the impact speed increases the sound multiplier.")]
+    [SerializeField] private float velocityScale; 
+    [Tooltip("Minimum impact speed required to generate a drop sound.")]
+    [SerializeField] private float minVelocityThreshold;
     
     private void Start()
     {
@@ -29,24 +41,32 @@ public class DropSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!useDropSound) return;
-
         if (collision.gameObject.CompareTag("Player")) return;
+
+        float finalMultiplier = dropSoundMultiplier;
+        float volumeScale = 1f;
+
+        if (useVelocityScaling)
+        {
+            float impactVelocity = collision.relativeVelocity.magnitude;
         
-        dropSoundDisntance = boxData.boxWeight * dropSoundMultiplier;
+            if (impactVelocity < minVelocityThreshold) return;
+
+            finalMultiplier += (impactVelocity * velocityScale);
+        
+            // Maybe use velocity to also increase volume?
+            //float volumeScale = Mathf.Clamp(impactVelocity / 10f, 0.1f, 1f);
+        }
+
+        dropSoundDisntance = boxData.boxWeight * finalMultiplier;
         audioSource.maxDistance = dropSoundDisntance;
-        
-        // Play the dropping sound
-        // idk for volume scale
-        //audioSource.PlayOneShot(dropSound, 1);
 
         if (showVisibleRadius)
         {
-            // Grab the exact point of impact so the circle sits on the floor
             Vector3 hitPoint = collision.GetContact(0).point;
             ShowRadiusInGame(dropSoundDisntance, hitPoint);
         }
-        
+    
         BroadcastSound(dropSoundDisntance);
     }
     

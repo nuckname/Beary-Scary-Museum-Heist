@@ -170,16 +170,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  dropSound: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1536
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  dropSoundMultiplier: 1
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
+  velocityScale: 0.25
+  minVelocityThreshold: 1
 --- !u!82 &8453200104703548179
 AudioSource:
   m_ObjectHideFlags: 0
