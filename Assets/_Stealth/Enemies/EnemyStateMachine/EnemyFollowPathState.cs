@@ -49,7 +49,8 @@ public class EnemyFollowPathState : EnemyBaseState
         }
     }
 
-    private void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
+    //This is public so we can randomly look around
+    public void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
     {
         Vector3 direction = (targetPos - manager.transform.position).normalized;
         if (direction != Vector3.zero)

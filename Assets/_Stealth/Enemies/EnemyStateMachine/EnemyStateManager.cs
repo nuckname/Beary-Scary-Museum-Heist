@@ -15,12 +15,11 @@ public class EnemyStateManager : MonoBehaviour
 
     // State Machine mechanics
     public EnemyBaseState currentState;
-    public EnemyFollowPathState FollowPathState = new EnemyFollowPathState();
-    public EnemyInvestigateALocationState InvestigateState = new EnemyInvestigateALocationState();
+    public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
+    public EnemyInvestigateALocationState EnemyInvestigateState = new EnemyInvestigateALocationState();
 
     void Start()
     {
-        // 1. Extract waypoints from the pathHolder just like your old Guards.cs
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)
         {
@@ -28,8 +27,7 @@ public class EnemyStateManager : MonoBehaviour
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
 
-        // 2. Start in the Follow Path state
-        SwitchState(FollowPathState);
+        SwitchState(EnemyFollowPathState);
     }
 
     void Update()
@@ -46,10 +44,10 @@ public class EnemyStateManager : MonoBehaviour
     // Use this to change stats
     public void TriggerInvestigation(Vector3 targetLocation)
     {
-        // Dot trigger if we are already investigating this exact spot, prevents spamming
-        if (currentState == InvestigateState && investigateTargetPosition == targetLocation) return;
+        // Dont trigger if we are already investigating this exact spot, prevents spamming
+        if (currentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) return;
 
         investigateTargetPosition = targetLocation;
-        SwitchState(InvestigateState);
+        SwitchState(EnemyInvestigateState);
     }
 }

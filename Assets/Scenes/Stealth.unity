@@ -789,8 +789,10 @@ GameObject:
   - component: {fileID: 152894694}
   - component: {fileID: 152894697}
   - component: {fileID: 152894696}
-  - component: {fileID: 152894698}
   - component: {fileID: 152894699}
+  - component: {fileID: 152894702}
+  - component: {fileID: 152894701}
+  - component: {fileID: 152894700}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -863,22 +865,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStealthController
   moveSpeed: 5
   controller: {fileID: 152894696}
---- !u!114 &152894698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152894691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4efa625e96687c4295c32c0f05bffcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollision
-  playerHand: {fileID: 1647143439}
-  playerHasPickedUpObject: 0
-  throwForce: 2
-  dropOffCooldown: 10
 --- !u!23 &152894699
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -928,6 +914,47 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &152894700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152894691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a3081a8d49c438b96a6b878d658a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerThrowController
+  minThrowForce: 2
+  maxThrowForce: 15
+  chargeRate: 15
+--- !u!114 &152894701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152894691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0515a31424be44696948fbded46f8641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGrabController
+  playerHand: {fileID: 1647143439}
+--- !u!114 &152894702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152894691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9319b4d96b3934446bb90567056fcc66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDropOffInteractor
+  dropOffCooldown: 10
 --- !u!1 &169918629
 GameObject:
   m_ObjectHideFlags: 0

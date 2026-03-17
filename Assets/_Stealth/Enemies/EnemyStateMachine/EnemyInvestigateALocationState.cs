@@ -34,6 +34,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
             if (Vector3.Distance(manager.transform.position, targetLocation) < 0.5f)
             {
                 reachedLocation = true;
+                //Do like random rotation
                 Debug.Log("Arrived at suspicious location. Looking around...");
             }
         }
@@ -45,7 +46,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
             if (searchTimer >= searchDuration)
             {
                 Debug.Log("Nothing here. Returning to patrol.");
-                manager.SwitchState(manager.FollowPathState); 
+                manager.SwitchState(manager.EnemyFollowPathState); 
             }
         }
     }
