@@ -42,100 +42,108 @@ public class DropSound : MonoBehaviour
 
         if (showVisibleRadius)
         {
-            ShowRadiusInGame(dropSoundDisntance);
+            // Grab the exact point of impact so the circle sits on the floor
+            Vector3 hitPoint = collision.GetContact(0).point;
+            ShowRadiusInGame(dropSoundDisntance, hitPoint);
         }
         
         BroadcastSound(dropSoundDisntance);
     }
     
-private void BroadcastSound(float baseRange)
-{
-    // Find potential listeners in a radius
-    Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, baseRange, enemyLayer);
-
-    // Raycast to check for walls
-    foreach (Collider entity in entitiesInHearingRange)
+    private void BroadcastSound(float baseRange)
     {
-        if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
+        // Find potential listeners in a radius
+        Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, baseRange, enemyLayer);
+
+        // Raycast to check for walls
+        foreach (Collider entity in entitiesInHearingRange)
         {
-            float finalRange = baseRange;
-            
-            if(entity.GetComponentInChildren<GuardHearing>() is GuardHearing ear)
+            if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
             {
-                finalRange *= ear.hearingSensitivity;
-            }
-
-            Vector3 directionToEntity = entity.transform.position - transform.position;
-            float distanceToEntity = directionToEntity.magnitude;
-
-            // Make sure they are within their specific modified hearing range
-            if (distanceToEntity <= finalRange)
-            {
-                // Line of sight / acoustic occlusion check
-                if (!Physics.Raycast(transform.position, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
+                float finalRange = baseRange;
+                
+                if(entity.GetComponentInChildren<GuardHearing>() is GuardHearing ear)
                 {
-                    // reached the guard
-                    Debug.DrawLine(transform.position, entity.transform.position, Color.green, 2f);
+                    finalRange *= ear.hearingSensitivity;
+                }
 
-                    listener.OnSoundHeard(transform.position, transform);
+                Vector3 directionToEntity = entity.transform.position - transform.position;
+                float distanceToEntity = directionToEntity.magnitude;
+
+                // Make sure they are within their specific modified hearing range
+                if (distanceToEntity <= finalRange)
+                {
+                    // Line of sight / acoustic occlusion check
+                    if (!Physics.Raycast(transform.position, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
+                    {
+                        // reached the guard
+                        Debug.DrawLine(transform.position, entity.transform.position, Color.green, 2f);
+
+                        listener.OnSoundHeard(transform.position, transform);
+                    }
+                    else
+                    {
+                        // hit an obstacle. 
+                        Debug.DrawLine(transform.position, hit.point, Color.red, 2f);
+                    }
                 }
                 else
                 {
-                    // hit an obstacle. 
-                    Debug.DrawLine(transform.position, hit.point, Color.red, 2f);
+                    // out of range
+                    Debug.DrawLine(transform.position, entity.transform.position, Color.yellow, 2f);
                 }
-            }
-            else
-            {
-                // out of range
-                Debug.DrawLine(transform.position, entity.transform.position, Color.yellow, 2f);
             }
         }
     }
-}
     
     //AI
     //https://gemini.google.com/share/cb1a8c33333e
-    private void ShowRadiusInGame(float radius)
+    //Updated to use 2D circle
+    private void ShowRadiusInGame(float radius, Vector3 hitPosition)
     {
-        // 1. Create a basic 3D sphere
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        // Create a Cylinder instead of a Sphere
+        GameObject flatCircle = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         
-        // 2. Destroy its collider immediately so it doesn't bump into your player or the floor
-        Destroy(sphere.GetComponent<Collider>());
+        // Destroy its collider immediately
+        Destroy(flatCircle.GetComponent<Collider>());
 
-        // 3. Move it to the dropped object's position
-        sphere.transform.position = transform.position;
+        // Move it to the impact point. 
+        // + 0.02f so its just above the ground to prevent flickering
+        flatCircle.transform.position = hitPosition + new Vector3(0, 0.02f, 0);
 
-        // 4. Scale it. A default sphere is 1 unit wide. We multiply the radius by 2 to get the diameter.
+        // Scale it. X and Z are the diameter. Y is squashed to make it a flat disc.
         float diameter = radius * 2f;
-        sphere.transform.localScale = new Vector3(diameter, diameter, diameter);
+        flatCircle.transform.localScale = new Vector3(diameter, 0.01f, diameter);
 
-        // 5. Apply your custom transparent material (if you assigned one)
         if (radiusMaterial != null)
         {
-            sphere.GetComponent<Renderer>().material = radiusMaterial;
+            flatCircle.GetComponent<Renderer>().material = radiusMaterial;
         }
 
-        // 6. Tell Unity to destroy this sphere after 'visualDuration' seconds
-        Destroy(sphere, visualDuration);
+        Destroy(flatCircle, visualDuration);
     }
 
-    //AI
-    //https://gemini.google.com/share/cb1a8c33333e
-    // Draws a sphere in the Scene view when the object is selected
     private void OnDrawGizmosSelected()
     {
-        // Safely fetch BoxCollision since Start() doesn't run in the Editor
         BoxCollision currentBoxData = GetComponent<BoxCollision>();
         
         if (currentBoxData != null)
         {
-            // Set the color for the Gizmo (Cyan is usually easy to see)
             Gizmos.color = Color.cyan;
+            float radius = currentBoxData.boxWeight * dropSoundMultiplier;
+
+            // Draw a flat wire circle in the editor instead of a 3D sphere
+            int segments = 36;
+            float angle = 0f;
+            Vector3 lastPoint = transform.position + new Vector3(radius, 0, 0);
             
-            // Draw a wireframe sphere using the boxWeight as the radius
-            Gizmos.DrawWireSphere(transform.position, currentBoxData.boxWeight);
+            for (int i = 1; i <= segments; i++)
+            {
+                angle += (360f / segments) * Mathf.Deg2Rad;
+                Vector3 nextPoint = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+                Gizmos.DrawLine(lastPoint, nextPoint);
+                lastPoint = nextPoint;
+            }
         }
     }
 }
