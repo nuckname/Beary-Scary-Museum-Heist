@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class DropSound : MonoBehaviour
 {
-    [Header("Sound Settings")]
-    public AudioClip dropSound;
+    [SerializeField] private bool useDropSound = true;
     
     [Header("Stealth Propagation")]
     public LayerMask obstacleLayer; 
@@ -12,6 +11,9 @@ public class DropSound : MonoBehaviour
     private AudioSource audioSource;
     private BoxCollision boxData;
 
+    [SerializeField] private float dropSoundMultiplier = 1f;
+    private float dropSoundDisntance = 0f;
+    
     public bool showVisibleRadius = true;
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
@@ -27,7 +29,10 @@ public class DropSound : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        audioSource.maxDistance = boxData.boxWeight;
+        if(!useDropSound) return;
+            
+        dropSoundDisntance = boxData.boxWeight * dropSoundMultiplier;
+        audioSource.maxDistance = dropSoundDisntance;
         
         // Play the dropping sound
         // idk for volume scale
@@ -35,12 +40,32 @@ public class DropSound : MonoBehaviour
 
         if (showVisibleRadius)
         {
-            ShowRadiusInGame(boxData.boxWeight);
+            ShowRadiusInGame(dropSoundDisntance);
         }
         
-        BroadcastSound(boxData.boxWeight);
+        BroadcastSound(dropSoundDisntance);
     }
     
+    private void BroadcastSound(float range)
+    {
+        // Find potential listeners in a radius
+        Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, range, enemyLayer);
+
+        // Raycast to check for walls
+        foreach (Collider entity in entitiesInHearingRange)
+        {
+            Vector3 directionToEntity = entity.transform.position - transform.position;
+            float distanceToEntity = directionToEntity.magnitude;
+
+            if (!Physics.Raycast(transform.position, directionToEntity.normalized, distanceToEntity, obstacleLayer))
+            {
+                Debug.Log($"Sound reached {entity.name} through clear line of sight!");
+            }
+        }
+    }
+    
+    //AI
+    //https://gemini.google.com/share/cb1a8c33333e
     private void ShowRadiusInGame(float radius)
     {
         // 1. Create a basic 3D sphere
@@ -66,24 +91,6 @@ public class DropSound : MonoBehaviour
         Destroy(sphere, visualDuration);
     }
 
-    private void BroadcastSound(float range)
-    {
-        // Find potential listeners in a radius
-        Collider[] entitiesInHearingRange = Physics.OverlapSphere(transform.position, range, enemyLayer);
-
-        // Raycast to check for walls
-        foreach (Collider entity in entitiesInHearingRange)
-        {
-            Vector3 directionToEntity = entity.transform.position - transform.position;
-            float distanceToEntity = directionToEntity.magnitude;
-
-            if (!Physics.Raycast(transform.position, directionToEntity.normalized, distanceToEntity, obstacleLayer))
-            {
-                Debug.Log($"Sound reached {entity.name} through clear line of sight!");
-            }
-        }
-    }
-    
     //AI
     //https://gemini.google.com/share/cb1a8c33333e
     // Draws a sphere in the Scene view when the object is selected
