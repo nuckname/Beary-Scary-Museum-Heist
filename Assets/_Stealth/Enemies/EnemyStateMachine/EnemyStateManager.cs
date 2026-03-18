@@ -1,6 +1,5 @@
 using UnityEngine;
 
-//https://www.youtube.com/watch?v=Vt8aZDPzRjI
 public class EnemyStateManager : MonoBehaviour
 {
     [Header("Pathfinding")]
@@ -13,13 +12,29 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
-    // State Machine mechanics
-    public EnemyBaseState currentState;
-    public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
-    public EnemyInvestigateALocationState EnemyInvestigateState = new EnemyInvestigateALocationState();
+
+    public EnemyBaseState EnemyCurrentState;
+    public EnemyFollowPathState EnemyFollowPathState;
+    public EnemyInvestigateALocationState EnemyInvestigateState;
+
+    // Can make this an enum later
+    [Header("Debug")]
+    public string currentStateName;
+    
+    void Awake()
+    {
+        EnemyFollowPathState = new EnemyFollowPathState();
+        EnemyInvestigateState = new EnemyInvestigateALocationState();
+    }
 
     void Start()
     {
+        if (pathHolder == null)
+        {
+            Debug.LogError("Path Holder is not assigned on " + gameObject.name);
+            return;
+        }
+
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)
         {
@@ -32,20 +47,25 @@ public class EnemyStateManager : MonoBehaviour
 
     void Update()
     {
-        currentState?.UpdateState(this);
+        EnemyCurrentState?.UpdateState(this);
     }
 
+    // Use this to switch states
     public void SwitchState(EnemyBaseState state)
     {
-        currentState = state;
-        currentState.EnterState(this);
+        EnemyCurrentState = state;
+        
+        if (EnemyCurrentState != null)
+        {
+            currentStateName = EnemyCurrentState.GetType().Name;
+            EnemyCurrentState.EnterState(this);
+        }
     }
 
-    // Use this to change stats
     public void TriggerInvestigation(Vector3 targetLocation)
     {
         // Dont trigger if we are already investigating this exact spot, prevents spamming
-        if (currentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) return;
+        if (EnemyCurrentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) return;
 
         investigateTargetPosition = targetLocation;
         SwitchState(EnemyInvestigateState);
