@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 389679328081552083}
   - component: {fileID: 6542874231435745682}
   - component: {fileID: 6934650795842922822}
-  - component: {fileID: 1748238354416997980}
   - component: {fileID: 8453200104703548179}
+  - component: {fileID: 1748238354416997980}
   - component: {fileID: 7031087383252706052}
+  - component: {fileID: 3499240631103670951}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: CanPickUp
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6774066252667396190}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90c844b51ce6d234aaa95304e947d198, type: 3}
   m_Name: 
@@ -159,31 +160,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1748238354416997980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6774066252667396190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1536
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  dropSoundMultiplier: 1
-  showVisibleRadius: 1
-  visualDuration: 1.5
-  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
-  useVelocityScaling: 1
-  velocityScale: 0.25
-  minVelocityThreshold: 1
 --- !u!82 &8453200104703548179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -281,6 +257,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1748238354416997980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropSound
+  noiseEmitter: {fileID: 3499240631103670951}
+  audioSource: {fileID: 8453200104703548179}
+  dropSoundMultiplier: 0.25
+  useVelocityScaling: 1
+  velocityScale: 0.25
+  minVelocityThreshold: 1
 --- !u!114 &7031087383252706052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,3 +288,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemWeight: 2
+--- !u!114 &3499240631103670951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745a72bba8ba2f343af7853bc127edfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  showVisibleRadius: 1
+  visualDuration: 1.5
+  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
