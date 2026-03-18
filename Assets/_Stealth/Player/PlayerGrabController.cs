@@ -36,7 +36,8 @@ public class PlayerGrabController : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
 
-        playerStealthController.moveSpeed -= pickable.Weight;
+        playerStealthController.walkSpeed -= pickable.Weight;
+        playerStealthController.sprintSpeed -= pickable.Weight;
     }
 
     public void ReleaseObject()
@@ -49,7 +50,8 @@ public class PlayerGrabController : MonoBehaviour
         
         if (CurrentPickableData != null)
         {
-            playerStealthController.moveSpeed += CurrentPickableData.Weight;
+            playerStealthController.walkSpeed += CurrentPickableData.Weight;
+            playerStealthController.sprintSpeed += CurrentPickableData.Weight;
         }
 
         PickedUpObject = null;

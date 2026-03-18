@@ -2,13 +2,25 @@ using UnityEngine;
 
 public class PlayerStealthController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float walkSpeed = 5f;
+    public float sprintSpeed = 9f;
+    
     public CharacterController controller;
     
     private Vector3 moveDirection;
+    private float currentSpeed;
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = sprintSpeed;
+        }
+        else
+        {
+            currentSpeed = walkSpeed;
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -16,7 +28,7 @@ public class PlayerStealthController : MonoBehaviour
 
         if (moveDirection.magnitude >= 0.1f)
         {
-            controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+            controller.Move(moveDirection * currentSpeed * Time.deltaTime);
 
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
