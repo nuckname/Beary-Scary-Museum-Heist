@@ -12,14 +12,13 @@ GameObject:
   - component: {fileID: 6694404355669895129}
   - component: {fileID: 7556620646139293542}
   - component: {fileID: 389679328081552083}
-  - component: {fileID: 6542874231435745682}
   - component: {fileID: 6934650795842922822}
   - component: {fileID: 8453200104703548179}
   - component: {fileID: 1748238354416997980}
   - component: {fileID: 7031087383252706052}
   - component: {fileID: 3499240631103670951}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: BombItem
   m_TagString: CanPickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,21 +117,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6542874231435745682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6774066252667396190}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90c844b51ce6d234aaa95304e947d198, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BoxCollision
-  boxWeight: 1
-  boxWorthAmount: 1
-  hasEnteredDropOffZone: 0
 --- !u!54 &6934650795842922822
 Rigidbody:
   m_ObjectHideFlags: 0
