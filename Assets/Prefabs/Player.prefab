@@ -63,6 +63,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStealthController
   walkSpeed: 4
   sprintSpeed: 7
+  maxStamina: 5
+  staminaRegenRate: 0.5
+  staminaDepleteRate: 1.5
   controller: {fileID: 1325467085621830619}
 --- !u!143 &1325467085621830619
 CharacterController:
