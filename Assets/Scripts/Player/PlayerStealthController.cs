@@ -76,4 +76,43 @@ public class PlayerStealthController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
         }
     }
+
+    void OnGUI()
+    {
+        // 1. Define the size and position of the background bar
+        float barWidth = 25f;
+        float barHeight = 200f;
+        float xPos = 20f; // 20 pixels from the left of the screen
+        float yPos = Screen.height - barHeight - 20f; // 20 pixels from the bottom
+
+        // 2. Draw the background (empty) bar in dark gray
+        Color originalColor = GUI.color;
+        GUI.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
+        GUI.Box(new Rect(xPos, yPos, barWidth, barHeight), "");
+
+        // 3. Calculate stamina percentage (0.0 to 1.0)
+        float staminaPercent = currentStamina / maxStamina;
+
+        // 4. Calculate the height of the filled portion
+        float fillHeight = barHeight * staminaPercent;
+        
+        // 5. Offset the Y position so the bar fills from bottom to top
+        float fillYPos = yPos + (barHeight - fillHeight);
+
+        // 6. Change color based on exhaustion state
+        if (isExhausted)
+        {
+            GUI.color = Color.red;
+        }
+        else
+        {
+            GUI.color = Color.green;
+        }
+
+        // 7. Draw the filled stamina bar over the background
+        GUI.Box(new Rect(xPos, fillYPos, barWidth, fillHeight), "");
+
+        // Reset the GUI color back to normal
+        GUI.color = originalColor;
+    }
 }
