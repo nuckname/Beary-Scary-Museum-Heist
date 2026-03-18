@@ -6,7 +6,7 @@ public class PlayerGrabController : MonoBehaviour
     private PlayerStealthController playerStealthController;
 
     public GameObject PickedUpObject { get; private set; }
-    public BoxCollision CurrentBoxData { get; private set; }
+    public IPickable CurrentPickableData { get; private set; }
 
     private void Awake()
     {
@@ -15,49 +15,44 @@ public class PlayerGrabController : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Box") && PickedUpObject == null)
+        if (hit.gameObject.CompareTag("CanPickUp") && PickedUpObject == null)
         {
-            BoxCollision box = hit.gameObject.GetComponent<BoxCollision>();
-            if (box != null)
+            if (hit.gameObject.TryGetComponent<IPickable>(out var pickable))
             {
-                PickUpObject(hit.gameObject, box);
+                PickUpObject(hit.gameObject, pickable);
             }
         }
     }
 
-    private void PickUpObject(GameObject collideBoxObject, BoxCollision boxCollision)
+    private void PickUpObject(GameObject obj, IPickable pickable)
     {
-        PickedUpObject = collideBoxObject;
-        CurrentBoxData = boxCollision;
+        PickedUpObject = obj;
+        CurrentPickableData = pickable;
 
-        Rigidbody boxRb = PickedUpObject.GetComponent<Rigidbody>();
-        if (boxRb != null) boxRb.isKinematic = true;
+        pickable.OnPickedUp();
 
-        Collider boxCollider = PickedUpObject.GetComponent<Collider>();
-        if (boxCollider != null) boxCollider.enabled = true;
+        // Attach to hand
+        obj.transform.SetParent(playerHand);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
 
-        collideBoxObject.transform.SetParent(playerHand);
-        collideBoxObject.transform.localPosition = Vector3.zero;
-        collideBoxObject.transform.localRotation = Quaternion.identity;
-
-        playerStealthController.moveSpeed -= boxCollision.boxWeight;
+        playerStealthController.moveSpeed -= pickable.Weight;
     }
 
     public void ReleaseObject()
     {
         if (PickedUpObject == null) return;
 
+        CurrentPickableData.OnReleased();
+
         PickedUpObject.transform.SetParent(null);
-
-        BoxCollider boxCollider = PickedUpObject.GetComponent<BoxCollider>();
-        if (boxCollider != null) boxCollider.enabled = true;
-
-        if (CurrentBoxData != null)
+        
+        if (CurrentPickableData != null)
         {
-            playerStealthController.moveSpeed += CurrentBoxData.boxWeight;
+            playerStealthController.moveSpeed += CurrentPickableData.Weight;
         }
 
         PickedUpObject = null;
-        CurrentBoxData = null;
+        CurrentPickableData = null;
     }
 }

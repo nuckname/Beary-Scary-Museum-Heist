@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 6934650795842922822}
   - component: {fileID: 1748238354416997980}
   - component: {fileID: 8453200104703548179}
+  - component: {fileID: 7031087383252706052}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Box
+  m_TagString: CanPickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
+  useVelocityScaling: 1
   velocityScale: 0.25
   minVelocityThreshold: 1
 --- !u!82 &8453200104703548179
@@ -279,3 +281,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7031087383252706052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe34163c0b92124ba8906879a9e5f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemWeight: 2
