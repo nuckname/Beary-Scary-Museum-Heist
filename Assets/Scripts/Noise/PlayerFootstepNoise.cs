@@ -27,6 +27,8 @@ public class PlayerFootstepNoise : MonoBehaviour
     {
         float currentSpeed = controller.velocity.magnitude;
 
+        print(currentSpeed);
+        
         if (currentSpeed > 0.1f)
         {
             stepTimer -= Time.deltaTime;
