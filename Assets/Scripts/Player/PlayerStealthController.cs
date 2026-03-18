@@ -26,9 +26,10 @@ public class PlayerStealthController : MonoBehaviour
 
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
+        controller.Move(moveDirection * currentSpeed * Time.deltaTime);
+        
         if (moveDirection.magnitude >= 0.1f)
         {
-            controller.Move(moveDirection * currentSpeed * Time.deltaTime);
 
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
