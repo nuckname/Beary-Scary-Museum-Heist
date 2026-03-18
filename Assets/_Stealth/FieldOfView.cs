@@ -55,7 +55,12 @@ public class FieldOfView : MonoBehaviour {
 					
 					if (target.CompareTag("Player") && targetsInViewRadius.Length > 0) 
 					{
-						GetComponentInParent<EnemyStateManager>().TriggerInvestigation(target.position);
+						EnemyStateManager stateManager = GetComponentInParent<EnemyStateManager>();
+    
+						if (stateManager != null) 
+						{
+							stateManager.TriggerInvestigation(target.position);
+						} 
 					}
 				}
 			}
