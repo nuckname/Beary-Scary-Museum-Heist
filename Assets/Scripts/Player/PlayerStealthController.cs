@@ -77,6 +77,7 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
+    //AI
     void OnGUI()
     {
         // 1. Define the size and position of the background bar
