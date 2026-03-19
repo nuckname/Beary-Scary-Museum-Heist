@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(NoiseEmitter))]
 [RequireComponent(typeof(Rigidbody))]
-public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
+public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem, IPickable
 {
     private NoiseEmitter noiseEmitter;
     private Rigidbody rb;
@@ -15,14 +15,45 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
     [Tooltip("How often the noise triggers (in seconds).")]
     public float noiseInterval = 0.5f;
     
-    [Tooltip("The radius of the emitted noise to alert Guards /ai.")]
+    [Tooltip("The radius of the emitted noise to alert Guards/AI.")]
     public float noiseRadius = 4f;
+
+    [Header("Pickup Settings")]
+    [SerializeField] private float itemWeight = 2f; 
 
     private float timer = 0f;
     
     // IThrowableItem variables
-    private bool isArmed = false;
-    private bool isActivated = false;
+    [SerializeField] private bool isArmed = false;
+    [SerializeField] private bool isActivated = false;
+
+    public float Weight
+    {
+        get
+        {
+            return itemWeight;
+        }
+    }
+
+    public void OnPickedUp()
+    {
+        isActivated = false;
+        isArmed = true;
+
+        if (rb != null)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.isKinematic = true; 
+        }
+    }
+
+    public void OnReleased()
+    {
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+        }
+    }
 
     private void Start()
     {
@@ -30,7 +61,7 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
         rb = GetComponent<Rigidbody>();
     }
 
-    // Called by the PlayerThrowController via the interface
+    // Called by the PlayerThrowController via the IThrowableItem interface
     public void OnThrown()
     {
         isArmed = true;
@@ -38,16 +69,19 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isArmed && !collision.gameObject.CompareTag("Player"))
+        // Ignore collisions with the player
+        if (collision.gameObject.CompareTag("Player")) return;
+
+        if (isArmed)
         {
+            // The item has hit the ground after being thrown. Turn it ON.
             isArmed = false;
             isActivated = true;
-            timer = 0f; // Trigger the first noise immediately on impact
+            timer = 0f; 
 
             if (rb != null)
             {
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
-                //rb.isKinematic = true; 
             }
 
             // Flatten the rotation so it drives nicely along the floor sort of parallel to the ground
@@ -63,11 +97,9 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
             
             // Get the first contact point to find out which way the wall/object is facing
             ContactPoint contact = collision.GetContact(0);
-
-            // Calculate the bounce direction by reflecting our current forward vector against the wall's normal
             Vector3 reflectedDirection = Vector3.Reflect(transform.forward, contact.normal);
 
-            // Flatten the Y axis so the bounce keeps it driving along the floor, not up into the air
+            // Calculate the bounce direction by reflecting our current forward vector against the wall's normal
             reflectedDirection.y = 0f;
 
             // Rotate the object to face the newly calculated bounce direction
