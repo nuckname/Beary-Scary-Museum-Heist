@@ -27,14 +27,6 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem, IPickabl
     [SerializeField] private bool isArmed = false;
     [SerializeField] private bool isActivated = false;
 
-    public float Weight
-    {
-        get
-        {
-            return itemWeight;
-        }
-    }
-
     public void OnPickedUp()
     {
         isActivated = false;
