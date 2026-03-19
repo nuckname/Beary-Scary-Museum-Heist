@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NoiseTimerWalkForwardItem : MonoBehaviour
+public class NoiseTimerMoveForwardItem : MonoBehaviour
 {
     private NoiseEmitter noiseEmitter;
 
