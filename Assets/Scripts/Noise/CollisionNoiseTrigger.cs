@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class CollisionNoiseTrigger : MonoBehaviour
 {
-    [SerializeField] private NoiseEmitter noiseEmitter;
-    [SerializeField] private AudioSource audioSource;
+    private NoiseEmitter noiseEmitter;
+    private AudioSource audioSource;
 
     private Rigidbody rb; 
     
@@ -22,8 +22,8 @@ public class CollisionNoiseTrigger : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         
-        if (noiseEmitter == null) noiseEmitter = GetComponent<NoiseEmitter>();
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        noiseEmitter = GetComponent<NoiseEmitter>();
     }
 
     private void OnCollisionEnter(Collision collision)
