@@ -1,6 +1,5 @@
 public interface IPickable
 {
-    float Weight { get; }
     void OnPickedUp();
     
     //This is different from the IThrowableItem's OnThrown() because

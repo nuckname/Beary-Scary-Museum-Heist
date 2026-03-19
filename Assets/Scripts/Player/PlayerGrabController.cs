@@ -10,6 +10,8 @@ public class PlayerGrabController : MonoBehaviour
     // Changed to an array to hold multiple IPickable scripts (This fixes the issue of only one IPickable being recognized when multiple are on the same object)
     public IPickable[] CurrentPickables { get; private set; }
 
+    private float currentHeldWeight = 0f;
+    
     private void Awake()
     {
         playerStealthController = GetComponent<PlayerStealthController>();
@@ -33,24 +35,23 @@ public class PlayerGrabController : MonoBehaviour
         PickedUpObject = obj;
         CurrentPickables = pickables;
 
-        float totalWeight = 0f;
 
         // Loop through every IPickable script and call OnPickedUp
         foreach (var pickable in CurrentPickables)
         {
             pickable.OnPickedUp();
-            
-            // This is a problem becuase we are adding double the weight
-            totalWeight += pickable.Weight;
         }
+        
+        currentHeldWeight = 0f;
+        currentHeldWeight = obj.GetComponent<Rigidbody>().mass;
 
         // Attach to hand
         obj.transform.SetParent(playerHand);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
 
-        playerStealthController.walkSpeed -= totalWeight;
-        playerStealthController.sprintSpeed -= totalWeight;
+        playerStealthController.walkSpeed -= currentHeldWeight;
+        playerStealthController.sprintSpeed -= currentHeldWeight;
     }
 
     public void ReleaseObject()
@@ -65,14 +66,13 @@ public class PlayerGrabController : MonoBehaviour
             foreach (var pickable in CurrentPickables)
             {
                 pickable.OnReleased();
-                totalWeightToRestore += pickable.Weight;
             }
         }
 
         PickedUpObject.transform.SetParent(null);
         
-        playerStealthController.walkSpeed += totalWeightToRestore;
-        playerStealthController.sprintSpeed += totalWeightToRestore;
+        playerStealthController.walkSpeed += currentHeldWeight;
+        playerStealthController.sprintSpeed += currentHeldWeight;
 
         PickedUpObject = null;
         CurrentPickables = null;

@@ -8,7 +8,7 @@ public class CollisionNoiseTrigger : MonoBehaviour
     [SerializeField] private NoiseEmitter noiseEmitter;
     [SerializeField] private AudioSource audioSource;
 
-    private IPickable pickableData;
+    private Rigidbody rb; 
     
     [Header("Collision Settings")]
     [SerializeField] private float dropSoundMultiplier = 1f;
@@ -20,7 +20,8 @@ public class CollisionNoiseTrigger : MonoBehaviour
 
     private void Awake()
     {
-        pickableData = GetComponent<IPickable>();
+        rb = GetComponent<Rigidbody>();
+        
         if (noiseEmitter == null) noiseEmitter = GetComponent<NoiseEmitter>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
     }
@@ -41,7 +42,7 @@ public class CollisionNoiseTrigger : MonoBehaviour
             }
         }
 
-        float noiseRadius = pickableData.Weight * finalMultiplier;
+        float noiseRadius = rb.mass * finalMultiplier;
         
         audioSource.maxDistance = noiseRadius;
         audioSource.Play();

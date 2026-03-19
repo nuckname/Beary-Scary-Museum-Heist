@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6248622856224337595, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.57333446
+      value: 1.1358329
       objectReference: {fileID: 0}
     - target: {fileID: 6248622856224337595, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5383493
+      value: 1.0665237
       objectReference: {fileID: 0}
     - target: {fileID: 6248622856224337595, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5775575
+      value: 1.1441991
       objectReference: {fileID: 0}
     - target: {fileID: 6248622856224337595, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -116,3 +116,6 @@ MonoBehaviour:
   moveSpeed: 3
   noiseInterval: 0.5
   noiseRadius: 4
+  itemWeight: 2
+  isArmed: 0
+  isActivated: 0
