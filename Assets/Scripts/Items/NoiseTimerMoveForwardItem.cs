@@ -38,7 +38,6 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
 
     private void OnCollisionEnter(Collision collision)
     {
-        // If it was thrown and hits anything but the player, activate it!
         if (isArmed && !collision.gameObject.CompareTag("Player"))
         {
             isArmed = false;
@@ -47,7 +46,8 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
 
             if (rb != null)
             {
-                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+                //rb.isKinematic = true; 
             }
 
             // Flatten the rotation so it drives nicely along the floor sort of parallel to the ground
@@ -55,6 +55,26 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem
             flatEuler.x = 0;
             flatEuler.z = 0;
             transform.eulerAngles = flatEuler;
+        }
+        else if (isActivated)
+        {
+            //AI
+            //https://gemini.google.com/share/aa687b042cde
+            
+            // Get the first contact point to find out which way the wall/object is facing
+            ContactPoint contact = collision.GetContact(0);
+
+            // Calculate the bounce direction by reflecting our current forward vector against the wall's normal
+            Vector3 reflectedDirection = Vector3.Reflect(transform.forward, contact.normal);
+
+            // Flatten the Y axis so the bounce keeps it driving along the floor, not up into the air
+            reflectedDirection.y = 0f;
+
+            // Rotate the object to face the newly calculated bounce direction
+            if (reflectedDirection != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(reflectedDirection.normalized);
+            }
         }
     }
 
