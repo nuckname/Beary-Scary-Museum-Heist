@@ -60,6 +60,13 @@ public class PlayerThrowController : MonoBehaviour
             boxRb.linearVelocity = throwDirection.normalized * currentThrowForce;
         }
 
+        // Check if the thrown object cares about being thrown
+        IThrowableItem throwable = objectToThrow.GetComponent<IThrowableItem>();
+        if (throwable != null)
+        {
+            throwable.OnThrown();
+        }
+
         isCharging = false;
         currentThrowForce = minThrowForce;
     }
