@@ -47,7 +47,7 @@ public class CollisionNoiseTrigger : MonoBehaviour
         audioSource.maxDistance = noiseRadius;
         audioSource.Play();
 
-        Vector3 hitPoint = collision.GetContact(0).point;
+        Vector3 hitPoint = transform.position;
         noiseEmitter.EmitNoise(noiseRadius, hitPoint);
     }
 }
