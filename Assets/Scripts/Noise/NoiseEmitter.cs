@@ -11,13 +11,28 @@ public class NoiseEmitter : MonoBehaviour
     public Material radiusMaterial;
 
     private float editorGizmoRadius = 4f;
+    private Collider myCollider;
+
+    private void Awake()
+    {
+        myCollider = GetComponent<Collider>();
+    }
 
     /// <summary>
     /// Call this from any script to make a noise that AI can hear.
+    /// The emitter automatically calculates its position at the bottom of the object.
     /// </summary>
-    public void EmitNoise(float noiseRadius, Vector3 emissionPoint)
+    public void EmitNoise(float noiseRadius)
     {
         editorGizmoRadius = noiseRadius;
+
+        // Spawn at the bottom of the object's collider
+        Vector3 emissionPoint = transform.position;
+        if (myCollider != null)
+        {
+            emissionPoint = myCollider.bounds.center;
+            emissionPoint.y -= myCollider.bounds.extents.y;
+        }
 
         if (showVisibleRadius)
         {

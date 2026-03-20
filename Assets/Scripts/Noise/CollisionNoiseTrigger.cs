@@ -7,7 +7,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
 {
     private NoiseEmitter noiseEmitter;
     private AudioSource audioSource;
-
     private Rigidbody rb; 
     
     [Header("Collision Settings")]
@@ -21,7 +20,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        
         audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
     }
@@ -47,7 +45,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
         audioSource.maxDistance = noiseRadius;
         audioSource.Play();
 
-        Vector3 hitPoint = transform.position;
-        noiseEmitter.EmitNoise(noiseRadius, hitPoint);
+        noiseEmitter.EmitNoise(noiseRadius);
     }
 }

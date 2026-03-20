@@ -26,8 +26,6 @@ public class PlayerFootstepNoise : MonoBehaviour
     private void Update()
     {
         float currentSpeed = controller.velocity.magnitude;
-
-        //print(currentSpeed);
         
         if (currentSpeed > 0.1f)
         {
@@ -53,9 +51,6 @@ public class PlayerFootstepNoise : MonoBehaviour
         // Calculate dynamic radius based on velocity
         float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier);
 
-        // Emit the noise at the player's feet (Which is based off this transform position minus the character controller height)
-        //Vector3 footPosition = transform.position - new Vector3(0, controller.height, 0);
-        
-        noiseEmitter.EmitNoise(calculatedRadius, transform.position);
+        noiseEmitter.EmitNoise(calculatedRadius);
     }
 }
