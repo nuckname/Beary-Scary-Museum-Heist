@@ -88,7 +88,7 @@ public class NoiseEmitter : MonoBehaviour
         Destroy(flatCircle.GetComponent<Collider>());
 
         // + 0.02f so it's just above the ground to prevent Z-fighting/flickering
-        flatCircle.transform.position = hitPosition + new Vector3(0, 0.02f, 0);
+        flatCircle.transform.position = hitPosition + new Vector3(0, 0.15f, 0);
 
         float diameter = radius * 2f;
         flatCircle.transform.localScale = new Vector3(diameter, 0.01f, diameter);
