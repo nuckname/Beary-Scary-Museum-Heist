@@ -26,7 +26,7 @@ public class DropOffZoneCollision : MonoBehaviour
                 artifact.hasBeenUsed = true;
 
                 Debug.Log($"value: {artifact.artifactValue} added to {totalQuota}");
-                artifactValueText.text = "Quota: " + artifact.artifactValue + " / Max quota";
+                artifactValueText.text = "Points: " + artifact.artifactValue;
                 // Destroy(other.gameObject);
             }
         }

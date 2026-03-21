@@ -8,8 +8,8 @@ public class DisplayUi : MonoBehaviour
 
     [SerializeField] private UpdateQuota updateQuota;
     void Update()
-    {
-        quotaText.text = "Quota: " + updateQuota.totalQuota + " / " + QuotaManager.Instance.GetQuotaValue();
-        roundText.text = "Current Round: " + RoundManager.Instance.ReturnRound(); 
+    { 
+        //        quotaText.text = "Quota: " + updateQuota.totalQuota + " / " + QuotaManager.Instance.GetQuotaValue();
+     //   roundText.text = "Current Round: " + RoundManager.Instance.ReturnRound(); 
     }
 }
