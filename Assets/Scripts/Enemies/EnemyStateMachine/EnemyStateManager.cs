@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour
@@ -17,6 +18,8 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyFollowPathState EnemyFollowPathState;
     public EnemyInvestigateALocationState EnemyInvestigateState;
 
+    public TMP_Text stateText;
+    
     // Can make this an enum later
     [Header("Debug")]
     public string currentStateName;

@@ -2,15 +2,31 @@ using UnityEngine;
 
 public class EnemyInvestigateALocationState : EnemyBaseState
 {
-    private float searchTimer = 0f;
-    private float searchDuration = 3f; 
     private bool reachedLocation = false;
+
+    // Look-around variables
+    private int targetLooks;
+    private int looksCompleted;
+    private Quaternion baseRotation;
+    private Quaternion targetLookRotation;
+    private bool lookingRight;
 
     public override void EnterState(EnemyStateManager manager)
     {
         Debug.Log("State: Investigating!");
-        searchTimer = 0f;
         reachedLocation = false;
+
+        UpdateGuardsText(manager);
+    }
+
+    // Can refactor this to EnemyStateManager onto another script if we want to avoid having to update the text in every state, but for now this is fine
+    private void UpdateGuardsText(EnemyStateManager manager)
+    {
+        if (manager.stateText != null)
+        {
+            manager.stateText.text = "I SEE YOUUU";
+            manager.stateText.color = Color.yellow;
+        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -34,21 +50,64 @@ public class EnemyInvestigateALocationState : EnemyBaseState
             if (Vector3.Distance(manager.transform.position, targetLocation) < 0.5f)
             {
                 reachedLocation = true;
-                //Do like random rotation
-                Debug.Log("Arrived at suspicious location. Looking around...");
+
+                // Look around behaviour
+                baseRotation = manager.transform.rotation;
+                targetLooks = Random.Range(3, 6); 
+                looksCompleted = 0;
+                
+                // Randomly choose to look left or right first
+                lookingRight = Random.value > 0.5f; 
+                SetNextLookRotation();
+                
+                if (manager.stateText != null)
+                {
+                    manager.stateText.text = "Sus?";
+                    manager.stateText.color = Color.yellow;
+                }
             }
         }
         else
         {
-            // Wait and look around
-            searchTimer += Time.deltaTime;
+            // Rotate towards the current left/right target
+            manager.transform.rotation = Quaternion.RotateTowards(manager.transform.rotation, targetLookRotation, manager.turnSpeed * Time.deltaTime);
 
-            if (searchTimer >= searchDuration)
+            // If the angle between current rotation and target rotation is very small, we've completed one "look"
+            if (Quaternion.Angle(manager.transform.rotation, targetLookRotation) < 2f)
             {
-                Debug.Log("Nothing here. Returning to patrol.");
-                manager.SwitchState(manager.EnemyFollowPathState); 
+                looksCompleted++;
+
+                if (looksCompleted >= targetLooks)
+                {
+                    Debug.Log("Nothing here. Returning to patrol.");
+                    manager.SwitchState(manager.EnemyFollowPathState); 
+                }
+                else
+                {
+                    // Switch direction for the next look
+                    lookingRight = !lookingRight;
+                    SetNextLookRotation();
+                }
             }
         }
+    }
+
+    // Helper method to calculate the angle to look at
+    private void SetNextLookRotation()
+    {
+        // Turn 60 degrees left or right from the original base rotation
+        float angle;
+
+        if (lookingRight)
+        {
+            angle = 60f;
+        }
+        else
+        {
+            angle = -60f;
+        }
+        
+        targetLookRotation = baseRotation * Quaternion.Euler(0, angle, 0);
     }
 
     public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)

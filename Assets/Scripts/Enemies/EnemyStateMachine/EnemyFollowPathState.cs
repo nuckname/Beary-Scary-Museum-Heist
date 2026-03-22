@@ -11,6 +11,12 @@ public class EnemyFollowPathState : EnemyBaseState
         // Optional: Find the closest waypoint here so they don't walk through walls to get to waypoint[0]
         isWaiting = false;
         waitTimer = 0f;
+
+        if (manager.stateText != null)
+        {
+            manager.stateText.text = "Patrolling";
+            manager.stateText.color = Color.green;
+        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -30,6 +36,11 @@ public class EnemyFollowPathState : EnemyBaseState
             {
                 isWaiting = false;
                 waitTimer = 0f;
+
+                if (manager.stateText != null)
+                {
+                    manager.stateText.text = "Patrolling";
+                }
             }
             
             // Stop updating movement while waiting
@@ -46,10 +57,15 @@ public class EnemyFollowPathState : EnemyBaseState
         {
             targetWaypointIndex = (targetWaypointIndex + 1) % manager.waypoints.Length;
             isWaiting = true; // Trigger wait for next frame
+
+            if (manager.stateText != null)
+            {
+                manager.stateText.text = "Waiting";
+            }
         }
     }
 
-    //This is public so we can randomly look around
+    // This is public so we can randomly look around
     public void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
     {
         Vector3 direction = (targetPos - manager.transform.position).normalized;
@@ -60,7 +76,7 @@ public class EnemyFollowPathState : EnemyBaseState
         }
     }
 
-    // Can handshake 
+
     public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)
     {
         
