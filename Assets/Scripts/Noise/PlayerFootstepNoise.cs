@@ -16,10 +16,17 @@ public class PlayerFootstepNoise : MonoBehaviour
     [Tooltip("How much the players speed multiplies the noise. Walking vs Sprinting.")]
     public float speedMultiplier = 1f;
 
-    private float stepTimer = 0f;
+    [Header("Weight Settings")]
+    [Tooltip("How much each unit of weight adds to the step duration interval (in seconds).")]
+    public float weightToDurationMultiplier = 0.05f;
 
-    // Fixes a bug where if the player colliders with a guard it would
-    // cause the speed to be really high and therefore create a loud noise
+    [Tooltip("How much each unit of weight adds to the footstep noise radius.")]
+    public float weightToRadiusMultiplier = 0.5f;
+
+    private float stepTimer = 0f;
+    
+    private float currentHeldWeight = 0f; 
+
     private readonly float maxSpeed = 10f;
     
     private void Start()
@@ -27,11 +34,14 @@ public class PlayerFootstepNoise : MonoBehaviour
         noiseEmitter = GetComponent<NoiseEmitter>();
     }
 
+    public void SetWeightModifier(float weight)
+    {
+        currentHeldWeight = weight;
+    }
+
     private void Update()
     {
         float currentSpeed = controller.velocity.magnitude;
-        
-        //print("currentSpeed: " + currentSpeed);
         
         if (currentSpeed > 0.1f && currentSpeed < maxSpeed)
         {
@@ -41,24 +51,20 @@ public class PlayerFootstepNoise : MonoBehaviour
             {
                 TriggerFootstep(currentSpeed);
                 
-                // Reset timer
-                stepTimer = stepInterval; 
+                // Calculate and add the extra duration
+                stepTimer = stepInterval + (currentHeldWeight * weightToDurationMultiplier); 
             }
         }
         else
         {
-            // Reset timer so the first step happens immediately when starting to move again
             stepTimer = 0f; 
         }
     }
 
     private void TriggerFootstep(float speed)
     {
-        // Calculate dynamic radius based on velocity
-        float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier);
+        float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier) + (currentHeldWeight * weightToRadiusMultiplier);
 
         noiseEmitter.EmitNoise(calculatedRadius);
-        
-        //Debug.unityLogger.Log("Footstep noise triggered.");
     }
 }

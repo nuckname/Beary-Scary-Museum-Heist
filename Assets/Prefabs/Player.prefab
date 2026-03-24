@@ -410,6 +410,8 @@ MonoBehaviour:
   stepInterval: 0.5
   baseNoiseRadius: 0.75
   speedMultiplier: 0.25
+  weightToDurationMultiplier: 0.1
+  weightToRadiusMultiplier: 1
 --- !u!82 &5544120613485267522
 AudioSource:
   m_ObjectHideFlags: 0
