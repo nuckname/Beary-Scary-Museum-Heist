@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ISoundListener
 {
-    void OnSoundHeard(Vector3 soundLocation, Transform soundSource);
+    void OnSoundHeard(Vector3 originPosition, Transform sourceTransform, NoiseType noiseType);
 }

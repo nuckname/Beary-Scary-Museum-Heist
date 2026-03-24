@@ -65,6 +65,6 @@ public class PlayerFootstepNoise : MonoBehaviour
     {
         float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier) + (currentHeldWeight * weightToRadiusMultiplier);
 
-        noiseEmitter.EmitNoise(calculatedRadius);
+        noiseEmitter.EmitNoise(calculatedRadius, NoiseType.Player);
     }
 }

@@ -44,7 +44,7 @@ public class CollisionNoiseTrigger : MonoBehaviour
         
         audioSource.maxDistance = noiseRadius;
         audioSource.Play();
-
-        noiseEmitter.EmitNoise(noiseRadius);
+        
+        noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
     }
 }

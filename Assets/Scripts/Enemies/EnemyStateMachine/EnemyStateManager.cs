@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class EnemyStateManager : MonoBehaviour
+public class EnemyStateManager : MonoBehaviour, ISoundListener
 {
     [Header("Pathfinding")]
     public Transform pathHolder;
@@ -27,6 +27,8 @@ public class EnemyStateManager : MonoBehaviour
     public FieldOfView fieldOfView;
     public Transform playerTransform;
 
+    public NoiseType currentNoiseType;
+    
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
     [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
@@ -87,19 +89,39 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
-    public void TriggerInvestigation(Vector3 targetLocation)
+    public void TriggerInvestigation(Vector3 targetLocation, NoiseType noiseType)
     {
-        // Dont trigger if we are already investigating this exact spot, prevents spamming
-        if (EnemyCurrentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) return;
+        // VISUAL PRIORITY: If we are actively chasing the player or stunned, ignore ALL other noises. Vision overrides hearing.
+        if (EnemyCurrentState == EnemyChasePlayerState || EnemyCurrentState == EnemyStunnedState) 
+            return;
 
-        // Don't trigger if we are currently chasing the player or stunned
-        if (EnemyCurrentState != EnemyInvestigateState && EnemyCurrentState != EnemyChasePlayerState && EnemyCurrentState != EnemyStunnedState)
+        // SPAM PREVENTION: Don't trigger if we are already investigating this exact spot
+        if (EnemyCurrentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) 
+            return;
+
+        // NOISE PRIORITY: If we are already investigating a Player noise, ignore Item noises.
+        if (EnemyCurrentState == EnemyInvestigateState)
         {
-            investigateTargetPosition = targetLocation;
-            SwitchState(EnemyInvestigateState);
+            if (currentNoiseType == NoiseType.Player && noiseType == NoiseType.Item)
+            {
+                // We heard an item, but we are already looking for a player noise. Ignore the item.
+                return; 
+            }
         }
+
+        // If we made it this far, either we weren't investigating anything, 
+        // OR the new noise is higher/equal priority to the old noise, therefore update our targets.
+        currentNoiseType = noiseType;
+        investigateTargetPosition = targetLocation;
+        SwitchState(EnemyInvestigateState);
     }
 
+    // This is the method the NoiseEmitter calls when it hears something
+    public void OnSoundHeard(Vector3 originPosition, Transform sourceTransform, NoiseType noiseType)
+    {
+        TriggerInvestigation(originPosition, noiseType);
+    }
+    
     // Helper function to quickly update the enemies overhead text
     public void SetStateText(string message, Color textColor)
     {

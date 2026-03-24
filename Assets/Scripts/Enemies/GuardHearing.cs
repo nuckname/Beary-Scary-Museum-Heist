@@ -12,12 +12,12 @@ public class GuardHearing : MonoBehaviour, ISoundListener
     private Coroutine suspicionRoutine;
 
     // Called by the dropping box because of the ISoundListener interface
-    public void OnSoundHeard(Vector3 soundLocation, Transform soundSource)
+    public void OnSoundHeard(Vector3 soundLocation, Transform soundSource, NoiseType noiseType)
     {
         // Debug.Log($"{gameObject.name} HEARD a sound at {soundLocation}!");
     
         // Tell the State Manager to switch to Investigate State
-        GetComponentInParent<EnemyStateManager>().TriggerInvestigation(soundLocation);
+        GetComponentInParent<EnemyStateManager>().TriggerInvestigation(soundLocation, noiseType);
     }
 
     private IEnumerator InvestigateSound(Vector3 location)

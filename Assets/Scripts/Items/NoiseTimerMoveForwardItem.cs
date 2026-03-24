@@ -119,7 +119,7 @@ public class NoiseTimerMoveForwardItem : MonoBehaviour, IThrowableItem, IPickabl
 
     private void TriggerNoise()
     {
-        noiseEmitter.EmitNoise(noiseRadius);
+        noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
         
         // Call audio here
     }

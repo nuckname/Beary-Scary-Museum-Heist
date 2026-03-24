@@ -22,7 +22,7 @@ public class NoiseEmitter : MonoBehaviour
     /// Call this from any script to make a noise that AI can hear.
     /// The emitter automatically calculates its position at the bottom of the object.
     /// </summary>
-    public void EmitNoise(float noiseRadius)
+    public void EmitNoise(float noiseRadius, NoiseType noiseType)
     {
         editorGizmoRadius = noiseRadius;
 
@@ -39,10 +39,10 @@ public class NoiseEmitter : MonoBehaviour
             ShowRadiusInGame(noiseRadius, emissionPoint);
         }
 
-        BroadcastToAI(noiseRadius, emissionPoint);
+        BroadcastToAI(noiseRadius, emissionPoint, noiseType);
     }
 
-    private void BroadcastToAI(float baseRange, Vector3 originPosition)
+    private void BroadcastToAI(float baseRange, Vector3 originPosition, NoiseType noiseType)
     {
         Collider[] entitiesInHearingRange = Physics.OverlapSphere(originPosition, baseRange, enemyLayer);
 
@@ -67,7 +67,7 @@ public class NoiseEmitter : MonoBehaviour
                     if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
                     {
                         Debug.DrawLine(originPosition, entity.transform.position, Color.green, 2f);
-                        listener.OnSoundHeard(originPosition, transform);
+                        listener.OnSoundHeard(originPosition, transform, noiseType);
                     }
                     else
                     {
