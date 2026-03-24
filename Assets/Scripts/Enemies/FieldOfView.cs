@@ -19,6 +19,8 @@ public class FieldOfView : MonoBehaviour {
 	public int edgeResolveIterations;
 	public float edgeDstThreshold;
 
+	public float maskCutawayDst = .1f;
+	
 	public MeshFilter viewMeshFilter;
 	Mesh viewMesh;
 
@@ -47,16 +49,32 @@ public class FieldOfView : MonoBehaviour {
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
 			Transform target = targetsInViewRadius [i].transform;
-			Vector3 dirToTarget = (target.position - transform.position).normalized;
-			if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
+      
+			// 1. Flatten the positions to the XZ plane for the Angle Check (to match the 2D mesh)
+			Vector3 flatEnemyPos = new Vector3(transform.position.x, 0, transform.position.z);
+			Vector3 flatTargetPos = new Vector3(target.position.x, 0, target.position.z);
+			Vector3 dirToTargetFlat = (flatTargetPos - flatEnemyPos).normalized;
+      
+			// 2. Get the flat forward direction of the enemy (ignoring up/down tilt)
+			Vector3 flatForward = DirFromAngle(0, false);
+
+			// 3. Perform the angle check using the perfectly flat vectors
+			if (Vector3.Angle (flatForward, dirToTargetFlat) < viewAngle / 2) {
+         
+				// 4. Calculate true 3D direction ONLY for the Raycast so low/high walls block vision
+				Vector3 dirToTarget3D = (target.position - transform.position).normalized;
 				float dstToTarget = Vector3.Distance (transform.position, target.position);
-				if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+         
+				// 5. Perform the line-of-sight check
+				if (!Physics.Raycast (transform.position, dirToTarget3D, dstToTarget, obstacleMask)) {
 					visibleTargets.Add (target);
-					
-					if (target.CompareTag("Player") && targetsInViewRadius.Length > 0) 
+            
+					// Note: Removed the redundant 'targetsInViewRadius.Length > 0' check, 
+					// as being inside this loop guarantees it is > 0.
+					if (target.CompareTag("Player")) 
 					{
 						EnemyStateManager stateManager = GetComponentInParent<EnemyStateManager>();
-    
+
 						if (stateManager != null) 
 						{
 							stateManager.TriggerInvestigation(target.position);
@@ -101,7 +119,7 @@ public class FieldOfView : MonoBehaviour {
 
 		vertices [0] = Vector3.zero;
 		for (int i = 0; i < vertexCount - 1; i++) {
-			vertices [i + 1] = transform.InverseTransformPoint(viewPoints [i]);
+			vertices [i + 1] = transform.InverseTransformPoint(viewPoints [i]) + Vector3.forward * maskCutawayDst;
 
 			if (i < vertexCount - 2) {
 				triangles [i * 3] = 0;
