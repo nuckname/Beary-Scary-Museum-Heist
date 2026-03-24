@@ -17,28 +17,27 @@ public class EnemyStateManager : MonoBehaviour
     public float chaseSpeed = 4f;
     public float normalWalkSpeed = 2f;
     
-    public EnemyBaseState EnemyCurrentState;
-    public EnemyFollowPathState EnemyFollowPathState;
-    public EnemyInvestigateALocationState EnemyInvestigateState;
-    public EnemyLostPlayerState EnemyLostPlayerState;
-    
-    public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
+    [Header("Physics & Knockback")]
+    public Rigidbody rb; 
+    public float knockbackForce = 10f;
+    public float upwardKnockback = 1f;
 
+    [Header("References")]
+    public TMP_Text stateText;
+    public FieldOfView fieldOfView;
     public Transform playerTransform;
 
-    
-    public TMP_Text stateText;
-    
+    // State Instances
+    [HideInInspector] public EnemyBaseState EnemyCurrentState; 
+    [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
+    [HideInInspector] public EnemyInvestigateALocationState EnemyInvestigateState = new EnemyInvestigateALocationState();
+    [HideInInspector] public EnemyLostPlayerState EnemyLostPlayerState = new EnemyLostPlayerState();
+    [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
+    [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
+
     // Can make this an enum later
     [Header("Debug")]
     public string currentStateName;
-    
-    void Awake()
-    {
-        EnemyLostPlayerState = new EnemyLostPlayerState();
-        EnemyFollowPathState = new EnemyFollowPathState();
-        EnemyInvestigateState = new EnemyInvestigateALocationState();
-    }
 
     void Start()
     {
@@ -60,18 +59,6 @@ public class EnemyStateManager : MonoBehaviour
         SwitchState(EnemyFollowPathState);
     }
     
-
-    public void StartChasing(Transform target)
-    {
-        playerTransform = target;
-
-        // Only switch state if we aren't ALREADY chasing them
-        if (EnemyCurrentState != EnemyChasePlayerState)
-        {
-            SwitchState(EnemyChasePlayerState);
-        }
-    }
-
     void Update()
     {
         EnemyCurrentState?.UpdateState(this);
@@ -89,12 +76,38 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
+    public void StartChasing(Transform target)
+    {
+        playerTransform = target;
+
+        // Only switch state if we aren't ALREADY chasing them and NOT stunned
+        if (EnemyCurrentState != EnemyChasePlayerState && EnemyCurrentState != EnemyStunnedState)
+        {
+            SwitchState(EnemyChasePlayerState);
+        }
+    }
+
     public void TriggerInvestigation(Vector3 targetLocation)
     {
         // Dont trigger if we are already investigating this exact spot, prevents spamming
         if (EnemyCurrentState == EnemyInvestigateState && investigateTargetPosition == targetLocation) return;
 
-        investigateTargetPosition = targetLocation;
-        SwitchState(EnemyInvestigateState);
+        // Don't trigger if we are currently chasing the player or stunned
+        if (EnemyCurrentState != EnemyInvestigateState && EnemyCurrentState != EnemyChasePlayerState && EnemyCurrentState != EnemyStunnedState)
+        {
+            investigateTargetPosition = targetLocation;
+            SwitchState(EnemyInvestigateState);
+        }
     }
+
+    // Helper function to quickly update the enemies overhead text
+    public void SetStateText(string message, Color textColor)
+    {
+        if (stateText != null)
+        {
+            stateText.text = message;
+            stateText.color = textColor;
+        }
+    }
+
 }
