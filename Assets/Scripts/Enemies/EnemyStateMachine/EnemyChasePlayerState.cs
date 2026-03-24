@@ -5,13 +5,15 @@ public class EnemyChasePlayerState : EnemyBaseState
     public override void EnterState(EnemyStateManager manager)
     {
         // Set the speed to our faster chase speed
-        manager.walkSpeed = manager.chaseSpeed;
+        manager.currentWalkSpeed = manager.chaseSpeed;
 
         if (manager.stateText != null)
         {
             manager.stateText.text = "CHASING!";
             manager.stateText.color = Color.red;
         }
+        
+        manager.currentWalkSpeed = manager.chaseSpeed;
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -32,7 +34,7 @@ public class EnemyChasePlayerState : EnemyBaseState
         }
 
         // Move towards the player
-        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetLocation, manager.walkSpeed * Time.deltaTime);
+        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetLocation, manager.currentWalkSpeed * Time.deltaTime);
     }
 
     public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)

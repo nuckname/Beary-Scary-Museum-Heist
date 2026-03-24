@@ -13,7 +13,7 @@ public class EnemyFollowPathState : EnemyBaseState
         waitTimer = 0f;
 
         // Reset the speed
-        manager.walkSpeed = manager.walkSpeed;
+        manager.currentWalkSpeed = manager.currentWalkSpeed;
         
         if (manager.stateText != null)
         {
@@ -39,11 +39,6 @@ public class EnemyFollowPathState : EnemyBaseState
             {
                 isWaiting = false;
                 waitTimer = 0f;
-
-                if (manager.stateText != null)
-                {
-                    manager.stateText.text = "Patrolling";
-                }
             }
             
             // Stop updating movement while waiting
@@ -53,7 +48,7 @@ public class EnemyFollowPathState : EnemyBaseState
         RotateTowards(manager, targetWaypoint);
 
         // Move towards target
-        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetWaypoint, manager.walkSpeed * Time.deltaTime);
+        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetWaypoint, manager.currentWalkSpeed * Time.deltaTime);
 
         // Check if arrived
         if (Vector3.Distance(manager.transform.position, targetWaypoint) < 0.1f)

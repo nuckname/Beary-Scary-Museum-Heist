@@ -27,7 +27,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
         }
 
         // Move towards the location
-        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetLocation, manager.walkSpeed * Time.deltaTime);
+        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetLocation, manager.currentWalkSpeed * Time.deltaTime);
 
         // Did we arrive?
         if (Vector3.Distance(manager.transform.position, targetLocation) < 0.5f)

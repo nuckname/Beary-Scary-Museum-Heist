@@ -12,10 +12,11 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
-    [Header("Speeds")]
-    public float walkSpeed = 2f;
-    public float chaseSpeed = 3.5f;
-
+    [Header("Guard Speed")]
+    public float currentWalkSpeed;
+    public float chaseSpeed = 4f;
+    public float normalWalkSpeed = 2f;
+    
     public EnemyBaseState EnemyCurrentState;
     public EnemyFollowPathState EnemyFollowPathState;
     public EnemyInvestigateALocationState EnemyInvestigateState;
@@ -46,6 +47,8 @@ public class EnemyStateManager : MonoBehaviour
             Debug.LogError("Path Holder is not assigned on " + gameObject.name);
             return;
         }
+        
+        currentWalkSpeed = normalWalkSpeed;
 
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+// Enemy lost noise
+// and enemy lose player
+// called both times?
 public class EnemyLostPlayerState : EnemyBaseState
 {
     private int targetLooks;
@@ -12,9 +15,11 @@ public class EnemyLostPlayerState : EnemyBaseState
     {
         if (manager.stateText != null)
         {
-            manager.stateText.text = "Lost player";
+            manager.stateText.text = "Lost Noise";
             manager.stateText.color = Color.black;
         }
+            
+        manager.currentWalkSpeed = manager.normalWalkSpeed;
 
         // Initialize look around behaviour based on where they are currently facing
         baseRotation = manager.transform.rotation;
@@ -38,12 +43,6 @@ public class EnemyLostPlayerState : EnemyBaseState
 
             if (looksCompleted >= targetLooks)
             {
-                if (manager.stateText != null)
-                {
-                    manager.stateText.text = "Lost player";
-                    manager.stateText.color = Color.black;
-                }
-
                 manager.SwitchState(manager.EnemyFollowPathState); 
             }
             else
