@@ -43,6 +43,7 @@ public class FieldOfView : MonoBehaviour {
 		DrawFieldOfView ();
 	}
 
+	// https://gemini.google.com/share/3e708dd40efa
 	void FindVisibleTargets() {
 		visibleTargets.Clear ();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
