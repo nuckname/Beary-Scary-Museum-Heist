@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,9 @@ public class FieldOfView : MonoBehaviour {
 	public int edgeResolveIterations;
 	public float edgeDstThreshold;
 
+	private bool currentlySeeingPlayer;
+	private EnemyStateManager enemyStateManager;
+	
 	public float maskCutawayDst = .1f;
 	
 	public MeshFilter viewMeshFilter;
@@ -31,6 +35,8 @@ public class FieldOfView : MonoBehaviour {
 		viewMesh.name = "View Mesh";
 		viewMeshFilter.mesh = viewMesh;
 
+		enemyStateManager = GetComponentInParent<EnemyStateManager>();
+		
 		StartCoroutine ("FindTargetsWithDelay", .2f);
 	}
 
@@ -51,7 +57,7 @@ void FindVisibleTargets() {
        visibleTargets.Clear ();
        
        // Assume we can't see the player until proven otherwise
-       bool currentlySeeingPlayer = false; 
+       currentlySeeingPlayer = false; 
 
        Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
 
@@ -75,30 +81,20 @@ void FindVisibleTargets() {
          
              // 5. Perform the line-of-sight check
              if (!Physics.Raycast (transform.position, dirToTarget3D, dstToTarget, obstacleMask)) {
-                visibleTargets.Add (target);
+	             visibleTargets.Add (target);
             
-                if (target.CompareTag("Player")) 
-                {
-                   currentlySeeingPlayer = true;
-
-                   EnemyStateManager stateManager = GetComponentInParent<EnemyStateManager>();
-
-                   if (stateManager != null) 
-                   {
-                      stateManager.TriggerInvestigation(target.position);
-                   } 
-                }
+	             if (target.CompareTag("Player")) 
+	             {
+		             currentlySeeingPlayer = true;
+		             enemyStateManager.StartChasing(target);
+	             }
              }
           }
        }
 
        if (wasSeeingPlayer && !currentlySeeingPlayer) 
        {
-           EnemyStateManager stateManager = GetComponentInParent<EnemyStateManager>();
-           if (stateManager != null) 
-           {
-               stateManager.SwitchState(stateManager.EnemyLostPlayerState);
-           }
+           enemyStateManager.SwitchState(enemyStateManager.EnemyLostPlayerState);
        }
 
        // Update our tracking variable for the next delay cycle

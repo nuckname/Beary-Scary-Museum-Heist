@@ -5,7 +5,6 @@ public class EnemyStateManager : MonoBehaviour
 {
     [Header("Pathfinding")]
     public Transform pathHolder;
-    public float walkSpeed = 2f;
     public float turnSpeed = 90f;
     public float waitTime = 2f;
     [HideInInspector] public Vector3[] waypoints;
@@ -13,11 +12,19 @@ public class EnemyStateManager : MonoBehaviour
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
+    [Header("Speeds")]
+    public float walkSpeed = 2f;
+    public float chaseSpeed = 3.5f;
 
     public EnemyBaseState EnemyCurrentState;
     public EnemyFollowPathState EnemyFollowPathState;
     public EnemyInvestigateALocationState EnemyInvestigateState;
     public EnemyLostPlayerState EnemyLostPlayerState;
+    
+    public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
+
+    public Transform playerTransform;
+
     
     public TMP_Text stateText;
     
@@ -48,6 +55,18 @@ public class EnemyStateManager : MonoBehaviour
         }
 
         SwitchState(EnemyFollowPathState);
+    }
+    
+
+    public void StartChasing(Transform target)
+    {
+        playerTransform = target;
+
+        // Only switch state if we aren't ALREADY chasing them
+        if (EnemyCurrentState != EnemyChasePlayerState)
+        {
+            SwitchState(EnemyChasePlayerState);
+        }
     }
 
     void Update()

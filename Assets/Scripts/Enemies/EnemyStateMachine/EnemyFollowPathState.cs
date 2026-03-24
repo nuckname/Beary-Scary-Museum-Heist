@@ -12,6 +12,9 @@ public class EnemyFollowPathState : EnemyBaseState
         isWaiting = false;
         waitTimer = 0f;
 
+        // Reset the speed
+        manager.walkSpeed = manager.walkSpeed;
+        
         if (manager.stateText != null)
         {
             manager.stateText.text = "Patrolling";
