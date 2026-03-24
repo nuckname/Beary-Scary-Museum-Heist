@@ -17,7 +17,8 @@ public class EnemyStateManager : MonoBehaviour
     public EnemyBaseState EnemyCurrentState;
     public EnemyFollowPathState EnemyFollowPathState;
     public EnemyInvestigateALocationState EnemyInvestigateState;
-
+    public EnemyLostPlayerState EnemyLostPlayerState;
+    
     public TMP_Text stateText;
     
     // Can make this an enum later
@@ -26,6 +27,7 @@ public class EnemyStateManager : MonoBehaviour
     
     void Awake()
     {
+        EnemyLostPlayerState = new EnemyLostPlayerState();
         EnemyFollowPathState = new EnemyFollowPathState();
         EnemyInvestigateState = new EnemyInvestigateALocationState();
     }

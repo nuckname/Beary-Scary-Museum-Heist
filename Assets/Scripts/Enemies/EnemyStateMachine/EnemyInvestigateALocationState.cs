@@ -79,8 +79,8 @@ public class EnemyInvestigateALocationState : EnemyBaseState
 
                 if (looksCompleted >= targetLooks)
                 {
-                    Debug.Log("Nothing here. Returning to patrol.");
-                    manager.SwitchState(manager.EnemyFollowPathState); 
+                    Debug.Log("Nothing here. Switching to Lost Player state.");
+                    manager.SwitchState(manager.EnemyLostPlayerState); 
                 }
                 else
                 {
