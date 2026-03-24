@@ -51,12 +51,6 @@ public class NoiseEmitter : MonoBehaviour
             if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
             {
                 float finalRange = baseRange;
-                
-                // Adjust for specific guard hearing sensitivity
-                if(entity.GetComponentInChildren<GuardHearing>() is GuardHearing ear)
-                {
-                    finalRange *= ear.hearingSensitivity;
-                }
 
                 Vector3 directionToEntity = entity.transform.position - originPosition;
                 float distanceToEntity = directionToEntity.magnitude;
