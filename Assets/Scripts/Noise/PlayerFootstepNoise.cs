@@ -18,6 +18,10 @@ public class PlayerFootstepNoise : MonoBehaviour
 
     private float stepTimer = 0f;
 
+    // Fixes a bug where if the player colliders with a guard it would
+    // cause the speed to be really high and therefore create a loud noise
+    private readonly float maxSpeed = 10f;
+    
     private void Start()
     {
         noiseEmitter = GetComponent<NoiseEmitter>();
@@ -27,7 +31,9 @@ public class PlayerFootstepNoise : MonoBehaviour
     {
         float currentSpeed = controller.velocity.magnitude;
         
-        if (currentSpeed > 0.1f)
+        //print("currentSpeed: " + currentSpeed);
+        
+        if (currentSpeed > 0.1f && currentSpeed < maxSpeed)
         {
             stepTimer -= Time.deltaTime;
 
@@ -52,5 +58,7 @@ public class PlayerFootstepNoise : MonoBehaviour
         float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier);
 
         noiseEmitter.EmitNoise(calculatedRadius);
+        
+        //Debug.unityLogger.Log("Footstep noise triggered.");
     }
 }
