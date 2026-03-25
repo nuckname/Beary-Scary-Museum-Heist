@@ -257,10 +257,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckBuffer: 0.1
-  dropSoundMultiplier: 0.25
+  dropSoundMultiplier: 1
   useVelocityScaling: 1
   velocityScale: 0.25
-  minVelocityThreshold: 1
+  minVelocityThreshold: 0.5
 --- !u!114 &3499240631103670951
 MonoBehaviour:
   m_ObjectHideFlags: 0
