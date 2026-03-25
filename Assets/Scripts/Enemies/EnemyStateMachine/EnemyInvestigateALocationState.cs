@@ -8,7 +8,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
 
         if (manager.stateText != null)
         {
-            manager.stateText.text = "Investigating...";
+            manager.stateText.text = "!!!";
             manager.stateText.color = Color.yellow;
         }
     }

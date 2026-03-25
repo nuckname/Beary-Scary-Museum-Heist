@@ -15,7 +15,7 @@ public class EnemyLostPlayerState : EnemyBaseState
     {
         if (manager.stateText != null)
         {
-            manager.stateText.text = "Lost Noise";
+            manager.stateText.text = "???";
             manager.stateText.color = Color.black;
         }
             

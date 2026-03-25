@@ -17,7 +17,8 @@ public class EnemyFollowPathState : EnemyBaseState
         
         if (manager.stateText != null)
         {
-            manager.stateText.text = "Patrolling";
+            //manager.stateText.text = "Patrolling";
+            manager.stateText.text = "";
             manager.stateText.color = Color.green;
         }
     }
@@ -58,7 +59,7 @@ public class EnemyFollowPathState : EnemyBaseState
 
             if (manager.stateText != null)
             {
-                manager.stateText.text = "Waiting";
+                manager.stateText.text = "";
             }
         }
     }

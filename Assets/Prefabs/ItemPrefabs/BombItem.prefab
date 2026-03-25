@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6934650795842922822}
   - component: {fileID: 8453200104703548179}
   - component: {fileID: 1748238354416997980}
-  - component: {fileID: 7031087383252706052}
   - component: {fileID: 3499240631103670951}
   m_Layer: 0
   m_Name: BombItem
@@ -253,25 +252,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  noiseEmitter: {fileID: 3499240631103670951}
-  audioSource: {fileID: 8453200104703548179}
+  itemWeight: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckBuffer: 0.1
   dropSoundMultiplier: 0.25
   useVelocityScaling: 1
   velocityScale: 0.25
   minVelocityThreshold: 1
---- !u!114 &7031087383252706052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6774066252667396190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbe34163c0b92124ba8906879a9e5f32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  itemWeight: 2
 --- !u!114 &3499240631103670951
 MonoBehaviour:
   m_ObjectHideFlags: 0

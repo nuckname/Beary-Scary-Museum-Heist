@@ -9,7 +9,7 @@ public class EnemyChasePlayerState : EnemyBaseState
 
         if (manager.stateText != null)
         {
-            manager.stateText.text = "CHASING!";
+            manager.stateText.text = "!!!";
             manager.stateText.color = Color.red;
         }
         

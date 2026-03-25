@@ -17,11 +17,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float chaseSpeed = 4f;
     public float normalWalkSpeed = 2f;
     
-    [Header("Physics & Knockback")]
-    public Rigidbody rb; 
-    public float knockbackForce = 10f;
-    public float upwardKnockback = 1f;
-
     [Header("References")]
     public TMP_Text stateText;
     public FieldOfView fieldOfView;

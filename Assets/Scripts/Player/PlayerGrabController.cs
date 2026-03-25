@@ -25,10 +25,17 @@ public class PlayerGrabController : MonoBehaviour
         if (hit.gameObject.CompareTag("CanPickUp") && PickedUpObject == null)
         {
             IPickable[] pickables = hit.gameObject.GetComponents<IPickable>();
-            
+        
             if (pickables.Length > 0)
             {
-                PickUpObject(hit.gameObject, pickables);
+                if (pickables[0].IsOnGround())
+                {
+                    PickUpObject(hit.gameObject, pickables);
+                }
+            }
+            else
+            {
+                Debug.LogError("pickables length is 0");
             }
         }
     }
@@ -49,7 +56,6 @@ public class PlayerGrabController : MonoBehaviour
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         currentHeldWeight = rb.mass;
         
-
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
         
         // Attach to hand
@@ -80,7 +86,6 @@ public class PlayerGrabController : MonoBehaviour
   
         playerFootstepNoise.SetWeightModifier(0f);
       
-
         PickedUpObject = null;
         CurrentPickables = null;
         currentHeldWeight = 0f;

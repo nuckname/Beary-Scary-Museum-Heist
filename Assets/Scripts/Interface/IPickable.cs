@@ -8,4 +8,6 @@ public interface IPickable
     //This allows for more flexibility in how items can be
     //released (dropped without throwing).
     void OnReleased();
+    
+    bool IsOnGround();
 }

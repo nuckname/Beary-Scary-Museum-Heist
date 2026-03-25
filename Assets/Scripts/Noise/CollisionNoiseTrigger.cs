@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(NoiseEmitter))]
-[RequireComponent(typeof(AudioSource))]
-public class CollisionNoiseTrigger : MonoBehaviour
+[RequireComponent(typeof(NoiseEmitter), typeof(AudioSource))]
+public class CollisionNoiseTrigger : PickupItem
 {
     private NoiseEmitter noiseEmitter;
     private AudioSource audioSource;
-    private Rigidbody rb; 
     
     [Header("Collision Settings")]
     [SerializeField] private float dropSoundMultiplier = 1f;
@@ -17,15 +14,18 @@ public class CollisionNoiseTrigger : MonoBehaviour
     [SerializeField] private float velocityScale = 0.5f; 
     [SerializeField] private float minVelocityThreshold = 2f;
 
-    private void Awake()
+    protected override void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        base.Awake(); 
+
         audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
+        // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
         float finalMultiplier = dropSoundMultiplier;
