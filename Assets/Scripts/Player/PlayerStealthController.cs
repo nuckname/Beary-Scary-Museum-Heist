@@ -83,6 +83,7 @@ public class PlayerStealthController : MonoBehaviour
         transform.position = pos;
     }
 
+    // AI https://gemini.google.com/share/3ac24891bcfb
     void HandleMouseRotation()
     {
         Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);

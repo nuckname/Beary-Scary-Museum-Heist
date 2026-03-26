@@ -78,6 +78,7 @@ public class PlayerThrowController : MonoBehaviour
         }
     }
 
+    // AI https://gemini.google.com/share/3ac24891bcfb
     private void DrawTrajectory()
     {
         Vector3 startPosition = transform.position + (Vector3.up * 1f); 
