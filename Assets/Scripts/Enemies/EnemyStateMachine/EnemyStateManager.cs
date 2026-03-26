@@ -22,7 +22,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public FieldOfView fieldOfView;
     public Transform playerTransform;
 
-    public NoiseType currentNoiseType;
+    [SerializeField] private NoiseType currentNoiseType = NoiseType.Nothing;
     
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
