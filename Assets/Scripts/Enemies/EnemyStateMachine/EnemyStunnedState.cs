@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyStunnedState : EnemyBaseState
 {
     private float stunTimer = 0f;
-    private float stunDuration = 2.0f; 
+    private float stunDuration = 0.75f; 
 
     public override void EnterState(EnemyStateManager manager)
     {

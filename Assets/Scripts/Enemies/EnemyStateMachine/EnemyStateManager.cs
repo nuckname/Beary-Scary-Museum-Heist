@@ -22,7 +22,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public FieldOfView fieldOfView;
     public Transform playerTransform;
 
-    [SerializeField] private NoiseType currentNoiseType = NoiseType.Nothing;
+    [SerializeField] private NoiseType whatTypeOfNoiseTheGuardHeard = NoiseType.Nothing;
     
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
@@ -97,7 +97,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // NOISE PRIORITY: If we are already investigating a Player noise, ignore Item noises.
         if (EnemyCurrentState == EnemyInvestigateState)
         {
-            if (currentNoiseType == NoiseType.Player && noiseType == NoiseType.Item)
+            if (whatTypeOfNoiseTheGuardHeard == NoiseType.Player && noiseType == NoiseType.Item)
             {
                 // We heard an item, but we are already looking for a player noise. Ignore the item.
                 return; 
@@ -106,7 +106,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
         // If we made it this far, either we weren't investigating anything, 
         // OR the new noise is higher/equal priority to the old noise, therefore update our targets.
-        currentNoiseType = noiseType;
+        whatTypeOfNoiseTheGuardHeard = noiseType;
         investigateTargetPosition = targetLocation;
         SwitchState(EnemyInvestigateState);
     }
