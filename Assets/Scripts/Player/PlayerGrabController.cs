@@ -52,16 +52,22 @@ public class PlayerGrabController : MonoBehaviour
         }
         
         currentHeldWeight = 0f;
-        
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         currentHeldWeight = rb.mass;
+     
         
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
+
+        // Store the object's original world scale before parenting
+        Vector3 originalScale = obj.transform.localScale;
         
         // Attach to hand
         obj.transform.SetParent(playerHand);
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localRotation = Quaternion.identity;
+        
+        // Re-apply the scale so it doesn't distort
+        obj.transform.localScale = originalScale;
 
         playerStealthController.walkSpeed -= currentHeldWeight;
         playerStealthController.sprintSpeed -= currentHeldWeight;
