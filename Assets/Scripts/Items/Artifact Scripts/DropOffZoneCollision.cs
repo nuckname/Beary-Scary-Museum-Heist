@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class DropOffZoneCollision : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI artifactValueText;
-    
+    private TextMeshProUGUI artifactValueText;
     public int totalQuota = 0;
-
+    
     private void Awake()
     {
         artifactValueText = GameObject.FindGameObjectWithTag("artifactValueText").GetComponent<TextMeshProUGUI>();
@@ -26,8 +25,7 @@ public class DropOffZoneCollision : MonoBehaviour
                 artifact.hasBeenUsed = true;
 
                 Debug.Log($"value: {artifact.artifactValue} added to {totalQuota}");
-                artifactValueText.text = "Points: " + artifact.artifactValue;
-                // Destroy(other.gameObject);
+                artifactValueText.text = "Points: " + totalQuota;
             }
         }
     }
