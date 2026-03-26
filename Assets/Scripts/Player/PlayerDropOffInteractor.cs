@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerDropOffInteractor : MonoBehaviour
 {
+    //This is when you press e or soemthing in the game
     [SerializeField] private float dropOffCooldown = 10f;
     private float nextDropOffTime = 0f;
 
