@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Enemy will be stunned for a short duration, unable to see or move, before recovering and acting confused for a moment
+/// </summary>
 public class EnemyStunnedState : EnemyBaseState
 {
     private float stunTimer = 0f;

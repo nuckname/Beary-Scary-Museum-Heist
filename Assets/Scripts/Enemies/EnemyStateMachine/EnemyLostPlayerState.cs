@@ -1,8 +1,9 @@
 using UnityEngine;
 
-// Enemy lost noise
-// and enemy lose player
-// called both times?
+
+/// <summary>
+///  Enemy will turn left and right a few times looking for the player, then return to patrolling if they don't find them
+/// </summary>
 public class EnemyLostPlayerState : EnemyBaseState
 {
     private int targetLooks;

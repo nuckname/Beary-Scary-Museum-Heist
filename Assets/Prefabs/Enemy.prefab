@@ -119,7 +119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8714572948119602041
 Transform:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   stateText: {fileID: 3645665797918119330}
   fieldOfView: {fileID: 7372062438631642018}
   playerTransform: {fileID: 0}
-  currentNoiseType: 0
+  whatTypeOfNoiseTheGuardHeard: 0
   currentStateName: 
 --- !u!114 &2329327420455388439
 MonoBehaviour:
@@ -739,7 +739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8335939149114923439
 Transform:
   m_ObjectHideFlags: 0
