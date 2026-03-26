@@ -4,12 +4,12 @@ public class PlayerStealthController : MonoBehaviour
 {
     public float walkSpeed = 5f;
     public float sprintSpeed = 9f;
-    
+
     [Header("Stamina Settings")]
     public float maxStamina = 5f;
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
-    
+
     private float currentStamina;
     private bool isExhausted = false;
 
@@ -17,19 +17,28 @@ public class PlayerStealthController : MonoBehaviour
     private Vector3 moveDirection;
     private float currentSpeed;
 
+    private Camera mainCam;
+
+    // Locked Y position
+    private float lockedY;
+
     void Start()
     {
         currentStamina = maxStamina;
+        mainCam = Camera.main;
+        lockedY = transform.position.y;
     }
 
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
         HandleSpeed();
         MovePlayer();
+        HandleMouseRotation();
     }
 
     void HandleSpeed()
@@ -45,20 +54,18 @@ public class PlayerStealthController : MonoBehaviour
             if (currentStamina <= 0)
             {
                 currentStamina = 0;
-                isExhausted = true; // Force player to stop sprinting
+                isExhausted = true;
             }
         }
         else
         {
             currentSpeed = walkSpeed;
-            
-            // Regenerate stamina when not sprinting
+
             if (currentStamina < maxStamina)
             {
                 currentStamina += staminaRegenRate * Time.deltaTime;
             }
 
-            // Reset exhausted state once stamina has recovered a bit (20% right now)
             if (isExhausted && currentStamina >= maxStamina * 0.2f)
             {
                 isExhausted = false;
@@ -69,38 +76,48 @@ public class PlayerStealthController : MonoBehaviour
     void MovePlayer()
     {
         controller.Move(moveDirection * currentSpeed * Time.deltaTime);
-        
-        if (moveDirection.magnitude >= 0.1f)
+
+        // Lock Y position
+        Vector3 pos = transform.position;
+        pos.y = lockedY;
+        transform.position = pos;
+    }
+
+    void HandleMouseRotation()
+    {
+        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+
+        if (groundPlane.Raycast(ray, out float rayDistance))
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
+            Vector3 point = ray.GetPoint(rayDistance);
+            Vector3 lookDirection = point - transform.position;
+            lookDirection.y = 0f;
+
+            if (lookDirection.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
+            }
         }
     }
 
-    //AI
     void OnGUI()
     {
-        // 1. Define the size and position of the background bar
         float barWidth = 25f;
         float barHeight = 200f;
-        float xPos = 20f; // 20 pixels from the left of the screen
-        float yPos = Screen.height - barHeight - 20f; // 20 pixels from the bottom
+        float xPos = 20f;
+        float yPos = Screen.height - barHeight - 20f;
 
-        // 2. Draw the background (empty) bar in dark gray
         Color originalColor = GUI.color;
+
         GUI.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
         GUI.Box(new Rect(xPos, yPos, barWidth, barHeight), "");
 
-        // 3. Calculate stamina percentage (0.0 to 1.0)
         float staminaPercent = currentStamina / maxStamina;
-
-        // 4. Calculate the height of the filled portion
         float fillHeight = barHeight * staminaPercent;
-        
-        // 5. Offset the Y position so the bar fills from bottom to top
         float fillYPos = yPos + (barHeight - fillHeight);
 
-        // 6. Change color based on exhaustion state
         if (isExhausted)
         {
             GUI.color = Color.red;
@@ -110,10 +127,8 @@ public class PlayerStealthController : MonoBehaviour
             GUI.color = Color.green;
         }
 
-        // 7. Draw the filled stamina bar over the background
         GUI.Box(new Rect(xPos, fillYPos, barWidth, fillHeight), "");
 
-        // Reset the GUI color back to normal
         GUI.color = originalColor;
     }
 }
