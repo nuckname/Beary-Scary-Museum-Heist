@@ -11,9 +11,6 @@ public class EnemyLostPlayerState : EnemyBaseState
     private Quaternion baseRotation;
     private Quaternion targetLookRotation;
     private bool lookingRight;
-    
-    private int minAmountOfTurns = 2;
-    private int maxAmountOfTurns = 4;
 
     public override void EnterState(EnemyStateManager manager)
     {
@@ -27,7 +24,7 @@ public class EnemyLostPlayerState : EnemyBaseState
 
         // Initialize look around behaviour based on where they are currently facing
         baseRotation = manager.transform.rotation;
-        targetLooks = Random.Range(minAmountOfTurns, maxAmountOfTurns); 
+        targetLooks = Random.Range(manager.minAmountOfTurnsTheGuardDoes, manager.maxAmountOfTurnsTheGuardDoes); 
         looksCompleted = 0;
         
         // Randomly choose to look left or right first

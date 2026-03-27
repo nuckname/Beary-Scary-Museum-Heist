@@ -30,15 +30,23 @@ public class FieldOfView : MonoBehaviour {
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    private NoiseEmitter noiseEmitter;
+    private bool hasShoutedAtPlayer = false;
+    
     private Vector3 lastKnownPlayerPosition;
     private float originalViewRadius;
+
+    private void Awake()
+    {
+       noiseEmitter = GetComponentInParent<NoiseEmitter>();
+       enemyStateManager = GetComponentInParent<EnemyStateManager>();
+    }
 
     void Start() {
        viewMesh = new Mesh ();
        viewMesh.name = "View Mesh";
        viewMeshFilter.mesh = viewMesh;
 
-       enemyStateManager = GetComponentInParent<EnemyStateManager>();
        originalViewRadius = viewRadius;
        
        StartCoroutine ("FindTargetsWithDelay", .2f);
@@ -92,6 +100,12 @@ public class FieldOfView : MonoBehaviour {
                     currentlySeeingPlayer = true;
                     
                     lastKnownPlayerPosition = target.position;
+
+                    if (!hasShoutedAtPlayer && enemyStateManager.makeGuardsCreateNoiseWhenTheySeeThePlayer)
+                    {
+                        noiseEmitter.EmitNoise(enemyStateManager.guardNoiseRadiusWhenTheySeeThePlayer, NoiseType.Nothing);
+                        hasShoutedAtPlayer = true;
+                    }
                     
                     enemyStateManager.StartChasing(target);
                  }
@@ -110,6 +124,8 @@ public class FieldOfView : MonoBehaviour {
           {
              enemyStateManager.SwitchState(enemyStateManager.EnemyLostPlayerState);
           }
+          
+          hasShoutedAtPlayer = false;
        }
 
        // Update our tracking variable for the next delay cycle

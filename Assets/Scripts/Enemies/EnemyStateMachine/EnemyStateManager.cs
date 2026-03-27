@@ -14,7 +14,21 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
     [Header("Behaviour Settings")]
     [Tooltip("If true, when the guards lose sight of the player, they will go to the player's last known location and look around. If false, they will instantly look around and then patrol.")]
+    [InspectorName("Guards Go To Last Player Location When They Lose Sight")]
     public bool makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight = true;
+
+    [Tooltip("if true, guards will make noise when they see the player, which can alert other guards. If false, guards will be silent when they see the player and just chase them.")]
+    [InspectorName("Guards Make Noise When They First The Player")]
+    public bool makeGuardsCreateNoiseWhenTheySeeThePlayer = true;
+    public float guardNoiseRadiusWhenTheySeeThePlayer = 5f;
+
+    [Header("Guard Turning")]
+    [Tooltip("The amount of turns the guard does when they lose sight of the player and look around. " +
+             "A turn is either looking left or right. So if this is 2, they will look left, then right, then go back to patrolling. " +
+             "If this is 4, they will look left, right, left, right before going back to patrolling.")]
+    public int minAmountOfTurnsTheGuardDoes = 2;
+    public int maxAmountOfTurnsTheGuardDoes = 4;
+    
     
     [Header("Guard Speed")]
     public float currentWalkSpeed;
