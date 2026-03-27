@@ -30,6 +30,7 @@ public class FieldOfView : MonoBehaviour {
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    private Vector3 lastKnownPlayerPosition;
     private float originalViewRadius;
 
     void Start() {
@@ -89,6 +90,9 @@ public class FieldOfView : MonoBehaviour {
                  if (target.CompareTag("Player")) 
                  {
                     currentlySeeingPlayer = true;
+                    
+                    lastKnownPlayerPosition = target.position;
+                    
                     enemyStateManager.StartChasing(target);
                  }
              }
@@ -97,7 +101,15 @@ public class FieldOfView : MonoBehaviour {
 
        if (wasSeeingPlayer && !currentlySeeingPlayer) 
        {
-           enemyStateManager.SwitchState(enemyStateManager.EnemyLostPlayerState);
+          if (enemyStateManager.makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight)
+          {
+             enemyStateManager.investigateTargetPosition = lastKnownPlayerPosition;
+             enemyStateManager.SwitchState(enemyStateManager.EnemyInvestigateState);
+          }
+          else
+          {
+             enemyStateManager.SwitchState(enemyStateManager.EnemyLostPlayerState);
+          }
        }
 
        // Update our tracking variable for the next delay cycle

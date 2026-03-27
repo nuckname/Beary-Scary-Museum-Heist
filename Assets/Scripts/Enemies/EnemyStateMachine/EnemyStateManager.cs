@@ -12,6 +12,10 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
+    [Header("Behaviour Settings")]
+    [Tooltip("If true, when the guards lose sight of the player, they will go to the player's last known location and look around. If false, they will instantly look around and then patrol.")]
+    public bool makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight = true;
+    
     [Header("Guard Speed")]
     public float currentWalkSpeed;
     public float chaseSpeed = 4f;
