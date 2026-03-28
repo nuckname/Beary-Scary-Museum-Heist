@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5522966862455197228}
   - component: {fileID: 2519119033967843050}
+  - component: {fileID: 7632212504812127375}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 5345641586640339}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2113905, y: 0.43, z: 0.14}
-  m_LocalScale: {x: 1, y: 0.38803148, z: 1}
+  m_LocalPosition: {x: -0.2113905, y: 0.938, z: 0.14}
+  m_LocalScale: {x: 0.67296, y: 0.26112965, z: 0.67296}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8779069409812356271}
@@ -81,16 +82,28 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4a1a253c8a5f6114a901c95c59da50ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7632212504812127375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345641586640339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9114580ee3aab46ada38e3da9b4ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockRotation
 --- !u!1 &1040525399222421954
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +279,8 @@ MonoBehaviour:
   makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight: 1
   makeGuardsCreateNoiseWhenTheySeeThePlayer: 1
   guardNoiseRadiusWhenTheySeeThePlayer: 5
+  minAmountOfTurnsTheGuardDoes: 2
+  maxAmountOfTurnsTheGuardDoes: 4
   currentWalkSpeed: 0
   chaseSpeed: 3.75
   normalWalkSpeed: 2
