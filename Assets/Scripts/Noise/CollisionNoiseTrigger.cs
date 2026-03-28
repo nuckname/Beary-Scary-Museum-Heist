@@ -31,7 +31,12 @@ public class CollisionNoiseTrigger : PickupItem
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
-        objectIsAirborne = false;
+        
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Ground") &&
+            collision.gameObject.layer != LayerMask.NameToLayer("Obstacle"))
+        {
+            objectIsAirborne = false;
+        }
         
         float finalMultiplier = dropSoundMultiplier;
 
