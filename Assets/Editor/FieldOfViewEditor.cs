@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-//this is from https://github.com/SebLague/Field-of-View/blob/master/Episode%2001/Editor/FieldOfViewEditor.cs
+//this is from https://raw.githubusercontent.com/SebLague/Field-of-View/refs/heads/master/Episode%2003/Editor/FieldOfViewEditor.cs
 [CustomEditor (typeof (FieldOfView))]
 public class FieldOfViewEditor : Editor {
 
