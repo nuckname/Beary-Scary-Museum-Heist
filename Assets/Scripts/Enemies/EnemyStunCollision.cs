@@ -14,7 +14,16 @@ public class EnemyStunCollision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("CanPickUp"))
         {
-            stateManager.SwitchState(stateManager.EnemyStunnedState);
+            CollisionNoiseTrigger noiseTrigger = collision.gameObject.GetComponent<CollisionNoiseTrigger>();
+            
+            if(noiseTrigger.canOnlyStunWhenAirBorne)
+            {
+                if (noiseTrigger.objectIsAirborne)
+                {
+                    stateManager.SwitchState(stateManager.EnemyStunnedState);
+                }
+            }
+     
         }
     }
 }

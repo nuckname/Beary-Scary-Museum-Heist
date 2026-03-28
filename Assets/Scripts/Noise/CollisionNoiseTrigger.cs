@@ -8,6 +8,9 @@ public class CollisionNoiseTrigger : PickupItem
     
     [Header("Collision Settings")]
     [SerializeField] private float dropSoundMultiplier = 1f;
+
+    public bool canOnlyStunWhenAirBorne = true; 
+    public bool objectIsAirborne = true;
     
     [Header("Velocity Settings")]
     [SerializeField] private bool useVelocityScaling = true;
@@ -28,6 +31,8 @@ public class CollisionNoiseTrigger : PickupItem
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
+        objectIsAirborne = false;
+        
         float finalMultiplier = dropSoundMultiplier;
 
         if (useVelocityScaling)
