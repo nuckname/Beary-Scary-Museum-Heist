@@ -39,6 +39,8 @@ public class FieldOfView : MonoBehaviour {
 	{
 		noiseEmitter = GetComponentInParent<NoiseEmitter>();
 		enemyStateManager = GetComponentInParent<EnemyStateManager>();
+		
+		originalViewRadius = viewRadius;
 	}
 
 	void Start() {
