@@ -20,7 +20,7 @@ public class EnemyStunCollision : MonoBehaviour
             {
                 if (noiseTrigger.objectIsAirborne)
                 {
-                    stateManager.SwitchState(stateManager.EnemyStunnedState);
+                    //stateManager.SwitchState(stateManager.EnemyStunnedState);
                 }
             }
      

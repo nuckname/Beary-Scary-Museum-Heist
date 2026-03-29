@@ -136,6 +136,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     }
     
     // Helper function to quickly update the enemies overhead text
+    // Refactor this to use images, sprite 2D with an enum on what emote we want to use
     public void SetStateText(string message, Color textColor)
     {
         if (stateText != null)

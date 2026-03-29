@@ -17,25 +17,56 @@ public class CollisionNoiseTrigger : PickupItem
     [SerializeField] private float velocityScale = 0.5f; 
     [SerializeField] private float minVelocityThreshold = 2f;
 
+    
+    private int groundLayerIndex;
+    private int obstacleLayerIndex;
+    
     protected override void Awake()
     {
         base.Awake(); 
 
         audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
-    }
 
+        // Important Cache 
+        groundLayerIndex = LayerMask.NameToLayer("Ground");
+        obstacleLayerIndex = LayerMask.NameToLayer("Obstacle");
+    }
+    
+    public override void OnPickedUp()
+    {
+        base.OnPickedUp();
+        objectIsAirborne = true;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (collision.gameObject.TryGetComponent(out EnemyStateManager enemy))
+            {
+                if (canOnlyStunWhenAirBorne && objectIsAirborne)
+                {
+                    enemy.SwitchState(enemy.EnemyStunnedState);
+                }
+            }
+        }
         
-        if (collision.gameObject.layer != LayerMask.NameToLayer("Ground") &&
-            collision.gameObject.layer != LayerMask.NameToLayer("Obstacle"))
+        Debug.Log($"Item hit: {collision.gameObject.name} | " +
+                  $"It is on Layer: {LayerMask.LayerToName(collision.gameObject.layer)}");
+        
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             objectIsAirborne = false;
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            objectIsAirborne = false;
+            
         }
         
         float finalMultiplier = dropSoundMultiplier;
