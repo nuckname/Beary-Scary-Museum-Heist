@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class EnemyStateManager : MonoBehaviour, ISoundListener
@@ -36,10 +35,17 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float normalWalkSpeed = 2f;
     
     [Header("References")]
-    public TMP_Text stateText;
     public FieldOfView fieldOfView;
     public Transform playerTransform;
+    
+    [Header("Guard Icons")]
+    [SerializeField] private SpriteRenderer stateSpriteRenderer;
+    [SerializeField] private Sprite heardIcon;
+    [SerializeField] private Sprite seenIcon;
+    [SerializeField] private Sprite patrollingIcon;
+    [SerializeField] private Sprite confusedIcon;
 
+    [Header("Noise")]
     [SerializeField] private NoiseType whatTypeOfNoiseTheGuardHeard = NoiseType.Nothing;
     
     // State Instances
@@ -135,15 +141,30 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         TriggerInvestigation(originPosition, noiseType);
     }
     
-    // Helper function to quickly update the enemies overhead text
-    // Refactor this to use images, sprite 2D with an enum on what emote we want to use
-    public void SetStateText(string message, Color textColor)
+    public void SetStateIcon(EnemyStateIcon iconType)
     {
-        if (stateText != null)
+        switch (iconType)
         {
-            stateText.text = message;
-            stateText.color = textColor;
+            case EnemyStateIcon.Heard:
+                stateSpriteRenderer.sprite = heardIcon;
+                stateSpriteRenderer.enabled = true;
+                break;
+            case EnemyStateIcon.Seen:
+                stateSpriteRenderer.sprite = seenIcon;
+                stateSpriteRenderer.enabled = true;
+                break;
+            case EnemyStateIcon.Patrolling:
+                stateSpriteRenderer.sprite = patrollingIcon;
+                stateSpriteRenderer.enabled = true;
+                break;
+            case EnemyStateIcon.Confused:
+                stateSpriteRenderer.sprite = confusedIcon;
+                stateSpriteRenderer.enabled = true;
+                break;
+            case EnemyStateIcon.Hide:
+                stateSpriteRenderer.sprite = null;
+                stateSpriteRenderer.enabled = false;
+                break;
         }
     }
-
 }

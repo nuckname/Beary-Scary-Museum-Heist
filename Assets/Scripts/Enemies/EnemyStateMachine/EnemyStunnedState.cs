@@ -12,7 +12,7 @@ public class EnemyStunnedState : EnemyBaseState
     {
         stunTimer = 0f;
 
-        manager.SetStateText("STUNNED", Color.gray);
+       // manager.SetStateText("STUNNED", Color.gray);
 
         if (manager.fieldOfView != null)
         {

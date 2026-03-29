@@ -5,12 +5,6 @@ public class EnemyInvestigateALocationState : EnemyBaseState
     public override void EnterState(EnemyStateManager manager)
     {
         Debug.Log("State: Investigating!");
-
-        if (manager.stateText != null)
-        {
-            manager.stateText.text = "!!!";
-            manager.stateText.color = Color.yellow;
-        }
     }
 
     public override void UpdateState(EnemyStateManager manager)

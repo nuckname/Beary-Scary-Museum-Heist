@@ -192,9 +192,13 @@ MonoBehaviour:
   currentWalkSpeed: 0
   chaseSpeed: 3.75
   normalWalkSpeed: 2
-  stateText: {fileID: 4895686110902997566}
   fieldOfView: {fileID: 7372062438631642018}
   playerTransform: {fileID: 0}
+  stateSpriteRenderer: {fileID: 2519119033967843050}
+  heardIcon: {fileID: 0}
+  seenIcon: {fileID: 0}
+  patrollingIcon: {fileID: 0}
+  confusedIcon: {fileID: 0}
   whatTypeOfNoiseTheGuardHeard: 0
   currentStateName: 
 --- !u!114 &2329327420455388439

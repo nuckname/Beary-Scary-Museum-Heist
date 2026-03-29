@@ -14,12 +14,6 @@ public class EnemyLostPlayerState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager manager)
     {
-        if (manager.stateText != null)
-        {
-            manager.stateText.text = "???";
-            manager.stateText.color = Color.black;
-        }
-            
         manager.currentWalkSpeed = manager.normalWalkSpeed;
 
         // Initialize look around behaviour based on where they are currently facing

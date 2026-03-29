@@ -14,13 +14,6 @@ public class EnemyFollowPathState : EnemyBaseState
 
         // Reset the speed
         manager.currentWalkSpeed = manager.currentWalkSpeed;
-        
-        if (manager.stateText != null)
-        {
-            //manager.stateText.text = "Patrolling";
-            manager.stateText.text = "";
-            manager.stateText.color = Color.green;
-        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -57,10 +50,7 @@ public class EnemyFollowPathState : EnemyBaseState
             targetWaypointIndex = (targetWaypointIndex + 1) % manager.waypoints.Length;
             isWaiting = true; // Trigger wait for next frame
 
-            if (manager.stateText != null)
-            {
-                manager.stateText.text = "";
-            }
+            manager.SetStateIcon(EnemyStateIcon.Hide);
         }
     }
 
