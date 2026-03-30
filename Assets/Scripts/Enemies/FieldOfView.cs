@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +32,13 @@ public class FieldOfView : MonoBehaviour {
 	
 	private NoiseEmitter noiseEmitter;
 	private bool hasShoutedAtPlayer = false;
-    
+	
+	bool seesPlayerThisFrame = false;
+	Transform spottedPlayer = null;
+	
+	public event Action<Transform> OnPlayerSpotted;
+	public event Action<Vector3> OnPlayerLost;
+	
 	private Vector3 lastKnownPlayerPosition;
 	private float originalViewRadius;
 
@@ -65,6 +72,11 @@ public class FieldOfView : MonoBehaviour {
 
 	void FindVisibleTargets() {
 		visibleTargets.Clear ();
+		
+		// Reset these locally every single time we check vision
+		bool seesPlayerThisFrame = false;
+		Transform spottedPlayer = null;
+		
 		Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++) {
@@ -77,39 +89,26 @@ public class FieldOfView : MonoBehaviour {
 					
 					if (target.CompareTag("Player")) 
 					{
-						currentlySeeingPlayer = true;
-                    
+						seesPlayerThisFrame = true;
+						spottedPlayer = target;
 						lastKnownPlayerPosition = target.position;
-
-						if (!hasShoutedAtPlayer && enemyStateManager.makeGuardsCreateNoiseWhenTheySeeThePlayer)
-						{
-							noiseEmitter.EmitNoise(enemyStateManager.guardNoiseRadiusWhenTheySeeThePlayer, NoiseType.Nothing);
-							hasShoutedAtPlayer = true;
-						}
-                    
-						enemyStateManager.StartChasing(target);
 					}
 				}
 			}
 		}
 		
-		if (wasSeeingPlayer && !currentlySeeingPlayer) 
+		// Handle Event Broadcasting
+		if (seesPlayerThisFrame) 
 		{
-			if (enemyStateManager.makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight)
-			{
-				enemyStateManager.investigateTargetPosition = lastKnownPlayerPosition;
-				enemyStateManager.SwitchState(enemyStateManager.EnemyInvestigateState);
-			}
-			else
-			{
-				enemyStateManager.SwitchState(enemyStateManager.EnemyLostPlayerState);
-			}
-          
-			hasShoutedAtPlayer = false;
+			OnPlayerSpotted?.Invoke(spottedPlayer);
+		}
+		else if (wasSeeingPlayer && !seesPlayerThisFrame) 
+		{
+			OnPlayerLost?.Invoke(lastKnownPlayerPosition);
 		}
 
 		// Update our tracking variable for the next delay cycle
-		wasSeeingPlayer = currentlySeeingPlayer;
+		wasSeeingPlayer = seesPlayerThisFrame;
 	}
 
 	void DrawFieldOfView() {

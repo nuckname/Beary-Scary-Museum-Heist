@@ -37,6 +37,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [Header("References")]
     public FieldOfView fieldOfView;
     public Transform playerTransform;
+    [SerializeField] private NoiseEmitter noiseEmitter; 
     
     [Header("Guard Icons")]
     [SerializeField] private SpriteRenderer stateSpriteRenderer;
@@ -47,6 +48,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
     [Header("Noise")]
     [SerializeField] private NoiseType whatTypeOfNoiseTheGuardHeard = NoiseType.Nothing;
+    private bool hasShoutedAtPlayer = false; // Moved from FieldOfView
     
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
@@ -59,6 +61,24 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // Can make this an enum later
     [Header("Debug")]
     public string currentStateName;
+
+    private void OnEnable()
+    {
+        if (fieldOfView != null)
+        {
+            fieldOfView.OnPlayerSpotted += HandlePlayerSpotted;
+            fieldOfView.OnPlayerLost += HandlePlayerLost;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (fieldOfView != null)
+        {
+            fieldOfView.OnPlayerSpotted -= HandlePlayerSpotted;
+            fieldOfView.OnPlayerLost -= HandlePlayerLost;
+        }
+    }
 
     void Start()
     {
@@ -95,6 +115,35 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             currentStateName = EnemyCurrentState.GetType().Name;
             EnemyCurrentState.EnterState(this);
         }
+    }
+
+    // Event Handlers
+    private void HandlePlayerSpotted(Transform target)
+    {
+        // Shouting logic 
+        if (!hasShoutedAtPlayer && makeGuardsCreateNoiseWhenTheySeeThePlayer)
+        {
+            noiseEmitter.EmitNoise(guardNoiseRadiusWhenTheySeeThePlayer, NoiseType.Nothing);
+            hasShoutedAtPlayer = true;
+        }
+        
+        StartChasing(target);
+    }
+
+    private void HandlePlayerLost(Vector3 lastKnownPosition)
+    {
+        // Investigation logic
+        if (makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight)
+        {
+            investigateTargetPosition = lastKnownPosition;
+            SwitchState(EnemyInvestigateState);
+        }
+        else
+        {
+            SwitchState(EnemyLostPlayerState);
+        }
+        
+        hasShoutedAtPlayer = false;
     }
 
     public void StartChasing(Transform target)
