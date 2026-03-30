@@ -16,6 +16,7 @@ public class SecurityCameraController : MonoBehaviour
 
     [Header("Alarm Settings")]
     public float alarmNoiseRadius = 15f;
+    public float alarmBeepInterval = 3f;
     
     // State Machine Instances
     [HideInInspector] public CameraBaseState currentState;
@@ -61,6 +62,8 @@ public class SecurityCameraController : MonoBehaviour
 
     public void SwitchState(CameraBaseState newState)
     {
+        currentState?.ExitState(this); 
+        
         currentState = newState;
         currentStateName = currentState.GetType().Name; // For the inspector
         currentState.EnterState(this);
