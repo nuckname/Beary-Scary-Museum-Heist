@@ -58,15 +58,9 @@ public class CollisionNoiseTrigger : PickupItem
         Debug.Log($"Item hit: {collision.gameObject.name} | " +
                   $"It is on Layer: {LayerMask.LayerToName(collision.gameObject.layer)}");
         
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (collision.gameObject.layer == groundLayerIndex || collision.gameObject.layer == obstacleLayerIndex)
         {
             objectIsAirborne = false;
-        }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
-        {
-            objectIsAirborne = false;
-            
         }
         
         float finalMultiplier = dropSoundMultiplier;
