@@ -24,7 +24,6 @@ public class DropOffZoneCollision : MonoBehaviour
                 
                 artifact.hasBeenUsed = true;
 
-                Debug.Log($"value: {artifact.artifactValue} added to {totalQuota}");
                 artifactValueText.text = "Points: " + totalQuota;
             }
         }

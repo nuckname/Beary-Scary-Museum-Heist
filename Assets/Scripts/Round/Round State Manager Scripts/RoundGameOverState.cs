@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class RoundAboutToStartState : RoundBaseState
+public class RoundGameOverState : RoundBaseState
 {
     public override void EnterState(RoundStateManager manager)
     {
-        Debug.Log("Round is about to start. you are in green zone.");
+        Debug.Log("Round Over. Threshold Reached.");
     }
 
     public override void UpdateState(RoundStateManager manager)
@@ -23,12 +23,7 @@ public class RoundAboutToStartState : RoundBaseState
     {
     }
 
-    // This is called by DropOffZoneListener.cs
     public override void OnTriggerExit(RoundStateManager manager, Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            manager.SwitchState(manager.InProgressState);
-        }
     }
 }

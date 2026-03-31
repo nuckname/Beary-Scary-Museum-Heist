@@ -36,8 +36,6 @@ public class Detector : MonoBehaviour
             {
                 if (fade != _currentObstacle)
                 {
-                    Debug.Log($"<color=yellow>New Obstacle Detected:</color> {hit.collider.name}");
-                    
                     if (_currentObstacle != null)
                         _currentObstacle.FadeIn();
 
@@ -48,7 +46,6 @@ public class Detector : MonoBehaviour
             else
             {
                 // Logic check: We hit something on the layer, but it lacks the script
-                Debug.LogWarning($"Hit {hit.collider.name} on Obstruction Layer, but it is missing the FadeObstacle component!");
             }
         }
         else
@@ -58,7 +55,6 @@ public class Detector : MonoBehaviour
 
             if (_currentObstacle != null)
             {
-                Debug.Log("<color=cyan>Path Clear:</color> Fading previous obstacle back in.");
                 _currentObstacle.FadeIn();
                 _currentObstacle = null;
             }

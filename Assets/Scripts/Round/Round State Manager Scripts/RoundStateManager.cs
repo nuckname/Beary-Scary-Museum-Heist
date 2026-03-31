@@ -2,27 +2,63 @@ using UnityEngine;
 
 public class RoundStateManager : MonoBehaviour
 {
-    // State Instances
+    // Singleton Instance
+    public static RoundStateManager Instance { get; private set; }
+
     [HideInInspector] public RoundBaseState CurrentState; 
     [HideInInspector] public RoundAboutToStartState AboutToStartState = new RoundAboutToStartState();
     [HideInInspector] public RoundInProgressState InProgressState = new RoundInProgressState();
+    [HideInInspector] public RoundGameOverState GameOverState = new RoundGameOverState();
 
-    [Header("Debug")]
     public string currentStateName;
+    // To complete the level
+    public int amountOfArtifactsToCompleteLevel = 3;
+    public int currentArtifacts = 0;
+
+    private void Awake()
+    {
+        // Standard Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        // Set the initial state when the scene starts
         SwitchState(AboutToStartState);
     }
     
     void Update()
     {
-        // Call the update method of whatever state is currently active
         CurrentState?.UpdateState(this);
     }
 
-    // Use this to switch states
+    // call this to have collisions on another script. 
+    public void NotifyCollisionEnter(Collision collision)
+    {
+        CurrentState?.OnCollisionEnter(this, collision);
+    }
+
+    public void NotifyCollisionExit(Collision collision)
+    {
+        CurrentState?.OnCollisionExit(this, collision);
+    }
+
+    public void NotifyTriggerEnter(Collider other)
+    {
+        CurrentState?.OnTriggerEnter(this, other);
+    }
+
+    public void NotifyTriggerExit(Collider other)
+    {
+        CurrentState?.OnTriggerExit(this, other);
+    }
+
     public void SwitchState(RoundBaseState state)
     {
         CurrentState = state;
