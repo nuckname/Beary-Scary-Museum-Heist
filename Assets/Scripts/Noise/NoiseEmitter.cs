@@ -50,18 +50,24 @@ public class NoiseEmitter : MonoBehaviour
         {
             if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
             { 
-                float finalRange = baseRange;
+                listener.OnSoundHeard(originPosition, transform, noiseType);
+                
+                //float finalRange = baseRange;
 
-                Vector3 directionToEntity = entity.transform.position - originPosition;
-                float distanceToEntity = directionToEntity.magnitude;
+               //Vector3 directionToEntity = entity.transform.position - originPosition;
+                //float distanceToEntity = directionToEntity.magnitude;
 
+                
+                // the problem is that we are checking for wall collisions, but the noise doesnt show wall collisions.
+                /*
                 if (distanceToEntity <= finalRange)
                 {
                     // Line of sight / acoustic occlusion check
                     if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
                     {
-                        Debug.DrawLine(originPosition, entity.transform.position, Color.green, 2f);
                         listener.OnSoundHeard(originPosition, transform, noiseType);
+                        
+                        Debug.DrawLine(originPosition, entity.transform.position, Color.green, 2f);
                     }
                     else
                     {
@@ -72,6 +78,7 @@ public class NoiseEmitter : MonoBehaviour
                 {
                     Debug.DrawLine(originPosition, entity.transform.position, Color.yellow, 2f);
                 }
+                */
             }
         }
     }
