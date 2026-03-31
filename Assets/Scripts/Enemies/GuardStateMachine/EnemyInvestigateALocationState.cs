@@ -4,7 +4,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager manager)
     {
-        Debug.Log("State: Investigating!");
+        manager.SetStateIcon(EnemyStateIcon.Confused);
     }
 
     public override void UpdateState(EnemyStateManager manager)

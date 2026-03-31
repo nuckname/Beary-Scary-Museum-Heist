@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5345641586640339}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2113905, y: 2.54, z: 0.14}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2113905, y: 1.51, z: 0.14}
+  m_LocalScale: {x: 0.5, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8779069409812356271}
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 4a1a253c8a5f6114a901c95c59da50ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 59ef96d1619f84ffdbc97e508a3b847f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +137,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4491018867253880691}
-  - {fileID: 3269095590096205032}
   - {fileID: 8866816931264410936}
   - {fileID: 5853207852897309559}
   - {fileID: 1540967942747251490}
@@ -194,10 +193,10 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   noiseEmitter: {fileID: 1398979885939180627}
   stateSpriteRenderer: {fileID: 2519119033967843050}
-  heardIcon: {fileID: 0}
-  seenIcon: {fileID: 0}
+  heardIcon: {fileID: 21300000, guid: dff315b5efdb14e2fafe169be07dab00, type: 3}
+  seenIcon: {fileID: 21300000, guid: 59ef96d1619f84ffdbc97e508a3b847f, type: 3}
   patrollingIcon: {fileID: 0}
-  confusedIcon: {fileID: 0}
+  confusedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
   whatTypeOfNoiseTheGuardHeard: 0
   currentStateName: 
 --- !u!114 &1398979885939180627
@@ -222,37 +221,6 @@ MonoBehaviour:
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
   meshResolution: 1
---- !u!1 &4983840213030546581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3269095590096205032}
-  m_Layer: 0
-  m_Name: Player Hands
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3269095590096205032
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983840213030546581}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 0, z: 0.83}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8779069409812356271}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6034622216592793170
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +249,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8779069409812356271}

@@ -11,6 +11,8 @@ public class EnemyFollowPathState : EnemyBaseState
         // Optional: Find the closest waypoint here so they don't walk through walls to get to waypoint[0]
         isWaiting = false;
         waitTimer = 0f;
+        
+        manager.SetStateIcon(EnemyStateIcon.Hide);
 
         // Reset the speed
         manager.currentWalkSpeed = manager.currentWalkSpeed;

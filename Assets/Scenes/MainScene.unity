@@ -824,7 +824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522966862455197228, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.81
+      value: 1.126
       objectReference: {fileID: 0}
     - target: {fileID: 7372062438631642018, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: viewAngle
@@ -1603,7 +1603,7 @@ MonoBehaviour:
   offset: {x: 0, y: 12.34, z: -17.5}
   lockYAxis: 0
   fixedYPosition: 0
-  useTopDownView: 1
+  useTopDownView: 0
   topDownOffset: {x: 0, y: 30, z: 0}
   topDownRotation: {x: 90, y: 0, z: 0}
   positionSmoothSpeed: 5
@@ -1755,7 +1755,7 @@ PrefabInstance:
     - target: {fileID: 6176304708878431874, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: edccda5bcf4543141b0bbedfeccc202a, type: 2}
+      objectReference: {fileID: 2100000, guid: 97abfa2a41a8f4688894eb69bd1ef34d, type: 2}
     - target: {fileID: 6176304708878431874, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
