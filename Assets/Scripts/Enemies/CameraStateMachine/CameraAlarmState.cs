@@ -50,7 +50,7 @@ public class CameraAlarmState : CameraBaseState
         {
             if (camera.noiseEmitter != null)
             {
-                camera.noiseEmitter.EmitNoise(camera.alarmNoiseRadius, NoiseType.Item);
+                camera.noiseEmitter.EmitNoise(camera.alarmNoiseRadius, NoiseType.Player);
             }
             
             yield return new WaitForSeconds(camera.alarmBeepInterval);

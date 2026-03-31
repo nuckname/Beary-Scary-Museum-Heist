@@ -49,7 +49,7 @@ public class NoiseEmitter : MonoBehaviour
         foreach (Collider entity in entitiesInHearingRange)
         {
             if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
-            {
+            { 
                 float finalRange = baseRange;
 
                 Vector3 directionToEntity = entity.transform.position - originPosition;

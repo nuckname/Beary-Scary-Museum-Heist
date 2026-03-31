@@ -157,7 +157,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         }
     }
 
-    public void TriggerInvestigation(Vector3 targetLocation, NoiseType noiseType)
+    // This is the method the NoiseEmitter calls when it hears something
+    public void OnSoundHeard(Vector3 targetLocation, Transform sourceTransform, NoiseType noiseType)
     {
         // VISUAL PRIORITY: If we are actively chasing the player or stunned, ignore ALL other noises. Vision overrides hearing.
         if (EnemyCurrentState == EnemyChasePlayerState || EnemyCurrentState == EnemyStunnedState) 
@@ -182,12 +183,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         whatTypeOfNoiseTheGuardHeard = noiseType;
         investigateTargetPosition = targetLocation;
         SwitchState(EnemyInvestigateState);
-    }
-
-    // This is the method the NoiseEmitter calls when it hears something
-    public void OnSoundHeard(Vector3 originPosition, Transform sourceTransform, NoiseType noiseType)
-    {
-        TriggerInvestigation(originPosition, noiseType);
     }
     
     public void SetStateIcon(EnemyStateIcon iconType)

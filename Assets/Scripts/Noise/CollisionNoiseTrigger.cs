@@ -44,6 +44,7 @@ public class CollisionNoiseTrigger : PickupItem
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
+        // Stun Logic -> might need to refactor to a new script 
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.gameObject.TryGetComponent(out EnemyStateManager enemy))
@@ -54,10 +55,7 @@ public class CollisionNoiseTrigger : PickupItem
                 }
             }
         }
-        
-        Debug.Log($"Item hit: {collision.gameObject.name} | " +
-                  $"It is on Layer: {LayerMask.LayerToName(collision.gameObject.layer)}");
-        
+
         if (collision.gameObject.layer == groundLayerIndex || collision.gameObject.layer == obstacleLayerIndex)
         {
             objectIsAirborne = false;
