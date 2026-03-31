@@ -1255,6 +1255,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6248622856224337595, guid: b931531cda2e37e41b5ef90007755a47, type: 3}
   m_PrefabInstance: {fileID: 1284044521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680108514 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
+  m_PrefabInstance: {fileID: 7040815815347221435}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &680108523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680108514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94667a6f198384b3e9760d1b22b9811f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Detector
+  cameraTransform: {fileID: 755569146}
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  showDebugRay: 1
+  rayColorHit: {r: 1, g: 0, b: 0, a: 1}
+  rayColorNoHit: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &697995117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b4e3f39edeb13c04c9b67b8f05b6b9ad, type: 3}
@@ -1579,8 +1603,8 @@ MonoBehaviour:
   offset: {x: 0, y: 12.34, z: -17.5}
   lockYAxis: 0
   fixedYPosition: 0
-  useTopDownView: 0
-  topDownOffset: {x: 0, y: 15, z: 0}
+  useTopDownView: 1
+  topDownOffset: {x: 0, y: 30, z: 0}
   topDownRotation: {x: 90, y: 0, z: 0}
   positionSmoothSpeed: 5
   rotationSmoothSpeed: 5
@@ -3357,6 +3381,7 @@ GameObject:
   - component: {fileID: 2090236982}
   - component: {fileID: 2090236981}
   - component: {fileID: 2090236980}
+  - component: {fileID: 2090236983}
   m_Layer: 9
   m_Name: pedestal3 (3)
   m_TagString: Untagged
@@ -3373,7 +3398,7 @@ Transform:
   m_GameObject: {fileID: 2090236978}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2104, y: 0.010832137, z: -0.0045}
+  m_LocalPosition: {x: -0.213, y: 0.010832137, z: -0.105}
   m_LocalScale: {x: 11.693935, y: 5.929618, z: 1.1071768}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3425,7 +3450,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1833810152192036645, guid: d51c13b31ddf04ddbb837ab73766a4a7, type: 3}
+  - {fileID: 2100000, guid: 2ba10877a87e04fe88282d8e8a946364, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3457,6 +3482,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090236978}
   m_Mesh: {fileID: 3956934677156826211, guid: d51c13b31ddf04ddbb837ab73766a4a7, type: 3}
+--- !u!114 &2090236983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090236978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0b7b975ead44e47a749dfaf550fa6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FadeObstacle
+  fadedAlpha: 0.2
+  fadeDuration: 0.25
 --- !u!1 &2123727863
 GameObject:
   m_ObjectHideFlags: 0
@@ -5636,7 +5675,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 680108523}
   m_SourcePrefab: {fileID: 100100000, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
 --- !u!4 &7042318095827972519
 Transform:

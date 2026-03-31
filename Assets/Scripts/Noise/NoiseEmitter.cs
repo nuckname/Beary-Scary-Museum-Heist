@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NoiseEmitter : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class NoiseEmitter : MonoBehaviour
     public bool showVisibleRadius = true;
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
+    
+    [Header("Mesh Resolution")]
+    [Tooltip("How many rays per degree. Higher means smoother edges but costs more performance.")]
+    public float meshResolution = 1f;
 
     private float editorGizmoRadius = 4f;
     private Collider myCollider;
@@ -50,58 +55,97 @@ public class NoiseEmitter : MonoBehaviour
         {
             if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
             { 
-                listener.OnSoundHeard(originPosition, transform, noiseType);
-                
-                //float finalRange = baseRange;
+                Vector3 directionToEntity = entity.transform.position - originPosition;
+                float distanceToEntity = directionToEntity.magnitude;
 
-               //Vector3 directionToEntity = entity.transform.position - originPosition;
-                //float distanceToEntity = directionToEntity.magnitude;
-
-                
-                // the problem is that we are checking for wall collisions, but the noise doesnt show wall collisions.
-                /*
-                if (distanceToEntity <= finalRange)
+                // Acoustic occlusion check: If a raycast to the enemy hits an obstacle, they can't hear it.
+                if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
                 {
-                    // Line of sight / acoustic occlusion check
-                    if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
-                    {
-                        listener.OnSoundHeard(originPosition, transform, noiseType);
-                        
-                        Debug.DrawLine(originPosition, entity.transform.position, Color.green, 2f);
-                    }
-                    else
-                    {
-                        Debug.DrawLine(originPosition, hit.point, Color.red, 2f);
-                    }
+                    listener.OnSoundHeard(originPosition, transform, noiseType);
+                    Debug.DrawLine(originPosition, entity.transform.position, Color.green, visualDuration);
                 }
                 else
                 {
-                    Debug.DrawLine(originPosition, entity.transform.position, Color.yellow, 2f);
+                    // Blocked by a wall
+                    Debug.DrawLine(originPosition, hit.point, Color.red, visualDuration);
                 }
-                */
             }
         }
     }
 
     private void ShowRadiusInGame(float radius, Vector3 hitPosition)
     {
-        GameObject flatCircle = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        Destroy(flatCircle.GetComponent<Collider>());
+        // 1. Create a new empty GameObject to hold our custom mesh
+        GameObject visualMeshObj = new GameObject("NoiseVisual");
+        
+        // + 0.15f so it's just above the ground to prevent Z-fighting/flickering
+        visualMeshObj.transform.position = hitPosition + new Vector3(0, 0.15f, 0);
 
-        // + 0.02f so it's just above the ground to prevent Z-fighting/flickering
-        flatCircle.transform.position = hitPosition + new Vector3(0, 0.15f, 0);
-
-        float diameter = radius * 2f;
-        flatCircle.transform.localScale = new Vector3(diameter, 0.01f, diameter);
-
+        MeshFilter meshFilter = visualMeshObj.AddComponent<MeshFilter>();
+        MeshRenderer meshRenderer = visualMeshObj.AddComponent<MeshRenderer>();
+        
         if (radiusMaterial != null)
         {
-            flatCircle.GetComponent<Renderer>().material = radiusMaterial;
+            meshRenderer.material = radiusMaterial;
         }
 
-        Destroy(flatCircle, visualDuration);
+        // 2. Calculate the vertices using Raycasts (360 degrees)
+        int stepCount = Mathf.RoundToInt(360f * meshResolution);
+        float stepAngleSize = 360f / stepCount;
+        List<Vector3> viewPoints = new List<Vector3>();
+
+        for (int i = 0; i <= stepCount; i++)
+        {
+            float angle = stepAngleSize * i;
+            Vector3 dir = DirFromAngle(angle);
+
+            // Check if the wall blocks the noise visually
+            if (Physics.Raycast(hitPosition, dir, out RaycastHit hit, radius, obstacleLayer))
+            {
+                viewPoints.Add(hit.point);
+            }
+            else
+            {
+                viewPoints.Add(hitPosition + dir * radius);
+            }
+        }
+
+        // 3. Build the Mesh from the calculated points
+        int vertexCount = viewPoints.Count + 1;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(vertexCount - 2) * 3];
+
+        vertices[0] = Vector3.zero; // The center of the mesh is local Vector3.zero
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            // Convert world space points to local space for the mesh
+            vertices[i + 1] = visualMeshObj.transform.InverseTransformPoint(viewPoints[i]);
+
+            if (i < vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+
+        meshFilter.mesh = mesh;
+
+        // 4. Clean up after the duration
+        Destroy(visualMeshObj, visualDuration);
     }
 
+    private Vector3 DirFromAngle(float angleInDegrees)
+    {
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+
+    // AI
     private void OnDrawGizmosSelected()
     {
         if (editorGizmoRadius <= 0f) return;
