@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyStunnedState : EnemyBaseState
 {
     private float stunTimer = 0f;
-    private float stunDuration = 0.75f; 
+    private float stunDuration = 1.5f; 
 
     public override void EnterState(EnemyStateManager manager)
     {
@@ -27,13 +27,10 @@ public class EnemyStunnedState : EnemyBaseState
         if (stunTimer >= stunDuration)
         {
             // Recovering from stun
-            if (manager.fieldOfView != null)
-            {
-                manager.fieldOfView.RestoreVision();
-            }
-
+            manager.fieldOfView.RestoreVision();
+          
             // Just act confused?
-            manager.SwitchState(manager.EnemyLostPlayerState);
+            manager.SwitchState(manager.enemyConfusedState);
         }
     }
 

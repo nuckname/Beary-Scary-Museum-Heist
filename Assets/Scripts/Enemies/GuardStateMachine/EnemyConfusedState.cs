@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 ///  Enemy will turn left and right a few times looking for the player, then return to patrolling if they don't find them
 /// </summary>
-public class EnemyLostPlayerState : EnemyBaseState
+public class EnemyConfusedState : EnemyBaseState
 {
     private int targetLooks;
     private int looksCompleted;

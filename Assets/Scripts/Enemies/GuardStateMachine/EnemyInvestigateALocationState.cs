@@ -28,7 +28,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
         {
             // We reached the target location and the player isn't here. 
             // Switch to Lost Player state to trigger the look-around behavior!
-            manager.SwitchState(manager.EnemyLostPlayerState);
+            manager.SwitchState(manager.enemyConfusedState);
         }
     }
 

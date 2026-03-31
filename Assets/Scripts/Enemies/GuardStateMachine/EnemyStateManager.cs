@@ -54,7 +54,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
     [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
     [HideInInspector] public EnemyInvestigateALocationState EnemyInvestigateState = new EnemyInvestigateALocationState();
-    [HideInInspector] public EnemyLostPlayerState EnemyLostPlayerState = new EnemyLostPlayerState();
+    [HideInInspector] public EnemyConfusedState enemyConfusedState = new EnemyConfusedState();
     [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
 
@@ -140,7 +140,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         }
         else
         {
-            SwitchState(EnemyLostPlayerState);
+            SwitchState(enemyConfusedState);
         }
         
         hasShoutedAtPlayer = false;
