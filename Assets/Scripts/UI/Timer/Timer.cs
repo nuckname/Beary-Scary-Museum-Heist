@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     [Header("UI Reference")]
     public TextMeshProUGUI timerText;
 
-    private float _currentTime;
+    public float _currentTime;
     public bool isPaused;
 
     void Start()

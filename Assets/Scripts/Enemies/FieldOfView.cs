@@ -87,8 +87,9 @@ public class FieldOfView : MonoBehaviour {
 				if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
 					visibleTargets.Add (target);
 					
-					if (target.CompareTag("Player")) 
+					if (target.CompareTag("Player"))
 					{
+						// Seen logic
 						seesPlayerThisFrame = true;
 						spottedPlayer = target;
 						lastKnownPlayerPosition = target.position;
@@ -100,10 +101,21 @@ public class FieldOfView : MonoBehaviour {
 		// Handle Event Broadcasting
 		if (seesPlayerThisFrame) 
 		{
+			// For score board tracking
+			// Only increment if we weren't seeing the player in the previous check
+			// Stops getting called too many times
+			// ? 
+			if (!wasSeeingPlayer) 
+			{
+				RoundStateManager.AmountOfTimesPlayerSpottedByGuards++;
+			}
+			
+			// called in EnemyStateManager.cs
 			OnPlayerSpotted?.Invoke(spottedPlayer);
 		}
 		else if (wasSeeingPlayer && !seesPlayerThisFrame) 
 		{
+			// called in EnemyStateManager.cs
 			OnPlayerLost?.Invoke(lastKnownPlayerPosition);
 		}
 

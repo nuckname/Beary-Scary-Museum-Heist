@@ -118,6 +118,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     }
 
     // Event Handlers
+    // Called from FieldOfView.cs
     private void HandlePlayerSpotted(Transform target)
     {
         // Shouting logic 
@@ -130,6 +131,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         StartChasing(target);
     }
 
+    // Called from FieldOfView.cs
     private void HandlePlayerLost(Vector3 lastKnownPosition)
     {
         // Investigation logic

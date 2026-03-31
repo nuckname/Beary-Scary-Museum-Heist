@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class RoundGameOverState : RoundBaseState
@@ -5,9 +6,11 @@ public class RoundGameOverState : RoundBaseState
     public override void EnterState(RoundStateManager manager)
     {
         Debug.Log("Round Over. Threshold Reached.");
+        Debug.Log("Seen: " + RoundStateManager.AmountOfTimesPlayerSpottedByGuards);
         
         manager.timer.isPaused = true;
-        
+
+
         // freeze game
         // show score board UI?
     }

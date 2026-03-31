@@ -12,6 +12,8 @@ public class RoundStateManager : MonoBehaviour
 
     // dragged in from the inspector
     [HideInInspector] public Timer timer; 
+
+    public static int AmountOfTimesPlayerSpottedByGuards = 0;
     
     public string currentStateName;
     // To complete the level

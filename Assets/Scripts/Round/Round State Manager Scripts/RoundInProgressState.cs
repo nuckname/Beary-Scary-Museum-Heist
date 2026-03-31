@@ -38,7 +38,7 @@ public class RoundInProgressState : RoundBaseState
             {
                 manager.currentArtifacts++;
             
-                if (manager.currentArtifacts >= manager.amountOfArtifactsToCompleteLevel)
+                if (manager.currentArtifacts > manager.amountOfArtifactsToCompleteLevel)
                 {
                     manager.SwitchState(manager.GameOverState);
                 }
