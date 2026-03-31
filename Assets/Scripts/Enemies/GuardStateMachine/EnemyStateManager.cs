@@ -160,6 +160,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // This is the method the NoiseEmitter calls when it hears something
     public void OnSoundHeard(Vector3 targetLocation, Transform sourceTransform, NoiseType noiseType)
     {
+        Debug.Log("OnSoundHeard");
         // VISUAL PRIORITY: If we are actively chasing the player or stunned, ignore ALL other noises. Vision overrides hearing.
         if (EnemyCurrentState == EnemyChasePlayerState || EnemyCurrentState == EnemyStunnedState) 
             return;

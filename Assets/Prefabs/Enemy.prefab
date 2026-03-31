@@ -115,7 +115,6 @@ GameObject:
   - component: {fileID: 8779069409812356271}
   - component: {fileID: 1523291737050807841}
   - component: {fileID: 8383171293565527006}
-  - component: {fileID: 2329327420455388439}
   - component: {fileID: 1398979885939180627}
   m_Layer: 10
   m_Name: Enemy
@@ -201,18 +200,6 @@ MonoBehaviour:
   confusedIcon: {fileID: 0}
   whatTypeOfNoiseTheGuardHeard: 0
   currentStateName: 
---- !u!114 &2329327420455388439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458527298132620225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5ba7b0d817f4518b38ab1d3c004ea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyStunCollision
 --- !u!114 &1398979885939180627
 MonoBehaviour:
   m_ObjectHideFlags: 0
