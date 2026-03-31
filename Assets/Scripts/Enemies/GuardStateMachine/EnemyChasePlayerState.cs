@@ -7,7 +7,7 @@ public class EnemyChasePlayerState : EnemyBaseState
         // Set the speed to our faster chase speed
         manager.currentWalkSpeed = manager.chaseSpeed;
 
-        //manager.SetStateIcon();
+        manager.SetStateIcon(EnemyStateIcon.Heard);
         
         manager.currentWalkSpeed = manager.chaseSpeed;
     }
