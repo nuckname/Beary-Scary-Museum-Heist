@@ -16,17 +16,17 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     private float _currentTime;
-    private bool _isPaused;
+    public bool isPaused;
 
     void Start()
     {
         _currentTime = startTimeInSeconds;
-        _isPaused = !runOnStart;
+        isPaused = !runOnStart;
     }
 
     void Update()
     {
-        if (_isPaused) return;
+        if (isPaused) return;
 
         if (currentMode == TimerMode.CountUp)
         {
@@ -38,7 +38,7 @@ public class Timer : MonoBehaviour
             if (_currentTime <= 0)
             {
                 _currentTime = 0;
-                _isPaused = true;
+                isPaused = true;
                 OnTimerComplete();
             }
         }

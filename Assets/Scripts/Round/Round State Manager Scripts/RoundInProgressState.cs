@@ -5,6 +5,8 @@ public class RoundInProgressState : RoundBaseState
     public override void EnterState(RoundStateManager manager)
     {
         Debug.Log("Round is in progress.");
+
+        manager.timer.isPaused = false;
     }
 
     public override void UpdateState(RoundStateManager manager)

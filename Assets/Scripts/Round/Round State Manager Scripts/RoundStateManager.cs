@@ -10,6 +10,9 @@ public class RoundStateManager : MonoBehaviour
     [HideInInspector] public RoundInProgressState InProgressState = new RoundInProgressState();
     [HideInInspector] public RoundGameOverState GameOverState = new RoundGameOverState();
 
+    // dragged in from the inspector
+    [HideInInspector] public Timer timer; 
+    
     public string currentStateName;
     // To complete the level
     public int amountOfArtifactsToCompleteLevel = 3;
