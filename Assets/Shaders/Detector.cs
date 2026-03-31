@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// https://www.youtube.com/shorts/D4xMei0nYW0
 // this is not mine https://www.patreon.com/posts/how-to-make-144078368
 public class Detector : MonoBehaviour
 {
