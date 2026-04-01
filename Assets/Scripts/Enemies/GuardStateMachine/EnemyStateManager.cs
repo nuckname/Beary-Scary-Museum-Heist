@@ -35,7 +35,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float normalWalkSpeed = 2f;
     
     [Header("References")]
-    // needs to be an array if we want to?
     public FieldOfView fieldOfView;
     public Transform playerTransform;
     [SerializeField] private NoiseEmitter noiseEmitter; 
