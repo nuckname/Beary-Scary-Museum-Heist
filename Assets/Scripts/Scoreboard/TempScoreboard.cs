@@ -13,7 +13,7 @@ public class TempScoreboard : MonoBehaviour
     public int maxPossibleTimeScore = 10000; 
     [Tooltip("How many points to lose per second.")]
     public int pointsLostPerSecond = 100;
-    public int penaltyPerSpot = 50;
+    public int penaltyPerSpot = 500;
 
     [HideInInspector]
     public bool isGameOver = false;

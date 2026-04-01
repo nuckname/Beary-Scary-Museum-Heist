@@ -32,13 +32,18 @@ public class RoundInProgressState : RoundBaseState
     {
         if (other.gameObject.CompareTag("CanPickUp"))
         {
-            IArtifact artifact = other.GetComponentInParent<IArtifact>();
+            IArtifact artifact = other.GetComponent<IArtifact>();
         
             if (artifact != null)
             {
-                manager.currentArtifacts++;
+                if (!artifact.hasBeenUsed)
+                {
+                    manager.currentArtifacts++;
+
+                    manager.UpdateUI();
+                }
             
-                if (manager.currentArtifacts > manager.amountOfArtifactsToCompleteLevel)
+                if (manager.currentArtifacts >= manager.amountOfArtifactsToCompleteLevel)
                 {
                     manager.SwitchState(manager.GameOverState);
                 }

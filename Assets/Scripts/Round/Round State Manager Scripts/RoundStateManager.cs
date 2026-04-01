@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class RoundStateManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class RoundStateManager : MonoBehaviour
     [HideInInspector] public RoundInProgressState InProgressState = new RoundInProgressState();
     [HideInInspector] public RoundGameOverState GameOverState = new RoundGameOverState();
 
+    public TextMeshProUGUI artifactValueText;
+    
     // dragged in from the inspector
     [HideInInspector] public Timer timer; 
 
@@ -36,11 +39,18 @@ public class RoundStateManager : MonoBehaviour
     void Start()
     {
         SwitchState(AboutToStartState);
+
+        UpdateUI();
     }
     
     void Update()
     {
         CurrentState?.UpdateState(this);
+    }
+    
+    public void UpdateUI()
+    {
+        UIManager.Instance.UpdateArtifactDisplay(currentArtifacts, amountOfArtifactsToCompleteLevel);
     }
 
     // call this to have collisions on another script. 
