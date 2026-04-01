@@ -83,7 +83,17 @@ public class PlayerThrowController : MonoBehaviour
     {
         Vector3 startPosition = transform.position + (Vector3.up * 1f); 
         Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
-        Vector3 velocity = throwDirection.normalized * currentThrowForce;
+
+        float mass = 1f;
+        if (grabController.PickedUpObject != null)
+        {
+            Rigidbody rb = grabController.PickedUpObject.GetComponent<Rigidbody>();
+            mass = rb.mass;
+        }
+
+        // Adjust the velocity calculation based on the object's mass
+        float effectiveForce = currentThrowForce / mass * 0.75f; // The 0.75f is a tuning factor to make the trajectory look better
+        Vector3 velocity = throwDirection.normalized * effectiveForce;
 
         for (int i = 0; i < linePoints; i++)
         {
@@ -105,9 +115,12 @@ public class PlayerThrowController : MonoBehaviour
         {
             boxRb.isKinematic = false;
             boxRb.useGravity = true;
-
+            
             Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
-            boxRb.linearVelocity = throwDirection.normalized * currentThrowForce;
+            
+            // Adjust the actual throw velocity based on the object's mass
+            float effectiveForce = currentThrowForce / Mathf.Max(boxRb.mass, 0.01f); 
+            boxRb.linearVelocity = throwDirection.normalized * effectiveForce;
         }
 
         IThrowableItem throwable = objectToThrow.GetComponent<IThrowableItem>();
