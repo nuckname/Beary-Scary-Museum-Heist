@@ -12,6 +12,9 @@ public class PlayerStealthController : MonoBehaviour
     public float staminaDepleteRate = 1f;
 
     [Header("Top-Down View Settings")]
+    // Toggle to allow movement while in topdown mode
+    public bool allowMovementInTopDown = false; 
+    
     public float maxTopDownHoldTime = 3f; 
     private float currentTopDownTimer = 0f;
     private bool isTopDownActive = false;
@@ -51,6 +54,12 @@ public class PlayerStealthController : MonoBehaviour
         HandleSpeed();
         MovePlayer();
         HandleMouseRotation();
+
+        // testing
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            allowMovementInTopDown = !allowMovementInTopDown;
+        }
     }
 
     void HandleTopDownView()
@@ -84,10 +93,20 @@ public class PlayerStealthController : MonoBehaviour
         cameraFollow.useTopDownView = isTopDownActive;
     }
 
+    // Bool function to determine if movement is currently allowed
+    private bool CanMoveNormally()
+    {
+        if (isTopDownActive && !allowMovementInTopDown)
+        {
+            return false;
+        }
+        return true;
+    }
+
     void HandleSpeed()
     {
         // If we are looking top-down, stop movement completely
-        if (isTopDownActive)
+        if (!CanMoveNormally())
         {
             currentSpeed = 0f;
             
