@@ -78,6 +78,7 @@ public class NoiseEmitter : MonoBehaviour
     }
 
     // Ai + Me
+    // https://gemini.google.com/share/1d2964621e3c
     private void ShowRadiusInGame(float radius, Vector3 hitPosition)
     {
         // Create a new empty GameObject
