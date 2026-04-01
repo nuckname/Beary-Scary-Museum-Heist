@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStealthController : MonoBehaviour
@@ -10,6 +11,12 @@ public class PlayerStealthController : MonoBehaviour
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
 
+    [Header("Top-Down View Settings")]
+    public float maxTopDownHoldTime = 3f; 
+    private float currentTopDownTimer = 0f;
+    private bool isTopDownActive = false;
+    private bool canUseTopDown = true;
+
     private float currentStamina;
     private bool isExhausted = false;
 
@@ -18,6 +25,7 @@ public class PlayerStealthController : MonoBehaviour
     private float currentSpeed;
 
     private Camera mainCam;
+    private CameraFollow cameraFollow;
 
     // Locked Y position
     private float lockedY;
@@ -26,6 +34,9 @@ public class PlayerStealthController : MonoBehaviour
     {
         currentStamina = maxStamina;
         mainCam = Camera.main;
+        
+        cameraFollow = mainCam.GetComponent<CameraFollow>();
+        
         lockedY = transform.position.y;
     }
 
@@ -36,13 +47,55 @@ public class PlayerStealthController : MonoBehaviour
 
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
+        HandleTopDownView();
         HandleSpeed();
         MovePlayer();
         HandleMouseRotation();
     }
 
+    void HandleTopDownView()
+    {
+        // Right Mouse Button
+        if (Input.GetMouseButton(1) && canUseTopDown)
+        {
+            isTopDownActive = true;
+            currentTopDownTimer += Time.deltaTime;
+
+            if (currentTopDownTimer >= maxTopDownHoldTime)
+            {
+                isTopDownActive = false;
+                
+                // Force the player to release the button to use it again
+                canUseTopDown = false; 
+            }
+        }
+        else
+        {
+            isTopDownActive = false;
+            
+            // Reset the ability to use top-down view once the player lets go of Right Click
+            if (!Input.GetMouseButton(1))
+            {
+                currentTopDownTimer = 0f;
+                canUseTopDown = true;
+            }
+        }
+        
+        cameraFollow.useTopDownView = isTopDownActive;
+    }
+
     void HandleSpeed()
     {
+        // If we are looking top-down, stop movement completely
+        if (isTopDownActive)
+        {
+            currentSpeed = 0f;
+            
+            // Allow stamina to regen while resting and looking around
+            RegenStamina();
+            return;
+        }
+
         bool isMoving = moveDirection.magnitude >= 0.1f;
         bool isTryingToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving && !isExhausted;
 
@@ -61,15 +114,20 @@ public class PlayerStealthController : MonoBehaviour
         {
             currentSpeed = walkSpeed;
 
-            if (currentStamina < maxStamina)
-            {
-                currentStamina += staminaRegenRate * Time.deltaTime;
-            }
+            RegenStamina();
+        }
+    }
 
-            if (isExhausted && currentStamina >= maxStamina * 0.2f)
-            {
-                isExhausted = false;
-            }
+    private void RegenStamina()
+    {
+        if (currentStamina < maxStamina)
+        {
+            currentStamina += staminaRegenRate * Time.deltaTime;
+        }
+
+        if (isExhausted && currentStamina >= maxStamina * 0.2f)
+        {
+            isExhausted = false;
         }
     }
 
