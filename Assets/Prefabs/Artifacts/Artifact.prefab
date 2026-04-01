@@ -259,9 +259,14 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckBuffer: 0.1
   dropSoundMultiplier: 0.8
+  canOnlyStunWhenAirBorne: 1
+  objectCanStunGuard: 1
   useVelocityScaling: 1
   velocityScale: 0.1
   minVelocityThreshold: 1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 576
 --- !u!114 &3499240631103670951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +288,7 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
+  meshResolution: 1
 --- !u!114 &330794285900612792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,4 +302,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IsArtifact
   <hasBeenUsed>k__BackingField: 0
-  <artifactValue>k__BackingField: 100

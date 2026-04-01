@@ -10,13 +10,14 @@ public class CollisionNoiseTrigger : PickupItem
     [SerializeField] private float dropSoundMultiplier = 1f;
 
     public bool canOnlyStunWhenAirBorne = true; 
-    public bool objectIsAirborne = true;
+    public bool objectCanStunGuard = true;
     
     [Header("Velocity Settings")]
     [SerializeField] private bool useVelocityScaling = true;
     [SerializeField] private float velocityScale = 0.5f; 
     [SerializeField] private float minVelocityThreshold = 2f;
 
+    [SerializeField] private LayerMask whatIsGround;
     
     private int groundLayerIndex;
     private int obstacleLayerIndex;
@@ -36,7 +37,7 @@ public class CollisionNoiseTrigger : PickupItem
     public override void OnPickedUp()
     {
         base.OnPickedUp();
-        objectIsAirborne = true;
+        objectCanStunGuard = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -49,16 +50,20 @@ public class CollisionNoiseTrigger : PickupItem
         {
             if (collision.gameObject.TryGetComponent(out EnemyStateManager enemy))
             {
-                if (canOnlyStunWhenAirBorne && objectIsAirborne)
+                if (canOnlyStunWhenAirBorne && objectCanStunGuard)
                 {
                     enemy.SwitchState(enemy.EnemyStunnedState);
                 }
             }
         }
 
-        if (collision.gameObject.layer == groundLayerIndex || collision.gameObject.layer == obstacleLayerIndex)
+        print(collision.gameObject.layer + " " + groundLayerIndex);
+
+        // Bitwise check: Is the collision layer included in the mask?
+        // Layer Index and a Layer Mask are two different math values we cant compare them, need this instead
+        if ((whatIsGround.value & (1 << collision.gameObject.layer)) != 0)
         {
-            objectIsAirborne = false;
+            objectCanStunGuard = false;
         }
         
         float finalMultiplier = dropSoundMultiplier;
