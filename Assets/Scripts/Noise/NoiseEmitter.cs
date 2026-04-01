@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Call this from any script to make a noise that AI can hear.
+/// The emitter automatically calculates its position at the bottom of the object.
+/// </summary>
 public class NoiseEmitter : MonoBehaviour
 {
     public LayerMask obstacleLayer; 
@@ -11,6 +15,13 @@ public class NoiseEmitter : MonoBehaviour
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
     
+    [Header("Outline Settings")]
+    [Tooltip("Check to draw an outline around the noise radius.")]
+    public bool showOutline = true;
+    [Tooltip("The material used for the outline (Use an Unlit or Sprite material for a clean look).")]
+    public Material outlineMaterial;
+    public float outlineWidth = 0.05f;
+
     [Header("Mesh Resolution")]
     [Tooltip("How many rays per degree. Higher means smoother edges but costs more performance.")]
     public float meshResolution = 1f;
@@ -23,15 +34,10 @@ public class NoiseEmitter : MonoBehaviour
         myCollider = GetComponent<Collider>();
     }
 
-    /// <summary>
-    /// Call this from any script to make a noise that AI can hear.
-    /// The emitter automatically calculates its position at the bottom of the object.
-    /// </summary>
     public void EmitNoise(float noiseRadius, NoiseType noiseType)
     {
         editorGizmoRadius = noiseRadius;
 
-        // Spawn at the bottom of the object's collider
         Vector3 emissionPoint = transform.position;
         if (myCollider != null)
         {
@@ -58,7 +64,6 @@ public class NoiseEmitter : MonoBehaviour
                 Vector3 directionToEntity = entity.transform.position - originPosition;
                 float distanceToEntity = directionToEntity.magnitude;
 
-                // Acoustic occlusion check: If a raycast to the enemy hits an obstacle, they can't hear it.
                 if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
                 {
                     listener.OnSoundHeard(originPosition, transform, noiseType);
@@ -66,20 +71,21 @@ public class NoiseEmitter : MonoBehaviour
                 }
                 else
                 {
-                    // Blocked by a wall
                     Debug.DrawLine(originPosition, hit.point, Color.red, visualDuration);
                 }
             }
         }
     }
 
+    // Ai + Me
     private void ShowRadiusInGame(float radius, Vector3 hitPosition)
     {
-        // 1. Create a new empty GameObject to hold our custom mesh
+        // Create a new empty GameObject
         GameObject visualMeshObj = new GameObject("NoiseVisual");
         
-        // + 0.15f so it's just above the ground to prevent Z-fighting/flickering
-        visualMeshObj.transform.position = hitPosition + new Vector3(0, 0.15f, 0);
+        // Define a single height offset to use for both
+        float surfaceOffset = 0.05f; 
+        visualMeshObj.transform.position = hitPosition + new Vector3(0, surfaceOffset, 0);
 
         MeshFilter meshFilter = visualMeshObj.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = visualMeshObj.AddComponent<MeshRenderer>();
@@ -89,28 +95,33 @@ public class NoiseEmitter : MonoBehaviour
             meshRenderer.material = radiusMaterial;
         }
 
-        // 2. Calculate the vertices using Raycasts (360 degrees)
+        // Calculate vertices
         int stepCount = Mathf.RoundToInt(360f * meshResolution);
         float stepAngleSize = 360f / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
+        List<Vector3> outlinePoints = new List<Vector3>();
 
         for (int i = 0; i <= stepCount; i++)
         {
             float angle = stepAngleSize * i;
             Vector3 dir = DirFromAngle(angle);
 
-            // Check if the wall blocks the noise visually
+            Vector3 targetPoint;
             if (Physics.Raycast(hitPosition, dir, out RaycastHit hit, radius, obstacleLayer))
             {
-                viewPoints.Add(hit.point);
+                targetPoint = hit.point;
             }
             else
             {
-                viewPoints.Add(hitPosition + dir * radius);
+                targetPoint = hitPosition + dir * radius;
             }
+
+            viewPoints.Add(targetPoint);
+            // Match the height exactly with the Mesh Object's Y position
+            outlinePoints.Add(targetPoint + new Vector3(0, surfaceOffset, 0)); 
         }
 
-        // 3. Build the Mesh from the calculated points
+        // Build the Mesh
         int vertexCount = viewPoints.Count + 1;
         Vector3[] vertices = new Vector3[vertexCount];
         int[] triangles = new int[(vertexCount - 2) * 3];
@@ -118,7 +129,6 @@ public class NoiseEmitter : MonoBehaviour
         vertices[0] = Vector3.zero; // The center of the mesh is local Vector3.zero
         for (int i = 0; i < vertexCount - 1; i++)
         {
-            // Convert world space points to local space for the mesh
             vertices[i + 1] = visualMeshObj.transform.InverseTransformPoint(viewPoints[i]);
 
             if (i < vertexCount - 2)
@@ -133,10 +143,24 @@ public class NoiseEmitter : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
-
         meshFilter.mesh = mesh;
 
-        // 4. Clean up after the duration
+        // outline render 
+        if (showOutline && outlineMaterial != null)
+        {
+            LineRenderer lineRenderer = visualMeshObj.AddComponent<LineRenderer>();
+            lineRenderer.material = outlineMaterial;
+            lineRenderer.startWidth = outlineWidth;
+            lineRenderer.endWidth = outlineWidth;
+            lineRenderer.useWorldSpace = true; // Still using world space
+            lineRenderer.loop = true;
+            lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            lineRenderer.receiveShadows = false;
+
+            lineRenderer.positionCount = outlinePoints.Count;
+            lineRenderer.SetPositions(outlinePoints.ToArray());
+        }
+
         Destroy(visualMeshObj, visualDuration);
     }
 

@@ -69,6 +69,8 @@ MonoBehaviour:
   maxStamina: 5
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
+  allowMovementInTopDown: 0
+  maxTopDownHoldTime: 3
   controller: {fileID: 1325467085621830619}
 --- !u!143 &1325467085621830619
 CharacterController:
@@ -571,7 +573,11 @@ MonoBehaviour:
     m_Bits: 1024
   showVisibleRadius: 1
   visualDuration: 1.5
-  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
+  radiusMaterial: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
+  showOutline: 1
+  outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
+  outlineWidth: 0.05
+  meshResolution: 1
 --- !u!114 &4018978504740902728
 MonoBehaviour:
   m_ObjectHideFlags: 0
