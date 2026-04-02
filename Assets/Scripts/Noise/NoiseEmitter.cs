@@ -85,7 +85,7 @@ public class NoiseEmitter : MonoBehaviour
         GameObject visualMeshObj = new GameObject("NoiseVisual");
         
         // Define a single height offset to use for both
-        float surfaceOffset = 0.05f; 
+        float surfaceOffset = 0.3f; 
         visualMeshObj.transform.position = hitPosition + new Vector3(0, surfaceOffset, 0);
 
         MeshFilter meshFilter = visualMeshObj.AddComponent<MeshFilter>();

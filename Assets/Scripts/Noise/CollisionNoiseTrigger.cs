@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(NoiseEmitter), typeof(AudioSource))]
@@ -22,6 +23,8 @@ public class CollisionNoiseTrigger : PickupItem
     private int groundLayerIndex;
     private int obstacleLayerIndex;
     
+    private Rigidbody rb;
+    
     protected override void Awake()
     {
         base.Awake(); 
@@ -29,11 +32,18 @@ public class CollisionNoiseTrigger : PickupItem
         audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
 
+        rb = GetComponent<Rigidbody>();
+        
         // Important Cache 
         groundLayerIndex = LayerMask.NameToLayer("Ground");
         obstacleLayerIndex = LayerMask.NameToLayer("Obstacle");
     }
-    
+
+    private void Start()
+    {
+        rb.mass = itemWeight;
+    }
+
     public override void OnPickedUp()
     {
         base.OnPickedUp();

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// help https://www.youtube.com/watch?v=K4DMCseZA08
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerThrowController : MonoBehaviour
 {
@@ -81,18 +82,19 @@ public class PlayerThrowController : MonoBehaviour
     // AI https://gemini.google.com/share/3ac24891bcfb
     private void DrawTrajectory()
     {
-        Vector3 startPosition = transform.position + (Vector3.up * 1f); 
+        // Start the line at the exact position of the held object
+        Vector3 startPosition = grabController.PickedUpObject.transform.position; 
         Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
 
         float mass = 1f;
-        if (grabController.PickedUpObject != null)
+        Rigidbody rb = grabController.PickedUpObject.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            Rigidbody rb = grabController.PickedUpObject.GetComponent<Rigidbody>();
-            mass = rb.mass;
+            // Prevents divide by zero errors
+            mass = Mathf.Max(rb.mass, 0.01f);
         }
 
-        // Adjust the velocity calculation based on the object's mass
-        float effectiveForce = currentThrowForce / mass * 0.75f; // The 0.75f is a tuning factor to make the trajectory look better
+        float effectiveForce = currentThrowForce / mass; 
         Vector3 velocity = throwDirection.normalized * effectiveForce;
 
         for (int i = 0; i < linePoints; i++)
