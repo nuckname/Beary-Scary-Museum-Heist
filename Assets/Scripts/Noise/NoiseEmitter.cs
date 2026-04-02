@@ -15,16 +15,16 @@ public class NoiseEmitter : MonoBehaviour
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
     [Tooltip("Height offset above the surface for the inner circle mesh.")]
-    public float meshHeightOffset = 0.3f;
+    public float meshHeightOffset = 1f;
     
     [Header("Outline Settings")]
     [Tooltip("Check to draw an outline around the noise radius.")]
     public bool showOutline = true;
     [Tooltip("The material used for the outline (Use an Unlit or Sprite material for a clean look).")]
     public Material outlineMaterial;
-    public float outlineWidth = 0.05f;
+    public float outlineWidth = 0.1f;
     [Tooltip("Height offset above the surface for the LineRenderer outline.")]
-    public float outlineHeightOffset = 0.1f;
+    public float outlineHeightOffset = 0.12f;
 
     [Header("Mesh Resolution")]
     [Tooltip("How many rays per degree. Higher means smoother edges but costs more performance.")]

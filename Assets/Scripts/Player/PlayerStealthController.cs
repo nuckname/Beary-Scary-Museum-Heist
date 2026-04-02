@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class PlayerStealthController : MonoBehaviour
 {
-    public float walkSpeed = 5f;
-    public float sprintSpeed = 9f;
+    public float walkSpeed;
+    public float sprintSpeed;
 
     [Header("Stamina Settings")]
     public float maxStamina = 5f;

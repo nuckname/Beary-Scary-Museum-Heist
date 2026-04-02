@@ -55,10 +55,6 @@ public class PlayerFootstepNoise : MonoBehaviour
                 stepTimer = stepInterval + (currentHeldWeight * weightToDurationMultiplier); 
             }
         }
-        else
-        {
-            stepTimer = 0f; 
-        }
     }
 
     private void TriggerFootstep(float speed)
