@@ -60,6 +60,15 @@ public class PlayerThrowController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            // Check if the held object can be thrown before starting the charge
+            
+            IThrowableItem throwable = grabController.PickedUpObject.GetComponent<IThrowableItem>();
+            
+            if (throwable != null && !throwable.CanThrowItem)
+            {
+                return;
+            }
+            
             isCharging = true;
             currentThrowForce = minThrowForce;
             lineRenderer.enabled = true; 
@@ -109,28 +118,24 @@ public class PlayerThrowController : MonoBehaviour
     private void ThrowObject()
     {
         GameObject objectToThrow = grabController.PickedUpObject;
-        
+    
+        // Release the object first (calls IPickable.OnReleased)
         grabController.ReleaseObject();
 
+        Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
         Rigidbody boxRb = objectToThrow.GetComponent<Rigidbody>();
-        if (boxRb != null)
-        {
-            boxRb.isKinematic = false;
-            boxRb.useGravity = true;
-            
-            Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
-            
-            // Adjust the actual throw velocity based on the object's mass
-            float effectiveForce = currentThrowForce / Mathf.Max(boxRb.mass, 0.01f); 
-            boxRb.linearVelocity = throwDirection.normalized * effectiveForce;
-        }
+    
+        float effectiveForce = currentThrowForce / Mathf.Max(boxRb.mass, 0.01f); 
+        Vector3 calculatedVelocity = throwDirection.normalized * effectiveForce;
 
+        // Check for our interface
         IThrowableItem throwable = objectToThrow.GetComponent<IThrowableItem>();
+    
         if (throwable != null)
         {
-            throwable.OnThrown();
+            throwable.OnThrown(calculatedVelocity);
         }
-
+        
         isCharging = false;
         currentThrowForce = minThrowForce;
         lineRenderer.enabled = false; 

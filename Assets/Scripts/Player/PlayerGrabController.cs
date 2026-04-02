@@ -46,7 +46,7 @@ public class PlayerGrabController : MonoBehaviour
         CurrentPickables = pickables;
 
         // Loop through every IPickable script and call OnPickedUp
-        foreach (var pickable in CurrentPickables)
+        foreach (IPickable pickable in CurrentPickables)
         {
             pickable.OnPickedUp();
         }
@@ -54,7 +54,6 @@ public class PlayerGrabController : MonoBehaviour
         currentHeldWeight = 0f;
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         currentHeldWeight = rb.mass;
-     
         
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
 
@@ -79,7 +78,7 @@ public class PlayerGrabController : MonoBehaviour
 
         if (CurrentPickables != null)
         {
-            foreach (var pickable in CurrentPickables)
+            foreach (IPickable pickable in CurrentPickables)
             {
                 pickable.OnReleased();
             }

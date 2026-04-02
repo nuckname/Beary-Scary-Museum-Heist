@@ -1,17 +1,22 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class PickupItem : MonoBehaviour, IPickable
+public class PickupItem : MonoBehaviour, IPickable, IThrowableItem
 {
     [Header("Base Pickup Settings")]
     [SerializeField] protected float itemWeight = 2.0f;
     [SerializeField] protected LayerMask groundLayer;
     [SerializeField] protected float groundCheckBuffer = 3f;
 
+    [Header("Throw Settings")]
+    [SerializeField] protected bool canBeThrown = true; 
+
     protected Rigidbody rb;
     protected Collider col;
 
     public float Weight => itemWeight;
+    
+    public bool CanThrowItem => canBeThrown; 
 
     protected virtual void Awake()
     {
@@ -36,9 +41,21 @@ public class PickupItem : MonoBehaviour, IPickable
             rb.useGravity = true;
         }
     }
+    
+    public void OnThrown(Vector3 velocity)
+    {
+        if (!CanThrowItem) 
+        {
+            return; 
+        }
 
-    // Was going to use ground layer but it's not working so as longs as it's something thats not that air,
-    // it's not the ground
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.linearVelocity = velocity; 
+
+        Debug.Log($"{gameObject.name} was thrown. speed {velocity.magnitude}");
+    }
+
     public virtual bool IsOnGround()
     {
         if (col == null) return true;
@@ -55,5 +72,5 @@ public class PickupItem : MonoBehaviour, IPickable
         }
 
         return false;
-    }
+    } 
 }
