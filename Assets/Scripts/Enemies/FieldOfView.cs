@@ -9,6 +9,7 @@ public class FieldOfView : MonoBehaviour {
     public float viewRadius;
     [Range(0,360)]
     public float viewAngle;
+    public float yDetectionRadius = 3f;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -31,7 +32,7 @@ public class FieldOfView : MonoBehaviour {
     public LineRenderer edgeLineRenderer;
     public Material edgeLineMaterial;
     public Color edgeLineColor = Color.red;
-    public float edgeLineWidth = 0.05f;
+    public float edgeLineWidth = 0.05f; 
     Mesh viewMesh;
     
     private NoiseEmitter noiseEmitter;
@@ -94,14 +95,22 @@ public class FieldOfView : MonoBehaviour {
        bool seesPlayerThisFrame = false;
        Transform spottedPlayer = null;
        
-       Collider[] targetsInViewRadius = Physics.OverlapSphere (transform.position, viewRadius, targetMask);
+       Vector3 topPoint = transform.position + (Vector3.up * yDetectionRadius);
+       Vector3 bottomPoint = transform.position - (Vector3.up * yDetectionRadius);
+       Collider[] targetsInViewRadius = Physics.OverlapCapsule (bottomPoint, topPoint, viewRadius, targetMask);
 
        for (int i = 0; i < targetsInViewRadius.Length; i++) {
           Transform target = targetsInViewRadius [i].transform;
-          Vector3 dirToTarget = (target.position - transform.position).normalized;
-          if (Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2) {
+          
+          Vector3 flattenedTargetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
+          Vector3 flattenedDirToTarget = (flattenedTargetPos - transform.position).normalized;
+          
+          if (Vector3.Angle (transform.forward, flattenedDirToTarget) < viewAngle / 2) {
+             
              float dstToTarget = Vector3.Distance (transform.position, target.position);
-             if (!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+             Vector3 trueDirToTarget = (target.position - transform.position).normalized;
+             
+             if (!Physics.Raycast (transform.position, trueDirToTarget, dstToTarget, obstacleMask)) {
                 visibleTargets.Add (target);
                 
                 if (target.CompareTag("Player"))
@@ -162,7 +171,6 @@ public class FieldOfView : MonoBehaviour {
              }
 
           }
-
 
           viewPoints.Add (newViewCast.point);
           oldViewCast = newViewCast;
