@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class PickupItem : MonoBehaviour, IPickable, IThrowableItem
+public class PickUpItem : MonoBehaviour, IPickable, IThrowableItem
 {
     [Header("Base Pickup Settings")]
     [SerializeField] protected float itemWeight = 2.0f;
@@ -31,6 +31,11 @@ public class PickupItem : MonoBehaviour, IPickable, IThrowableItem
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+    }
+    
+    public void SetThrowableState(bool state)
+    {
+        canBeThrown = state;
     }
 
     public virtual void OnReleased()

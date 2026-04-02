@@ -1,53 +1,23 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(NoiseEmitter), typeof(AudioSource))]
-public class CollisionNoiseTrigger : PickupItem
+[RequireComponent(typeof(NoiseEmitter), typeof(AudioSource), typeof(Rigidbody))]
+public class CollisionNoiseTrigger : MonoBehaviour
 {
-    private NoiseEmitter noiseEmitter;
-    private AudioSource audioSource;
-    
-    [Header("Collision Settings")]
+    [Header("Collision Sound Settings")]
     [SerializeField] private float dropSoundMultiplier = 1f;
-
-    public bool canOnlyStunWhenAirBorne = true; 
-    public bool objectCanStunGuard = true;
-    
-    [Header("Velocity Settings")]
     [SerializeField] private bool useVelocityScaling = true;
     [SerializeField] private float velocityScale = 0.5f; 
     [SerializeField] private float minVelocityThreshold = 2f;
 
-    [SerializeField] private LayerMask whatIsGround;
-    
-    private int groundLayerIndex;
-    private int obstacleLayerIndex;
-    
+    private NoiseEmitter noiseEmitter;
+    private AudioSource audioSource;
     private Rigidbody rb;
-    
-    protected override void Awake()
-    {
-        base.Awake(); 
 
+    private void Awake()
+    {
         audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
-
         rb = GetComponent<Rigidbody>();
-        
-        // Important Cache 
-        groundLayerIndex = LayerMask.NameToLayer("Ground");
-        obstacleLayerIndex = LayerMask.NameToLayer("Obstacle");
-    }
-
-    private void Start()
-    {
-        rb.mass = itemWeight;
-    }
-
-    public override void OnPickedUp()
-    {
-        base.OnPickedUp();
-        objectCanStunGuard = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -55,27 +25,6 @@ public class CollisionNoiseTrigger : PickupItem
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
 
-        // Stun Logic -> might need to refactor to a new script 
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (collision.gameObject.TryGetComponent(out EnemyStateManager enemy))
-            {
-                if (canOnlyStunWhenAirBorne && objectCanStunGuard)
-                {
-                    enemy.SwitchState(enemy.EnemyStunnedState);
-                }
-            }
-        }
-
-        print(collision.gameObject.layer + " " + groundLayerIndex);
-
-        // Bitwise check: Is the collision layer included in the mask?
-        // Layer Index and a Layer Mask are two different math values we cant compare them, need this instead
-        if ((whatIsGround.value & (1 << collision.gameObject.layer)) != 0)
-        {
-            objectCanStunGuard = false;
-        }
-        
         float finalMultiplier = dropSoundMultiplier;
 
         if (useVelocityScaling)
@@ -88,6 +37,7 @@ public class CollisionNoiseTrigger : PickupItem
             }
         }
 
+        // We use the Rigidbody mass, which is naturally set by your actual PickupItem/Gun script!
         float noiseRadius = rb.mass * finalMultiplier;
         
         audioSource.maxDistance = noiseRadius;

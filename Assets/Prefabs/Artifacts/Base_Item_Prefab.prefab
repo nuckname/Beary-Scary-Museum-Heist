@@ -127,6 +127,8 @@ GameObject:
   - component: {fileID: 1748238354416997980}
   - component: {fileID: 3499240631103670951}
   - component: {fileID: 330794285900612792}
+  - component: {fileID: 320365017770492848}
+  - component: {fileID: 7465897929046717834}
   m_Layer: 0
   m_Name: Base_Item_Prefab
   m_TagString: CanPickUp
@@ -167,10 +169,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1.5672569, y: 0.52969146, z: 1.2478256}
-  m_Center: {x: -0.13894844, y: 0.23515427, z: -0.21678543}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6934650795842922822
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -307,20 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  itemWeight: 1.9
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckBuffer: 0.1
   dropSoundMultiplier: 0.8
-  canOnlyStunWhenAirBorne: 1
-  objectCanStunGuard: 1
   useVelocityScaling: 1
   velocityScale: 0.1
   minVelocityThreshold: 1
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 576
 --- !u!114 &3499240631103670951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +353,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IsArtifact
   <hasBeenUsed>k__BackingField: 0
+--- !u!114 &320365017770492848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908c41d94163a184bb714851564470ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThrowableStunObject
+  canOnlyStunWhenAirBorne: 1
+  objectCanStunGuard: 1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &7465897929046717834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe34163c0b92124ba8906879a9e5f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemWeight: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckBuffer: 3
+  canBeThrown: 1
 --- !u!1 &9183374101498264629
 GameObject:
   m_ObjectHideFlags: 0
