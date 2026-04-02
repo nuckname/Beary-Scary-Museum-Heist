@@ -14,6 +14,8 @@ public class NoiseEmitter : MonoBehaviour
     public bool showVisibleRadius = true;
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
+    [Tooltip("Height offset above the surface for the inner circle mesh.")]
+    public float meshHeightOffset = 0.3f;
     
     [Header("Outline Settings")]
     [Tooltip("Check to draw an outline around the noise radius.")]
@@ -21,6 +23,8 @@ public class NoiseEmitter : MonoBehaviour
     [Tooltip("The material used for the outline (Use an Unlit or Sprite material for a clean look).")]
     public Material outlineMaterial;
     public float outlineWidth = 0.05f;
+    [Tooltip("Height offset above the surface for the LineRenderer outline.")]
+    public float outlineHeightOffset = 0.1f;
 
     [Header("Mesh Resolution")]
     [Tooltip("How many rays per degree. Higher means smoother edges but costs more performance.")]
@@ -84,9 +88,8 @@ public class NoiseEmitter : MonoBehaviour
         // Create a new empty GameObject
         GameObject visualMeshObj = new GameObject("NoiseVisual");
         
-        // Define a single height offset to use for both
-        float surfaceOffset = 0.3f; 
-        visualMeshObj.transform.position = hitPosition + new Vector3(0, surfaceOffset, 0);
+        // Use the new specific offset for the Mesh
+        visualMeshObj.transform.position = hitPosition + new Vector3(0, meshHeightOffset, 0);
 
         MeshFilter meshFilter = visualMeshObj.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = visualMeshObj.AddComponent<MeshRenderer>();
@@ -118,8 +121,9 @@ public class NoiseEmitter : MonoBehaviour
             }
 
             viewPoints.Add(targetPoint);
-            // Match the height exactly with the Mesh Object's Y position
-            outlinePoints.Add(targetPoint + new Vector3(0, surfaceOffset, 0)); 
+            
+            // Use the specific offset for the LineRenderer Outline
+            outlinePoints.Add(targetPoint + new Vector3(0, outlineHeightOffset, 0)); 
         }
 
         // Build the Mesh

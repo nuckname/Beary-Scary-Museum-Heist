@@ -718,9 +718,11 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
+  meshHeightOffset: 0.3
   showOutline: 1
   outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
-  outlineWidth: 0.05
+  outlineWidth: 0.1
+  outlineHeightOffset: 0.12
   meshResolution: 1
 --- !u!114 &330794285900612792
 MonoBehaviour:
