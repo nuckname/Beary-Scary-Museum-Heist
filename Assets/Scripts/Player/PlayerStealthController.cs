@@ -224,33 +224,48 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
-    void OnGUI()
+void OnGUI()
     {
-        float barWidth = 25f;
-        float barHeight = 200f;
-        float xPos = 20f;
-        float yPos = Screen.height - barHeight - 20f;
-
         Color originalColor = GUI.color;
-
-        GUI.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-        GUI.Box(new Rect(xPos, yPos, barWidth, barHeight), "");
-
         float staminaPercent = currentStamina / maxStamina;
-        float fillHeight = barHeight * staminaPercent;
-        float fillYPos = yPos + (barHeight - fillHeight);
+        // ==========================================
+        // 2. NEW UI: Horizontal Stamina Bar Above Player
+        // ==========================================
+        
+        // Pick a point above the player's head (2.0f units up). 
+        // Adjust this number if it floats too high or low!
+        Vector3 headPosition = transform.position + (Vector3.up * 2.0f);
+        
+        // Convert that 3D head position to 2D screen coordinates
+        Vector3 screenPos = mainCam.WorldToScreenPoint(headPosition);
 
-        if (isExhausted)
+        // Only draw if the player is in front of the camera
+        if (screenPos.z > 0)
         {
-            GUI.color = Color.red;
-        }
-        else
-        {
-            GUI.color = Color.green;
+            // Unity Screen coordinates start at the bottom-left. GUI starts at top-left.
+            float guiY = Screen.height - screenPos.y;
+
+            // --- BAR DIMENSIONS ---
+            float maxBarWidth = 60f; // Total width when stamina is full
+            float barThickness = 8f; // How thick the line is top-to-bottom
+
+            // Calculate the current width based on stamina percentage
+            float currentWidth = maxBarWidth * staminaPercent;
+
+            // Calculate X position so the bar is perfectly centered over the player
+            float startX = screenPos.x - (maxBarWidth / 2f);
+
+            // Create the rectangle: (X, Y, Width, Height)
+            Rect lineRect = new Rect(startX, guiY, currentWidth, barThickness);
+
+            // Choose color based on exhaustion state
+            GUI.color = isExhausted ? Color.red : Color.cyan;
+
+            // Draw the solid block
+            GUI.DrawTexture(lineRect, Texture2D.whiteTexture);
         }
 
-        GUI.Box(new Rect(xPos, fillYPos, barWidth, fillHeight), "");
-
+        // Restore original color
         GUI.color = originalColor;
     }
 }

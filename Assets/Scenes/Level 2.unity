@@ -5934,6 +5934,7 @@ GameObject:
   - component: {fileID: 8851138284055886467}
   - component: {fileID: 2149432955633394333}
   - component: {fileID: 7458404856581573750}
+  - component: {fileID: 8851138284055886468}
   m_Layer: 0
   m_Name: entry
   m_TagString: Untagged
@@ -7977,6 +7978,7 @@ GameObject:
   - component: {fileID: 8529430332778760612}
   - component: {fileID: 7461934743638538550}
   - component: {fileID: 5723623106127976969}
+  - component: {fileID: 8529430332778760613}
   m_Layer: 9
   m_Name: wall2
   m_TagString: Untagged
@@ -9053,6 +9055,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653057282061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8529430332778760613
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459923126581516691}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.9999999}
+  m_Center: {x: 0.000000029802322, y: 0, z: 0}
 --- !u!33 &8576649830297123196
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9212,6 +9235,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450653057282061}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8851138284055886468
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174561621827331314}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.43412, y: 1.4534762, z: 1.2966056}
+  m_Center: {x: 6.165505, y: 0.22673813, z: 0.01875639}
 --- !u!4 &8855814411398429725
 Transform:
   m_ObjectHideFlags: 0
