@@ -151,7 +151,11 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         
         hasShoutedAtPlayer = false;
     }
-
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        EnemyCurrentState?.OnCollisionEnter(this, collision);
+    }
     public void StartChasing(Transform target)
     {
         playerTransform = target;

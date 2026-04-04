@@ -56,7 +56,7 @@ public class EnemyConfusedState : EnemyBaseState
         targetLookRotation = baseRotation * Quaternion.Euler(0, angle, 0);
     }
 
-    public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)
+    public override void OnCollisionEnter(EnemyStateManager manager, Collision other)
     {
         // Collision logic
     }

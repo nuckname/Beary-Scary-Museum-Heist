@@ -322,6 +322,7 @@ MonoBehaviour:
   patrollingIcon: {fileID: 0}
   confusedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
   whatTypeOfNoiseTheGuardHeard: 0
+  startingRotation: {x: 0, y: 0, z: 0, w: 0}
   currentStateName: 
 --- !u!114 &1398979885939180627
 MonoBehaviour:
@@ -346,7 +347,7 @@ MonoBehaviour:
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
   meshHeightOffset: 1
   showOutline: 1
-  outlineMaterial: {fileID: 0}
+  outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
   outlineWidth: 0.05
   outlineHeightOffset: 0.12
   meshResolution: 1
@@ -496,6 +497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 19.16
   viewAngle: 51
+  yDetectionRadius: 3
   targetMask:
     serializedVersion: 2
     m_Bits: 256
@@ -767,6 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 4.62
   viewAngle: 172
+  yDetectionRadius: 3
   targetMask:
     serializedVersion: 2
     m_Bits: 256

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyChasePlayerState : EnemyBaseState
 {
@@ -33,7 +34,11 @@ public class EnemyChasePlayerState : EnemyBaseState
         manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetLocation, manager.currentWalkSpeed * Time.deltaTime);
     }
 
-    public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)
+    public override void OnCollisionEnter(EnemyStateManager manager, Collision other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

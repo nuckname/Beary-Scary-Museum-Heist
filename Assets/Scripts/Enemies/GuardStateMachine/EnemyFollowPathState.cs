@@ -68,7 +68,7 @@ public class EnemyFollowPathState : EnemyBaseState
     }
 
 
-    public override void OnCollisionEnter2D(EnemyStateManager manager, Collision2D other)
+    public override void OnCollisionEnter(EnemyStateManager manager, Collision other)
     {
         
     }
