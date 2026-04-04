@@ -252,20 +252,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  itemWeight: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckBuffer: 0.1
   dropSoundMultiplier: 1
-  canOnlyStunWhenAirBorne: 1
-  objectCanStunGuard: 1
   useVelocityScaling: 1
   velocityScale: 0.25
   minVelocityThreshold: 0.5
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 576
 --- !u!114 &8430622584522496057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,10 +276,10 @@ MonoBehaviour:
     m_Bits: 1024
   showVisibleRadius: 1
   visualDuration: 1.5
-  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
-  meshHeightOffset: 0.3
-  showOutline: 0
-  outlineMaterial: {fileID: 0}
-  outlineWidth: 0.05
-  outlineHeightOffset: 0.3
+  radiusMaterial: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
+  meshHeightOffset: 1.5
+  showOutline: 1
+  outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
+  outlineWidth: 0.1
+  outlineHeightOffset: 0.12
   meshResolution: 1

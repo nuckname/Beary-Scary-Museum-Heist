@@ -19,7 +19,7 @@ public class ThrowableStunObject : MonoBehaviour, IPickable
 
     public bool IsOnGround()
     {
-        if (TryGetComponent(out PickUpItem pickup))
+        if (TryGetComponent(out CanPickUpItem pickup))
         {
             return pickup.IsOnGround();
         }

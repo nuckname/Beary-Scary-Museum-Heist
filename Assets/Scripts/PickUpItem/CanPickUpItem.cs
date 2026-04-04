@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class PickUpItem : MonoBehaviour, IPickable, IThrowableItem
+public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 {
     [Header("Base Pickup Settings")]
     [SerializeField] protected float itemWeight = 2.0f;

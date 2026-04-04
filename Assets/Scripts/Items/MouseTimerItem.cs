@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(NoiseEmitter))]
-public class MouseTimerItem : PickUpItem, IThrowableItem 
+public class MouseTimerItem : CanPickUpItem, IThrowableItem 
 {
     private NoiseEmitter noiseEmitter;
 

@@ -58,6 +58,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
 
+    [SerializeField] private Quaternion startingRotation;
+    
     // Can make this an enum later
     [Header("Debug")]
     public string currentStateName;
@@ -87,6 +89,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             Debug.LogError("Path Holder is not assigned on " + gameObject.name);
             return;
         }
+        
+        startingRotation = transform.rotation;
         
         currentWalkSpeed = normalWalkSpeed;
 

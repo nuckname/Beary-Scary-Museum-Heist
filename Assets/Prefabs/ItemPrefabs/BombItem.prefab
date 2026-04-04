@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 8453200104703548179}
   - component: {fileID: 1748238354416997980}
   - component: {fileID: 3499240631103670951}
+  - component: {fileID: 750580019269604420}
+  - component: {fileID: 4378435195641114781}
   m_Layer: 0
   m_Name: BombItem
   m_TagString: CanPickUp
@@ -252,20 +254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
-  itemWeight: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckBuffer: 0.1
   dropSoundMultiplier: 1
-  canOnlyStunWhenAirBorne: 1
-  objectCanStunGuard: 1
   useVelocityScaling: 1
   velocityScale: 0.25
   minVelocityThreshold: 0.5
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 576
 --- !u!114 &3499240631103670951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,8 +278,45 @@ MonoBehaviour:
     m_Bits: 1024
   showVisibleRadius: 1
   visualDuration: 1.5
-  radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
-  showOutline: 0
-  outlineMaterial: {fileID: 0}
-  outlineWidth: 0.05
+  radiusMaterial: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
+  meshHeightOffset: 1.5
+  showOutline: 1
+  outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
+  outlineWidth: 0.1
+  outlineHeightOffset: 0.12
   meshResolution: 1
+--- !u!114 &750580019269604420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe34163c0b92124ba8906879a9e5f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickUpItem
+  itemWeight: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckBuffer: 3
+  canBeThrown: 1
+--- !u!114 &4378435195641114781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774066252667396190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908c41d94163a184bb714851564470ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThrowableStunObject
+  canOnlyStunWhenAirBorne: 1
+  objectCanStunGuard: 1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64

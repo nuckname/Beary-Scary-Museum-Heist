@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PickUpItem))] 
+[RequireComponent(typeof(CanPickUpItem))] 
 public class Gun : MonoBehaviour 
 {
     [Header("Gun Settings")]
@@ -13,13 +13,13 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform muzzlePoint;
 
-    private PickUpItem basePickupItem;
+    private CanPickUpItem basePickupItem;
     private bool hasBeenFired = false;
     private bool isHeld = false;
 
     private void Awake()
     {
-        basePickupItem = GetComponent<PickUpItem>(); 
+        basePickupItem = GetComponent<CanPickUpItem>(); 
         
         basePickupItem.SetThrowableState(false); 
     }
