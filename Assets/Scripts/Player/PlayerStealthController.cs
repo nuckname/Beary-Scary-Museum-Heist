@@ -224,14 +224,12 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
-void OnGUI()
+    // AI https://gemini.google.com/share/cd5b8c0e652f
+    void OnGUI()
     {
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
-        // ==========================================
-        // 2. NEW UI: Horizontal Stamina Bar Above Player
-        // ==========================================
-        
+
         // Pick a point above the player's head (2.0f units up). 
         // Adjust this number if it floats too high or low!
         Vector3 headPosition = transform.position + (Vector3.up * 2.0f);

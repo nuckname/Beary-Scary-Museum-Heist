@@ -13,10 +13,13 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 
     protected Rigidbody rb;
     protected Collider col;
+    
+    protected bool isAirborne = false;
 
     public float Weight => itemWeight;
-    
     public bool CanThrowItem => canBeThrown; 
+    
+    public virtual bool CanBePickedUp => !isAirborne;
 
     protected virtual void Awake()
     {
@@ -31,6 +34,8 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+        
+        isAirborne = false; 
     }
     
     public void SetThrowableState(bool state)
@@ -58,7 +63,20 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
         rb.useGravity = true;
         rb.linearVelocity = velocity; 
 
+        isAirborne = true;
+
         Debug.Log($"{gameObject.name} was thrown. speed {velocity.magnitude}");
+    }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if (isAirborne)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+            {
+                isAirborne = false;
+            }
+        }
     }
 
     public virtual bool IsOnGround()

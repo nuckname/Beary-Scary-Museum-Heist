@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -12,11 +13,16 @@ public class Timer : MonoBehaviour
     public float startTimeInSeconds = 60f;
     public bool runOnStart = true;
 
-    [Header("UI Reference")]
-    public TextMeshProUGUI timerText;
+    private TextMeshProUGUI timerText;
 
+    [Header("UI Reference")]
     public float _currentTime;
     public bool isPaused;
+
+    private void Awake()
+    {
+        timerText = GameObject.FindGameObjectWithTag("Timer").GetComponent<TextMeshProUGUI>();
+    }
 
     void Start()
     {

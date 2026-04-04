@@ -28,7 +28,7 @@ public class PlayerGrabController : MonoBehaviour
         
             if (pickables.Length > 0)
             {
-                if (pickables[0].IsOnGround())
+                if (pickables[0].CanBePickedUp && pickables[0].IsOnGround())
                 {
                     PickUpObject(hit.gameObject, pickables);
                 }

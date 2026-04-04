@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -5,8 +6,8 @@ using TMPro;
 public class TempScoreboard : MonoBehaviour
 {
     [Header("References")]
-    public Timer timer;
-    public TextMeshProUGUI totalScoreTMPro; // Drag your TMPro element here in the inspector
+    private Timer timer;
+    private TextMeshProUGUI totalScoreTMPro;
 
     [Header("Balancing Settings")]
     [Tooltip("The score a player gets if they finish in 0 seconds.")]
@@ -17,6 +18,12 @@ public class TempScoreboard : MonoBehaviour
 
     [HideInInspector]
     public bool isGameOver = false;
+
+    private void Awake()
+    {
+        timer = GetComponent<Timer>();
+        totalScoreTMPro = GameObject.FindGameObjectWithTag("ScoreBoard").GetComponent<TextMeshProUGUI>();
+    }
 
     void OnGUI()
     {

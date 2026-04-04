@@ -6,9 +6,22 @@ public class ThrowableStunObject : MonoBehaviour, IPickable
     public bool canOnlyStunWhenAirBorne = true; 
     public bool objectCanStunGuard = true;
     [SerializeField] private LayerMask whatIsGround;
+
+    public bool CanBePickedUp
+    {
+        get
+        {
+            if (TryGetComponent(out CanPickUpItem pickup))
+            {
+                return pickup.CanBePickedUp;
+            }
+            return true;
+        }
+    }
     
     public void OnPickedUp()
     {
+        // Resets the stun capability when the player grabs it
         objectCanStunGuard = true;
     }
 
@@ -30,6 +43,7 @@ public class ThrowableStunObject : MonoBehaviour, IPickable
     {
         if (collision.gameObject.CompareTag("Player")) return;
 
+        // If it hits the ground, turn off the ability to stun
         if ((whatIsGround.value & (1 << collision.gameObject.layer)) != 0)
         {
             objectCanStunGuard = false;
@@ -41,6 +55,8 @@ public class ThrowableStunObject : MonoBehaviour, IPickable
             if (collision.gameObject.TryGetComponent(out EnemyStateManager enemy))
             {
                 enemy.SwitchState(enemy.EnemyStunnedState);
+                
+                objectCanStunGuard = false; 
             }
         }
     }

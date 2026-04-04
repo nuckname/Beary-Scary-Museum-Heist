@@ -10,4 +10,6 @@ public interface IPickable
     void OnReleased();
     
     bool IsOnGround();
+    
+    bool CanBePickedUp { get; }
 }
