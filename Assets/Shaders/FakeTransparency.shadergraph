@@ -11,6 +11,9 @@
         },
         {
             "m_Id": "f3203a8b6fba4307acb939cddcdbad30"
+        },
+        {
+            "m_Id": "1ce1b321d0f74486af4b33cdfbfe1fa3"
         }
     ],
     "m_Keywords": [],
@@ -74,11 +77,28 @@
         },
         {
             "m_Id": "8cead5c0b26346519f2af28f1f335710"
+        },
+        {
+            "m_Id": "56afa3d6d8694e09afff520c622ec4ff"
         }
     ],
     "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "56afa3d6d8694e09afff520c622ec4ff"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "9604f3f338b443279487d6046ca37b88"
+                },
+                "m_SlotId": 0
+            }
+        },
         {
             "m_OutputSlot": {
                 "m_Node": {
@@ -265,6 +285,22 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "01514daef48c4cd4bd65c2faad231930",
+    "m_Id": 0,
+    "m_DisplayName": "DitherEffect",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": [],
+    "m_LiteralMode": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "0ef24bba1d734fc9be8c540ced23f003",
     "m_Id": 2,
     "m_DisplayName": "G",
@@ -387,6 +423,50 @@
         "w": 0.0
     },
     "m_LiteralMode": false
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "1ce1b321d0f74486af4b33cdfbfe1fa3",
+    "m_Guid": {
+        "m_GuidSerialized": "6c1a7802-ae95-454a-b248-69553416044f"
+    },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
+    "m_Name": "DitherEffect",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "DitherEffect",
+    "m_DefaultReferenceName": "_DitherEffect",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_PerRendererData": false,
+    "m_customAttributes": [],
+    "m_Value": 0.0,
+    "m_FloatType": 1,
+    "m_LiteralFloatMode": false,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    },
+    "m_SliderType": 0,
+    "m_SliderPower": 3.0,
+    "m_EnumType": 0,
+    "m_CSharpEnumString": "",
+    "m_EnumNames": [
+        "Default"
+    ],
+    "m_EnumValues": [
+        0
+    ]
 }
 
 {
@@ -568,6 +648,42 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "56afa3d6d8694e09afff520c622ec4ff",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -675.0,
+            "y": 542.0,
+            "width": 138.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "01514daef48c4cd4bd65c2faad231930"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "1ce1b321d0f74486af4b33cdfbfe1fa3"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "593a2547db064a1e91c86e05f1d8100a",
     "m_Id": 0,
@@ -618,6 +734,9 @@
         },
         {
             "m_Id": "f3203a8b6fba4307acb939cddcdbad30"
+        },
+        {
+            "m_Id": "1ce1b321d0f74486af4b33cdfbfe1fa3"
         }
     ]
 }
@@ -1151,10 +1270,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -376.800048828125,
-            "y": 523.2000122070313,
-            "width": 0.0,
-            "height": 0.0
+            "x": -437.0,
+            "y": 509.0,
+            "width": 208.0,
+            "height": 302.0
         }
     },
     "m_Slots": [
