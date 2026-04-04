@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerStealthController : MonoBehaviour
@@ -15,10 +16,14 @@ public class PlayerStealthController : MonoBehaviour
     // Toggle to allow movement while in topdown mode
     public bool allowMovementInTopDown = false; 
     
-    public float maxTopDownHoldTime = 3f; 
+    public float maxTopDownHoldTime = 3f;
+    // How long to wait if holding Left Mouse
+    public float swapBackDelay = 1f;
+    
     private float currentTopDownTimer = 0f;
     private bool isTopDownActive = false;
     private bool canUseTopDown = true;
+    private bool isWaitingToSwap = false;
 
     private float currentStamina;
     private bool isExhausted = false;
@@ -64,6 +69,8 @@ public class PlayerStealthController : MonoBehaviour
 
     void HandleTopDownView()
     {
+        if (isWaitingToSwap) return; 
+
         // Right Mouse Button
         if (Input.GetMouseButton(1) && canUseTopDown)
         {
@@ -72,15 +79,18 @@ public class PlayerStealthController : MonoBehaviour
 
             if (currentTopDownTimer >= maxTopDownHoldTime)
             {
-                isTopDownActive = false;
-                
                 // Force the player to release the button to use it again
                 canUseTopDown = false; 
+                StartSwapBack();
             }
         }
         else
         {
-            isTopDownActive = false;
+            // If we were in top down, but just let go of Right Click
+            if (isTopDownActive) 
+            {
+                StartSwapBack();
+            }
             
             // Reset the ability to use top-down view once the player lets go of Right Click
             if (!Input.GetMouseButton(1))
@@ -90,7 +100,41 @@ public class PlayerStealthController : MonoBehaviour
             }
         }
         
-        cameraFollow.useTopDownView = isTopDownActive;
+        // Update camera state if not waiting
+        if (!isWaitingToSwap)
+        {
+            cameraFollow.useTopDownView = isTopDownActive;
+        }
+    }
+
+    // Checks if we are holding Left Click before swapping
+    void StartSwapBack()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            StartCoroutine(DelaySwapBackRoutine());
+        }
+        else
+        {
+            // If not holding Left Click, swap immediately
+            isTopDownActive = false;
+            cameraFollow.useTopDownView = false;
+        }
+    }
+
+    private IEnumerator DelaySwapBackRoutine()
+    {
+        isWaitingToSwap = true;
+
+        // Wait for a specific amount of time
+        //yield return new WaitForSeconds(swapBackDelay);
+
+        // We wait UNTIL the player lets go of Lise Mouse,
+        yield return new WaitUntil(() => !Input.GetMouseButton(0));
+
+        isTopDownActive = false;
+        cameraFollow.useTopDownView = false;
+        isWaitingToSwap = false;
     }
 
     // Bool function to determine if movement is currently allowed
