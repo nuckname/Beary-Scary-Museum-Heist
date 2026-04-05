@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStateManager
   pathHolder: {fileID: 0}
-  turnSpeed: 90
+  turnSpeed: 45
   waitTime: 2
   waypoints: []
   investigateTargetPosition: {x: 0, y: 0, z: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   minAmountOfTurnsTheGuardDoes: 2
   maxAmountOfTurnsTheGuardDoes: 4
   currentWalkSpeed: 0
-  chaseSpeed: 3.75
+  chaseSpeed: 4
   normalWalkSpeed: 2
   fieldOfView: {fileID: 7372062438631642018}
   playerTransform: {fileID: 0}
@@ -323,6 +323,9 @@ MonoBehaviour:
   confusedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
   whatTypeOfNoiseTheGuardHeard: 0
   startingRotation: {x: 0, y: 0, z: 0, w: 0}
+  showGuardPaths: 1
+  pathColor: {r: 1, g: 0, b: 0, a: 1}
+  pathLineWidth: 0.15
   currentStateName: 
 --- !u!114 &1398979885939180627
 MonoBehaviour:

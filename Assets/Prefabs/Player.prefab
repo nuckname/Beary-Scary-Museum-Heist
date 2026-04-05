@@ -72,7 +72,8 @@ MonoBehaviour:
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
   allowMovementInTopDown: 0
-  maxTopDownHoldTime: 3
+  maxTopDownHoldTime: 3000
+  swapBackDelay: 3
   controller: {fileID: 1325467085621830619}
 --- !u!143 &1325467085621830619
 CharacterController:

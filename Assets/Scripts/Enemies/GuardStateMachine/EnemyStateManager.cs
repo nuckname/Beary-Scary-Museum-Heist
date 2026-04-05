@@ -59,6 +59,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
 
     [SerializeField] private Quaternion startingRotation;
+
+    [Header("Path Visuals")] 
+    [SerializeField] private bool showGuardPaths = true;
+    [SerializeField] private Color pathColor = Color.red; 
+    [SerializeField] private float pathLineWidth = 0.15f;
+    private LineRenderer lineRenderer;
     
     // Can make this an enum later
     [Header("Debug")]
@@ -101,9 +107,29 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
 
+        SetUpGuardPathingLines();
+
         SwitchState(EnemyFollowPathState);
     }
-    
+
+    private void SetUpGuardPathingLines()
+    {
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        
+        // Colour
+        lineRenderer.startColor = pathColor;
+        lineRenderer.endColor = pathColor;
+        
+        // Width
+        lineRenderer.startWidth = pathLineWidth;
+        lineRenderer.endWidth = pathLineWidth;
+        
+        lineRenderer.positionCount = waypoints.Length;
+        lineRenderer.SetPositions(waypoints);
+    }
+
     void Update()
     {
         EnemyCurrentState?.UpdateState(this);
@@ -220,6 +246,22 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
                 stateSpriteRenderer.sprite = null;
                 stateSpriteRenderer.enabled = false;
                 break;
+        }
+    }
+    
+    private void OnDrawGizmos()
+    {
+        if (pathHolder == null || !showGuardPaths) return;
+
+        Gizmos.color = pathColor; 
+
+        for (int i = 0; i < pathHolder.childCount - 1; i++)
+        {
+            Vector3 startPos = pathHolder.GetChild(i).position;
+            Vector3 endPos = pathHolder.GetChild(i + 1).position;
+            
+            // Draw a line connecting the points in the Scene View
+            Gizmos.DrawLine(startPos, endPos);
         }
     }
 }
