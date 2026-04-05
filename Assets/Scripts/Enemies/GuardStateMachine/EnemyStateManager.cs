@@ -25,8 +25,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [Tooltip("The amount of turns the guard does when they lose sight of the player and look around. " +
              "A turn is either looking left or right. So if this is 2, they will look left, then right, then go back to patrolling. " +
              "If this is 4, they will look left, right, left, right before going back to patrolling.")]
-    public int minAmountOfTurnsTheGuardDoes = 2;
-    public int maxAmountOfTurnsTheGuardDoes = 4;
+    public int amountOfTimesTheGuardTurns = 2;
     
     
     [Header("Guard Speed")]

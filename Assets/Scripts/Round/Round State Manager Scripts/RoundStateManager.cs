@@ -48,6 +48,8 @@ public class RoundStateManager : MonoBehaviour
         SetUpGuards();
 
         UpdateUI();
+
+        AmountOfTimesPlayerSpottedByGuards = 0;
     }
 
     private void SetUpGuards()

@@ -18,7 +18,9 @@ public class EnemyConfusedState : EnemyBaseState
 
         // Initialize look around behaviour based on where they are currently facing
         baseRotation = manager.transform.rotation;
-        targetLooks = Random.Range(manager.minAmountOfTurnsTheGuardDoes, manager.maxAmountOfTurnsTheGuardDoes); 
+        
+        targetLooks = manager.amountOfTimesTheGuardTurns;
+        
         looksCompleted = 0;
         
         // Randomly choose to look left or right first
