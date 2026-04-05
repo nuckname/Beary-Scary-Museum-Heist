@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+// Ensures the new camera script is attached to the same GameObject
+[RequireComponent(typeof(PlayerCameraController))] 
 public class PlayerStealthController : MonoBehaviour
 {
     public float walkSpeed;
@@ -12,19 +14,6 @@ public class PlayerStealthController : MonoBehaviour
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
 
-    [Header("Top-Down View Settings")]
-    // Toggle to allow movement while in topdown mode
-    public bool allowMovementInTopDown = false; 
-    
-    public float maxTopDownHoldTime = 3f;
-    // How long to wait if holding Left Mouse
-    public float swapBackDelay = 1f;
-    
-    private float currentTopDownTimer = 0f;
-    private bool isTopDownActive = false;
-    private bool canUseTopDown = true;
-    private bool isWaitingToSwap = false;
-
     private float currentStamina;
     private bool isExhausted = false;
 
@@ -32,19 +21,15 @@ public class PlayerStealthController : MonoBehaviour
     private Vector3 moveDirection;
     private float currentSpeed;
 
-    private Camera mainCam;
-    private CameraFollow cameraFollow;
-
     // Locked Y position
     private float lockedY;
+
+    private PlayerCameraController cameraController;
 
     void Start()
     {
         currentStamina = maxStamina;
-        mainCam = Camera.main;
-        
-        cameraFollow = mainCam.GetComponent<CameraFollow>();
-        
+        cameraController = GetComponent<PlayerCameraController>();
         lockedY = transform.position.y;
     }
 
@@ -55,92 +40,15 @@ public class PlayerStealthController : MonoBehaviour
 
         moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
 
-        HandleTopDownView();
         HandleSpeed();
         MovePlayer();
         HandleMouseRotation();
-
-        // testing
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            allowMovementInTopDown = !allowMovementInTopDown;
-        }
-    }
-
-    void HandleTopDownView()
-    {
-        if (isWaitingToSwap) return; 
-
-        // Right Mouse Button
-        if (Input.GetMouseButton(1) && canUseTopDown)
-        {
-            isTopDownActive = true;
-            currentTopDownTimer += Time.deltaTime;
-
-            if (currentTopDownTimer >= maxTopDownHoldTime)
-            {
-                // Force the player to release the button to use it again
-                canUseTopDown = false; 
-                StartSwapBack();
-            }
-        }
-        else
-        {
-            // If we were in top down, but just let go of Right Click
-            if (isTopDownActive) 
-            {
-                StartSwapBack();
-            }
-            
-            // Reset the ability to use top-down view once the player lets go of Right Click
-            if (!Input.GetMouseButton(1))
-            {
-                currentTopDownTimer = 0f;
-                canUseTopDown = true;
-            }
-        }
-        
-        // Update camera state if not waiting
-        if (!isWaitingToSwap)
-        {
-            cameraFollow.useTopDownView = isTopDownActive;
-        }
-    }
-
-    // Checks if we are holding Left Click before swapping
-    void StartSwapBack()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            StartCoroutine(DelaySwapBackRoutine());
-        }
-        else
-        {
-            // If not holding Left Click, swap immediately
-            isTopDownActive = false;
-            cameraFollow.useTopDownView = false;
-        }
-    }
-
-    private IEnumerator DelaySwapBackRoutine()
-    {
-        isWaitingToSwap = true;
-
-        // Wait for a specific amount of time
-        //yield return new WaitForSeconds(swapBackDelay);
-
-        // We wait UNTIL the player lets go of Lise Mouse,
-        yield return new WaitUntil(() => !Input.GetMouseButton(0));
-
-        isTopDownActive = false;
-        cameraFollow.useTopDownView = false;
-        isWaitingToSwap = false;
     }
 
     // Bool function to determine if movement is currently allowed
     private bool CanMoveNormally()
     {
-        if (isTopDownActive && !allowMovementInTopDown)
+        if (cameraController.IsTopDownActive && !cameraController.allowMovementInTopDown)
         {
             return false;
         }
@@ -176,7 +84,6 @@ public class PlayerStealthController : MonoBehaviour
         else
         {
             currentSpeed = walkSpeed;
-
             RegenStamina();
         }
     }
@@ -204,10 +111,11 @@ public class PlayerStealthController : MonoBehaviour
         transform.position = pos;
     }
 
-    // AI https://gemini.google.com/share/3ac24891bcfb
     void HandleMouseRotation()
     {
-        Ray ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        if (cameraController.MainCam == null) return;
+
+        Ray ray = cameraController.MainCam.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
         if (groundPlane.Raycast(ray, out float rayDistance))
@@ -224,44 +132,48 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
-    // AI https://gemini.google.com/share/cd5b8c0e652f
+    // AI
+    // https://gemini.google.com/share/b0fd5f70855e
     void OnGUI()
     {
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
 
-        // Pick a point above the player's head (2.0f units up). 
-        // Adjust this number if it floats too high or low!
-        Vector3 headPosition = transform.position + (Vector3.up * 2.0f);
-        
-        // Convert that 3D head position to 2D screen coordinates
-        Vector3 screenPos = mainCam.WorldToScreenPoint(headPosition);
+        // --- BAR DIMENSIONS (Made Bigger) ---
+        float maxBarWidth = 400f; 
+        float barThickness = 24f; 
 
-        // Only draw if the player is in front of the camera
-        if (screenPos.z > 0)
-        {
-            // Unity Screen coordinates start at the bottom-left. GUI starts at top-left.
-            float guiY = Screen.height - screenPos.y;
+        // --- POSITIONING (Bottom Middle) ---
+        float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
+        float startY = Screen.height - 50f; // Shifted up slightly to fit the thicker bar
 
-            // --- BAR DIMENSIONS ---
-            float maxBarWidth = 60f; // Total width when stamina is full
-            float barThickness = 8f; // How thick the line is top-to-bottom
+        // --- SPRINT TEXT (Top Right of Bar) ---
+        GUIStyle textStyle = new GUIStyle(GUI.skin.label);
+        textStyle.alignment = TextAnchor.LowerRight;
+        textStyle.normal.textColor = Color.white;
+        textStyle.fontStyle = FontStyle.Bold;
+        textStyle.fontSize = 16; // Increased font size slightly to match the larger bar
 
-            // Calculate the current width based on stamina percentage
-            float currentWidth = maxBarWidth * staminaPercent;
+        // Position the text right above the right edge of the bar
+        Rect textRect = new Rect(startX + maxBarWidth - 100f, startY - 26f, 100f, 20f);
+        GUI.Label(textRect, "Sprint", textStyle);
 
-            // Calculate X position so the bar is perfectly centered over the player
-            float startX = screenPos.x - (maxBarWidth / 2f);
+        // --- DRAW BARS ---
+        // 1. Draw a semi-transparent black background
+        GUI.color = new Color(0, 0, 0, 0.6f);
+        GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
 
-            // Create the rectangle: (X, Y, Width, Height)
-            Rect lineRect = new Rect(startX, guiY, currentWidth, barThickness);
+        // 2. Generate a shifting rainbow color based on time
+        // Mathf.Repeat loops the value between 0 and 1 over time. Multiplier controls speed.
+        Color rainbowColor = Color.HSVToRGB(Mathf.Repeat(Time.time * 0.5f, 1f), 1f, 1f);
 
-            // Choose color based on exhaustion state
-            GUI.color = isExhausted ? Color.red : Color.cyan;
+        // 3. Choose foreground color (Red if exhausted, otherwise Rainbow)
+        GUI.color = isExhausted ? Color.red : rainbowColor;
 
-            // Draw the solid block
-            GUI.DrawTexture(lineRect, Texture2D.whiteTexture);
-        }
+        // 4. Draw the solid stamina block
+        float currentWidth = maxBarWidth * staminaPercent;
+        Rect activeBarRect = new Rect(startX, startY, currentWidth, barThickness);
+        GUI.DrawTexture(activeBarRect, Texture2D.whiteTexture);
 
         // Restore original color
         GUI.color = originalColor;

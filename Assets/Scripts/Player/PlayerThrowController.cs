@@ -1,6 +1,7 @@
 using UnityEngine;
 
 // help https://www.youtube.com/watch?v=K4DMCseZA08
+// AI help
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerThrowController : MonoBehaviour
 {
