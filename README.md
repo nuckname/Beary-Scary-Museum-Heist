@@ -18,3 +18,7 @@ https://docs.unity3d.com/6000.3/Documentation/Manual/building-blocks-multiplayer
 Multiplayer Services SDK
 https://docs.unity.com/en-us/mps-sdk
 
+
+Sam's Playtest - 
+https://youtu.be/kN89UZFEhmQ
+Note are in video's description.
