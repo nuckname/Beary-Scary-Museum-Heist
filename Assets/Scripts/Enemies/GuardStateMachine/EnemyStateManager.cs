@@ -95,10 +95,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             Debug.LogError("Path Holder is not assigned on " + gameObject.name);
             return;
         }
-        
-        startingRotation = transform.rotation;
-        
-        currentWalkSpeed = normalWalkSpeed;
+
+        // Freeze guards until we want them to start moving called in RoundStateManager
+        currentWalkSpeed = 0;
 
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)
@@ -110,6 +109,13 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         SetUpGuardPathingLines();
 
         SwitchState(EnemyFollowPathState);
+    }
+
+    public void GuardStartMoving()
+    {
+        startingRotation = transform.rotation;
+        
+        currentWalkSpeed = normalWalkSpeed;
     }
 
     private void SetUpGuardPathingLines()
