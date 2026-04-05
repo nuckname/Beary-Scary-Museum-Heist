@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class RoundStateManager : MonoBehaviour
     public int amountOfArtifactsToCompleteLevel = 3;
     public int currentArtifacts = 0;
 
+    public List<GameObject> guards = new List<GameObject>(); 
+
     private void Awake()
     {
         // Standard Singleton pattern
@@ -42,9 +45,29 @@ public class RoundStateManager : MonoBehaviour
     {
         SwitchState(AboutToStartState);
 
+        SetUpGuards();
+
         UpdateUI();
     }
+
+    private void SetUpGuards()
+    {
+        guards.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+
+    }
     
+    public void MakeGuardsStartMoving()
+    {
+        foreach (GameObject guard in guards)
+        {
+            EnemyStateManager enemyStateManager = guard.GetComponent<EnemyStateManager>();
+            if(enemyStateManager != null)
+            {
+                enemyStateManager.GuardStartMoving();
+            }
+        }
+    }
+
     void Update()
     {
         CurrentState?.UpdateState(this);
