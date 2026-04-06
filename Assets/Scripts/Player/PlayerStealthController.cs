@@ -17,19 +17,26 @@ public class PlayerStealthController : MonoBehaviour
     private float currentStamina;
     private bool isExhausted = false;
 
-    public CharacterController controller;
+    public Rigidbody rb;
     private Vector3 moveDirection;
     private float currentSpeed;
 
     // Locked Y position
     private float lockedY;
 
-    private PlayerCameraController cameraController;
+   // private PlayerCameraController cameraController;
 
-    void Start()
+   private Camera camera;
+
+   private void Awake()
+   {
+       camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+   }
+
+   void Start()
     {
         currentStamina = maxStamina;
-        cameraController = GetComponent<PlayerCameraController>();
+        //cameraController = GetComponent<PlayerCameraController>();
         lockedY = transform.position.y;
     }
 
@@ -46,6 +53,7 @@ public class PlayerStealthController : MonoBehaviour
     }
 
     // Bool function to determine if movement is currently allowed
+    /*
     private bool CanMoveNormally()
     {
         if (cameraController.IsTopDownActive && !cameraController.allowMovementInTopDown)
@@ -54,9 +62,10 @@ public class PlayerStealthController : MonoBehaviour
         }
         return true;
     }
-
+*/
     void HandleSpeed()
     {
+        /*
         // If we are looking top-down, stop movement completely
         if (!CanMoveNormally())
         {
@@ -66,7 +75,7 @@ public class PlayerStealthController : MonoBehaviour
             RegenStamina();
             return;
         }
-
+*/
         bool isMoving = moveDirection.magnitude >= 0.1f;
         bool isTryingToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving && !isExhausted;
 
@@ -103,7 +112,7 @@ public class PlayerStealthController : MonoBehaviour
 
     void MovePlayer()
     {
-        controller.Move(moveDirection * currentSpeed * Time.deltaTime);
+        rb.linearVelocity = moveDirection * currentSpeed;
 
         // Lock Y position
         Vector3 pos = transform.position;
@@ -113,9 +122,9 @@ public class PlayerStealthController : MonoBehaviour
 
     void HandleMouseRotation()
     {
-        if (cameraController.MainCam == null) return;
+        //if (cameraController.MainCam == null) return;
 
-        Ray ray = cameraController.MainCam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
         if (groundPlane.Raycast(ray, out float rayDistance))
@@ -149,7 +158,7 @@ public class PlayerStealthController : MonoBehaviour
 
         // --- SPRINT TEXT (Top Right of Bar) ---
         GUIStyle textStyle = new GUIStyle(GUI.skin.label);
-        textStyle.alignment = TextAnchor.LowerRight;
+        textStyle.alignment = TextAnchor.LowerLeft;
         textStyle.normal.textColor = Color.white;
         textStyle.fontStyle = FontStyle.Bold;
         textStyle.fontSize = 16; // Increased font size slightly to match the larger bar
