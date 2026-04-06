@@ -7,7 +7,6 @@ public class EnemyChasePlayerState : EnemyBaseState
     {
         manager.SetStateIcon(EnemyStateIcon.Heard);
         
-        manager.GuardStopMoving();
         manager.agent.speed = manager.guardChaseSpeed;
     }
 

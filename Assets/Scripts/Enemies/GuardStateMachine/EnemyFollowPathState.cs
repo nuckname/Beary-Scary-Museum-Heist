@@ -16,8 +16,9 @@ public class EnemyFollowPathState : EnemyBaseState
         
         manager.agent.angularSpeed = manager.turnSpeed;
 
-        manager.GuardStopMoving();
-        manager.agent.updateRotation = true; 
+        manager.GuardStartMoving();
+        //manager.GuardStopMoving();
+      //  manager.agent.updateRotation = true; 
         manager.agent.speed = manager.guardPatrollSpeed;
 
         // Start heading to the first target
@@ -47,7 +48,7 @@ public class EnemyFollowPathState : EnemyBaseState
                 
                 // Wait is over, tell the agent to resume moving
                 manager.agent.isStopped = false;
-                manager.agent.updateRotation = true; // Let the NavMeshAgent control rotation again
+             //   manager.agent.updateRotation = true; // Let the NavMeshAgent control rotation again
                 manager.agent.SetDestination(targetWaypoint); 
             }
             
@@ -61,7 +62,7 @@ public class EnemyFollowPathState : EnemyBaseState
             
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
-            manager.agent.updateRotation = false; // Stop the agent from fighting our manual RotateTowards code
+         //   manager.agent.updateRotation = false; // Stop the agent from fighting our manual RotateTowards code
 
             manager.SetStateIcon(EnemyStateIcon.Hide);
         }

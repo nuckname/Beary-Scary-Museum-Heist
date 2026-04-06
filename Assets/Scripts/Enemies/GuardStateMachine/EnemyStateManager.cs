@@ -132,6 +132,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         agent.isStopped = true;
     }
+    
+    public void GuardStartMoving()
+    {
+        agent.isStopped = false;
+    }
+
 
     private void SetUpGuardPathingLines()
     {

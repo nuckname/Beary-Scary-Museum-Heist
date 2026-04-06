@@ -6,15 +6,15 @@ public class EnemyInvestigateALocationState : EnemyBaseState
     {
         manager.SetStateIcon(EnemyStateIcon.Confused);
         
-        manager.GuardStopMoving();
         manager.agent.speed = manager.guardPatrollSpeed;
+        manager.GuardStartMoving(); 
         
         manager.agent.SetDestination(manager.investigateTargetPosition);
     }
 
     public override void UpdateState(EnemyStateManager manager)
     {
-        if (!manager.agent.pathPending && manager.agent.remainingDistance < 0.5f)
+        if (manager.agent.remainingDistance < 0.05f)
         {
             manager.SwitchState(manager.enemyConfusedState);
         }
