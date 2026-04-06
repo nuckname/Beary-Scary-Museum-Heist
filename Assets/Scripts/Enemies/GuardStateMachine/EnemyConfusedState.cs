@@ -16,6 +16,10 @@ public class EnemyConfusedState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager manager)
     {
+        // Stop
+        manager.agent.isStopped = true;
+        manager.agent.velocity = Vector3.zero;
+        
         manager.currentWalkSpeed = manager.normalWalkSpeed;
 
         // Initialize look around behaviour based on where they are currently facing

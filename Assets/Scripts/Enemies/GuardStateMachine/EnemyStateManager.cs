@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStateManager : MonoBehaviour, ISoundListener
 {
@@ -57,6 +59,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
 
+    [HideInInspector] public NavMeshAgent agent;
+    
     [SerializeField] private Quaternion startingRotation;
 
     [Header("Path Visuals")] 
@@ -87,6 +91,11 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         }
     }
 
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
     void Start()
     {
         if (pathHolder == null)
@@ -110,6 +119,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         SwitchState(EnemyFollowPathState);
 
         enemyConfusedState.lookAngle = turnAngle;
+        
+        agent.isStopped = true;
     }
 
     public void GuardStartMoving()
@@ -117,6 +128,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         startingRotation = transform.rotation;
         
         currentWalkSpeed = normalWalkSpeed;
+        
+        agent.speed = currentWalkSpeed;
+        agent.isStopped = false;
     }
 
     private void SetUpGuardPathingLines()
@@ -260,15 +274,23 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         if (pathHolder == null || !showGuardPaths) return;
 
-        Gizmos.color = pathColor; 
+        Gizmos.color = pathColor;
 
         for (int i = 0; i < pathHolder.childCount - 1; i++)
         {
             Vector3 startPos = pathHolder.GetChild(i).position;
             Vector3 endPos = pathHolder.GetChild(i + 1).position;
-            
-            // Draw a line connecting the points in the Scene View
+
             Gizmos.DrawLine(startPos, endPos);
+        }
+
+        // Connect last waypoint back to first
+        if (pathHolder.childCount > 1)
+        {
+            Vector3 lastPos = pathHolder.GetChild(pathHolder.childCount - 1).position;
+            Vector3 firstPos = pathHolder.GetChild(0).position;
+
+            Gizmos.DrawLine(lastPos, firstPos);
         }
     }
 }

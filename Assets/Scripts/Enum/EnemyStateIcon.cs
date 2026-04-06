@@ -4,5 +4,6 @@ public enum EnemyStateIcon
     Heard,
     Seen,
     Patrolling,
-    Confused
+    Confused,
+    Stunned
 }

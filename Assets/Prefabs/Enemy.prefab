@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5522966862455197228}
   - component: {fileID: 2519119033967843050}
   - component: {fileID: 7632212504812127375}
+  - component: {fileID: 6222647849801143489}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -99,11 +100,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5345641586640339}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b9114580ee3aab46ada38e3da9b4ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockRotation
+--- !u!114 &6222647849801143489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345641586640339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196566e8fa85c4c33a5bf7fedc9c93e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
 --- !u!1 &448901846782747718
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +253,7 @@ GameObject:
   - component: {fileID: 8383171293565527006}
   - component: {fileID: 1398979885939180627}
   - component: {fileID: 7366677077020431994}
+  - component: {fileID: 7098716618415637635}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -323,6 +337,7 @@ MonoBehaviour:
   patrollingIcon: {fileID: 0}
   confusedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
   whatTypeOfNoiseTheGuardHeard: 0
+  agent: {fileID: 0}
   startingRotation: {x: 0, y: 0, z: 0, w: 0}
   showGuardPaths: 1
   pathColor: {r: 1, g: 0, b: 0, a: 1}
@@ -368,15 +383,35 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7098716618415637635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458527298132620225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6034622216592793170
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,14 +8,23 @@ public class EnemyFollowPathState : EnemyBaseState
 
     public override void EnterState(EnemyStateManager manager)
     {
-        // Optional: Find the closest waypoint here so they don't walk through walls to get to waypoint[0]
         isWaiting = false;
         waitTimer = 0f;
-        
         manager.SetStateIcon(EnemyStateIcon.Hide);
 
-        // Reset the speed
-        manager.currentWalkSpeed = manager.currentWalkSpeed;
+        manager.agent.acceleration = 100f; 
+        
+        manager.agent.angularSpeed = manager.turnSpeed;
+
+        manager.agent.isStopped = false;
+        manager.agent.updateRotation = true; 
+        manager.agent.speed = manager.currentWalkSpeed;
+
+        // Start heading to the first target
+        if (manager.waypoints.Length > 0)
+        {
+            manager.agent.SetDestination(manager.waypoints[targetWaypointIndex]);
+        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -35,31 +44,34 @@ public class EnemyFollowPathState : EnemyBaseState
             {
                 isWaiting = false;
                 waitTimer = 0f;
+                
+                // Wait is over, tell the agent to resume moving
+                manager.agent.isStopped = false;
+                manager.agent.updateRotation = true; // Let the NavMeshAgent control rotation again
+                manager.agent.SetDestination(targetWaypoint); 
             }
             
-            // Stop updating movement while waiting
             return; 
         }
 
-        RotateTowards(manager, targetWaypoint);
-
-        // Move towards target
-        manager.transform.position = Vector3.MoveTowards(manager.transform.position, targetWaypoint, manager.currentWalkSpeed * Time.deltaTime);
-
-        // Check if arrived
-        if (Vector3.Distance(manager.transform.position, targetWaypoint) < 0.1f)
+        // Did we arrive? 
+        if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance + 0.1f)
         {
             targetWaypointIndex = (targetWaypointIndex + 1) % manager.waypoints.Length;
-            isWaiting = true; // Trigger wait for next frame
+            
+            isWaiting = true; 
+            manager.agent.isStopped = true; // Stop the agent from walking while waiting
+            manager.agent.updateRotation = false; // Stop the agent from fighting our manual RotateTowards code
 
             manager.SetStateIcon(EnemyStateIcon.Hide);
         }
     }
 
-    // This is public so we can randomly look around
     public void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
     {
         Vector3 direction = (targetPos - manager.transform.position).normalized;
+        direction.y = 0; // Flatten the Y axis so the guard doesn't tilt up/down
+
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -67,9 +79,7 @@ public class EnemyFollowPathState : EnemyBaseState
         }
     }
 
-
     public override void OnCollisionEnter(EnemyStateManager manager, Collision other)
     {
-        
     }
 }

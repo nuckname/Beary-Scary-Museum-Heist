@@ -12,12 +12,13 @@ public class EnemyStunnedState : EnemyBaseState
     {
         stunTimer = 0f;
 
-       // manager.SetStateText("STUNNED", Color.gray);
-
-        if (manager.fieldOfView != null)
-        {
-            manager.fieldOfView.DisableVision();
-        }
+        manager.agent.isStopped = true;
+        manager.agent.velocity = Vector3.zero;
+        
+        manager.SetStateIcon(EnemyStateIcon.Stunned);
+        
+        manager.fieldOfView.DisableVision();
+        
     }
 
     public override void UpdateState(EnemyStateManager manager)
