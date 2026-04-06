@@ -1269,12 +1269,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
   player: {fileID: 152894695}
-  offset: {x: 0, y: 12.34, z: -17.5}
+  offset: {x: 0, y: 17, z: -17}
+  normalRotationEuler: {x: 40, y: 0, z: 0}
   lockYAxis: 0
   fixedYPosition: 0
   useTopDownView: 0
-  topDownOffset: {x: 0, y: 30, z: 0}
-  topDownRotation: {x: 90, y: 0, z: 0}
+  topDownOffset: {x: 0, y: 17, z: -17}
+  topDownRotation: {x: 40, y: 0, z: 0}
   positionSmoothSpeed: 5
   rotationSmoothSpeed: 5
 --- !u!65 &755569149
@@ -6593,7 +6594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1825642667893727279, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.95
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 1825642667893727279, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6638,7 +6639,7 @@ PrefabInstance:
     - target: {fileID: 4009258880554653775, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: lineMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
+      objectReference: {fileID: 2100000, guid: 325b322c02f46c5408b67676e4228b36, type: 2}
     - target: {fileID: 4018978504740902728, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: stepInterval
       value: 1

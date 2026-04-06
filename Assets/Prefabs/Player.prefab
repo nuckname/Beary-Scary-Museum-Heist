@@ -72,9 +72,6 @@ MonoBehaviour:
   maxStamina: 5
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
-  allowMovementInTopDown: 0
-  maxTopDownHoldTime: 3000
-  swapBackDelay: 3
   controller: {fileID: 1325467085621830619}
 --- !u!143 &1325467085621830619
 CharacterController:
@@ -396,6 +393,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea5d19f6f36d9e4cb93070f52b9dee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  allowMovementInTopDown: 0
+  maxTopDownHoldTime: 3
+  swapBackDelay: 1
 --- !u!1 &593090449467370125
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,7 +762,7 @@ Transform:
   m_GameObject: {fileID: 5549496384786629327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 0, z: 1.45}
+  m_LocalPosition: {x: -0.16, y: 0, z: 1.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

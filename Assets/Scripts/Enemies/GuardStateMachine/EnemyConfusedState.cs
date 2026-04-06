@@ -12,6 +12,8 @@ public class EnemyConfusedState : EnemyBaseState
     private Quaternion targetLookRotation;
     private bool lookingRight;
 
+    public int lookAngle; // How far the guard turns left and right when looking around
+
     public override void EnterState(EnemyStateManager manager)
     {
         manager.currentWalkSpeed = manager.normalWalkSpeed;
@@ -53,8 +55,8 @@ public class EnemyConfusedState : EnemyBaseState
 
     private void SetNextLookRotation()
     {
-        // Turn 60 degrees left or right from the original base rotation
-        float angle = lookingRight ? 60f : -60f;
+        // Turn a set amount of degrees (lookAngle) left or right from the original base rotation
+        float angle = lookingRight ? lookAngle : -lookAngle;
         targetLookRotation = baseRotation * Quaternion.Euler(0, angle, 0);
     }
 

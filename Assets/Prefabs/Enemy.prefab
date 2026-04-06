@@ -301,15 +301,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStateManager
   pathHolder: {fileID: 0}
-  turnSpeed: 60
+  turnSpeed: 45
   waitTime: 2
   waypoints: []
   investigateTargetPosition: {x: 0, y: 0, z: 0}
   makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight: 1
   makeGuardsCreateNoiseWhenTheySeeThePlayer: 1
   guardNoiseRadiusWhenTheySeeThePlayer: 5
-  minAmountOfTurnsTheGuardDoes: 2
-  maxAmountOfTurnsTheGuardDoes: 4
+  amountOfTimesTheGuardTurns: 2
+  turnAngle: 40
   currentWalkSpeed: 0
   chaseSpeed: 4
   normalWalkSpeed: 2
@@ -471,8 +471,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6385661620311417246}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.371, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -654,7 +654,7 @@ Transform:
   m_GameObject: {fileID: 6982605526775248571}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.371, z: 0}
+  m_LocalPosition: {x: 0, y: -0.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

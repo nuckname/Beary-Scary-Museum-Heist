@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
 
     [Header("Normal View Settings")]
     public Vector3 offset = new Vector3(0f, 2f, -10f);
+    public Vector3 normalRotationEuler = new Vector3(15f, 0f, 0f);
     public bool lockYAxis = false;
     public float fixedYPosition = 0f;
 
@@ -50,7 +51,7 @@ public class CameraFollow : MonoBehaviour
         {
             // Normal Mode
             targetPosition = player.position + offset;
-            targetRotation = normalRotation;
+            targetRotation = Quaternion.Euler(normalRotationEuler);
 
             // Apply Y-axis lock only in normal view (locking Y in top-down usually breaks it)
             if (lockYAxis)
@@ -63,6 +64,6 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, positionSmoothSpeed * Time.deltaTime);
 
         // 3. Smoothly adjust the camera's rotation
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);
     }
 }

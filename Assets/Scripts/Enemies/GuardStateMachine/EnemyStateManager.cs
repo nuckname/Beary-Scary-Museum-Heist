@@ -26,7 +26,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
              "A turn is either looking left or right. So if this is 2, they will look left, then right, then go back to patrolling. " +
              "If this is 4, they will look left, right, left, right before going back to patrolling.")]
     public int amountOfTimesTheGuardTurns = 2;
-    
+    public int turnAngle = 40;
     
     [Header("Guard Speed")]
     public float currentWalkSpeed;
@@ -108,6 +108,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         SetUpGuardPathingLines();
 
         SwitchState(EnemyFollowPathState);
+
+        enemyConfusedState.lookAngle = turnAngle;
     }
 
     public void GuardStartMoving()
