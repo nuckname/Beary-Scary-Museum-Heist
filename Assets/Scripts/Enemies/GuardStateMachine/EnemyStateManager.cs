@@ -33,6 +33,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
              "If this is 4, they will look left, right, left, right before going back to patrolling.")]
     public int amountOfTimesTheGuardTurns = 2;
     public int turnAngle = 40;
+
+    [Header("Patrol Turning Vision Reduction")]
+    [Tooltip("Percentage to reduce vision radius when turning. 0.5 = 50% reduction.")]
+    [Range(0f, 1f)]
+    public float turnVisionRadiusReductionPercentage = 0.5f; 
+    public float fovTurnAngleThreshold = 25f;
     
     [Header("References")]
     public FieldOfView fieldOfView;
@@ -166,6 +172,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public void SwitchState(EnemyBaseState state)
     {
         EnemyCurrentState = state;
+        
+        fieldOfView.RestoreFOVRadius();
         
         if (EnemyCurrentState != null)
         {

@@ -12,13 +12,9 @@ public class EnemyFollowPathState : EnemyBaseState
         waitTimer = 0f;
         manager.SetStateIcon(EnemyStateIcon.Hide);
 
-        manager.agent.acceleration = 100f; 
-        
         manager.agent.angularSpeed = manager.turnSpeed;
 
         manager.GuardStartMoving();
-        //manager.GuardStopMoving();
-      //  manager.agent.updateRotation = true; 
         manager.agent.speed = manager.guardPatrollSpeed;
 
         // Start heading to the first target
@@ -34,6 +30,42 @@ public class EnemyFollowPathState : EnemyBaseState
 
         Vector3 targetWaypoint = manager.waypoints[targetWaypointIndex];
 
+        Vector3 desiredDirection = Vector3.zero;
+
+        if (isWaiting)
+        {
+            // When waiting, the guard is manually rotating towards the next waypoint
+            desiredDirection = (targetWaypoint - manager.transform.position).normalized;
+        }
+        else if (manager.agent.hasPath)
+        {
+            // When walking, the steeringTarget is the immediate next corner in the NavMesh path
+            desiredDirection = (manager.agent.steeringTarget - manager.transform.position).normalized;
+        }
+
+        desiredDirection.y = 0; // Flatten
+
+        // Check the angle for FOV reduction
+        if (desiredDirection != Vector3.zero)
+        {
+            float angleToTarget = Vector3.Angle(manager.transform.forward, desiredDirection);
+            
+            if (angleToTarget >= manager.fovTurnAngleThreshold)
+            {
+                // The angle variation is 25+ degrees, reduce vision radius
+                manager.fieldOfView.ReduceFOVRadius(manager.turnVisionRadiusReductionPercentage);
+            }
+            else
+            {
+                // We are facing mostly forward, return radius to normal
+                manager.fieldOfView.RestoreFOVRadius();
+            }
+        }
+        else
+        {
+            manager.fieldOfView.RestoreFOVRadius();
+        }
+
         if (isWaiting)
         {
             waitTimer += Time.deltaTime;
@@ -41,14 +73,21 @@ public class EnemyFollowPathState : EnemyBaseState
             // Turn to face the next waypoint while waiting
             RotateTowards(manager, targetWaypoint);
 
-            if (waitTimer >= manager.waitTime)
+            // Check if the guard has fully rotated to face the next waypoint
+            Vector3 directionToTarget = (targetWaypoint - manager.transform.position).normalized;
+            directionToTarget.y = 0; 
+            
+            // We check if the angle is less than 1f degree to account for tiny math inaccuracies 
+            bool hasFinishedTurning = Vector3.Angle(manager.transform.forward, directionToTarget) < 1f;
+
+            // Only stop waiting if the timer is up AND we have fully finished turning
+            if (waitTimer >= manager.waitTime && hasFinishedTurning)
             {
                 isWaiting = false;
                 waitTimer = 0f;
                 
-                // Wait is over, tell the agent to resume moving
+                // Wait and turn is over, tell the agent to resume moving
                 manager.agent.isStopped = false;
-             //   manager.agent.updateRotation = true; // Let the NavMeshAgent control rotation again
                 manager.agent.SetDestination(targetWaypoint); 
             }
             
@@ -62,12 +101,13 @@ public class EnemyFollowPathState : EnemyBaseState
             
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
-         //   manager.agent.updateRotation = false; // Stop the agent from fighting our manual RotateTowards code
 
             manager.SetStateIcon(EnemyStateIcon.Hide);
         }
     }
-
+    
+    // AI
+    // https://gemini.google.com/share/93d7d274a35c
     public void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
     {
         Vector3 direction = (targetPos - manager.transform.position).normalized;
@@ -75,8 +115,25 @@ public class EnemyFollowPathState : EnemyBaseState
 
         if (direction != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            manager.transform.rotation = Quaternion.RotateTowards(manager.transform.rotation, targetRotation, manager.turnSpeed * Time.deltaTime);
+            // 1. Get the signed angle (-180 to 180 degrees) from current forward to the target
+            float signedAngle = Vector3.SignedAngle(manager.transform.forward, direction, Vector3.up);
+            
+            // 2. Convert to a 0 to 360 degree range to measure the exact clockwise distance
+            float clockwiseAngle = signedAngle >= 0f ? signedAngle : 360f + signedAngle;
+            
+            float rotationStep = manager.turnSpeed * Time.deltaTime;
+
+            // 3. Check if we are close enough to snap to the exact rotation 
+            // (Using a small threshold near 360f prevents a full spin if the agent starts slightly left)
+            if (clockwiseAngle <= rotationStep || clockwiseAngle >= 359f)
+            {
+                manager.transform.rotation = Quaternion.LookRotation(direction);
+            }
+            else
+            {
+                // 4. Always rotate right (positive Y axis rotation)
+                manager.transform.Rotate(Vector3.up, rotationStep, Space.World);
+            }
         }
     }
 

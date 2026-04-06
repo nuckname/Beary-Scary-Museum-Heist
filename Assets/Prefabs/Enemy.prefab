@@ -327,6 +327,8 @@ MonoBehaviour:
   guardNoiseRadiusWhenTheySeeThePlayer: 5
   amountOfTimesTheGuardTurns: 2
   turnAngle: 40
+  turnVisionRadiusReductionPercentage: 0.25
+  fovTurnAngleThreshold: 1
   fieldOfView: {fileID: 7372062438631642018}
   playerTransform: {fileID: 0}
   noiseEmitter: {fileID: 1398979885939180627}

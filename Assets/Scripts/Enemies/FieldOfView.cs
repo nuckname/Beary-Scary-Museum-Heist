@@ -47,12 +47,15 @@ public class FieldOfView : MonoBehaviour {
     private Vector3 lastKnownPlayerPosition;
     private float originalViewRadius;
 
+    private float originalViewAngle;
+    
     private void Awake()
     {
        noiseEmitter = GetComponentInParent<NoiseEmitter>();
        enemyStateManager = GetComponentInParent<EnemyStateManager>();
        
        originalViewRadius = viewRadius;
+       originalViewAngle = viewAngle;
     }
 
     void Start() {
@@ -218,6 +221,22 @@ public class FieldOfView : MonoBehaviour {
     public void RestoreVision()
     {
        viewRadius = originalViewRadius;
+       viewAngle = originalViewAngle;
+    }
+    
+    public void RestoreFOVRadius()
+    {
+       viewRadius = originalViewRadius;
+    }
+    
+    /// <summary>
+    /// E.g. A 50% reduction (0.50f) of a 10m radius makes it 5m
+    /// 
+    /// </summary>
+    /// <param name="percentage"></param>
+    public void ReduceFOVRadius(float percentage)
+    {
+       viewRadius = originalViewRadius * (1f - percentage);
     }
 
     EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast) {
