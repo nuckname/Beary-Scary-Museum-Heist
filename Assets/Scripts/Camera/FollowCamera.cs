@@ -4,8 +4,7 @@ using UnityEngine;
 // AI gen https://gemini.google.com/share/e8c0047c52fb
 public class CameraFollow : MonoBehaviour
 {
-    [Header("Target Setup")]
-    public Transform player;
+    private Transform player;
 
     [Header("Normal View Settings")]
     public Vector3 offset = new Vector3(0f, 2f, -10f);
@@ -29,6 +28,8 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
         // Store the initial rotation of the camera to return to it when top-down is toggled off
         normalRotation = transform.rotation;
     }

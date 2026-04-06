@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 // https://www.youtube.com/shorts/D4xMei0nYW0
 // this is not mine https://www.patreon.com/posts/how-to-make-144078368
 public class CameraObstacleFade : MonoBehaviour
 {
+    private Transform cameraTransform;
+    
     [Header("References")]
-    public Transform cameraTransform;
     public LayerMask obstructionMask;
     public LayerMask forceHideObjects; 
 
@@ -15,6 +17,11 @@ public class CameraObstacleFade : MonoBehaviour
     public Color rayColorNoHit = Color.green;
 
     private FadeObstacles _currentObstacle;
+
+    private void Awake()
+    {
+        cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+    }
 
     private void LateUpdate()
     {
