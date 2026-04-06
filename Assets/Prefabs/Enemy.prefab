@@ -319,15 +319,14 @@ MonoBehaviour:
   turnSpeed: 45
   waitTime: 2
   waypoints: []
+  guardPatrollSpeed: 3
+  guardChaseSpeed: 4
   investigateTargetPosition: {x: 0, y: 0, z: 0}
   makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight: 1
   makeGuardsCreateNoiseWhenTheySeeThePlayer: 1
   guardNoiseRadiusWhenTheySeeThePlayer: 5
   amountOfTimesTheGuardTurns: 2
   turnAngle: 40
-  currentWalkSpeed: 0
-  chaseSpeed: 4
-  normalWalkSpeed: 2
   fieldOfView: {fileID: 7372062438631642018}
   playerTransform: {fileID: 0}
   noiseEmitter: {fileID: 1398979885939180627}

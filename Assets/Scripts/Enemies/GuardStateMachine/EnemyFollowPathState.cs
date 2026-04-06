@@ -16,9 +16,9 @@ public class EnemyFollowPathState : EnemyBaseState
         
         manager.agent.angularSpeed = manager.turnSpeed;
 
-        manager.agent.isStopped = false;
+        manager.GuardStopMoving();
         manager.agent.updateRotation = true; 
-        manager.agent.speed = manager.currentWalkSpeed;
+        manager.agent.speed = manager.guardPatrollSpeed;
 
         // Start heading to the first target
         if (manager.waypoints.Length > 0)

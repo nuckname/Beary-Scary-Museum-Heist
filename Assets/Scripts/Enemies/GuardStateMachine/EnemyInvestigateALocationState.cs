@@ -6,7 +6,8 @@ public class EnemyInvestigateALocationState : EnemyBaseState
     {
         manager.SetStateIcon(EnemyStateIcon.Confused);
         
-        manager.agent.speed = manager.currentWalkSpeed;
+        manager.GuardStopMoving();
+        manager.agent.speed = manager.guardPatrollSpeed;
         
         manager.agent.SetDestination(manager.investigateTargetPosition);
     }

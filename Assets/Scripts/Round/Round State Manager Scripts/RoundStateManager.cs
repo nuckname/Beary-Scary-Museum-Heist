@@ -65,7 +65,7 @@ public class RoundStateManager : MonoBehaviour
             EnemyStateManager enemyStateManager = guard.GetComponent<EnemyStateManager>();
             if(enemyStateManager != null)
             {
-                enemyStateManager.GuardStartMoving();
+                enemyStateManager.InitialiseGuardStartMoving();
             }
         }
     }

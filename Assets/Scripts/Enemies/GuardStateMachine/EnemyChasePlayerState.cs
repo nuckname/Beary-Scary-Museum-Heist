@@ -5,10 +5,10 @@ public class EnemyChasePlayerState : EnemyBaseState
 {
     public override void EnterState(EnemyStateManager manager)
     {
-        manager.currentWalkSpeed = manager.chaseSpeed;
         manager.SetStateIcon(EnemyStateIcon.Heard);
         
-        manager.agent.speed = manager.currentWalkSpeed;
+        manager.GuardStopMoving();
+        manager.agent.speed = manager.guardChaseSpeed;
     }
 
     public override void UpdateState(EnemyStateManager manager)

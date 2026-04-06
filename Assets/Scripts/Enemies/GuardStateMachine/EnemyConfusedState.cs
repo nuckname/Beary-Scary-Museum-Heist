@@ -20,8 +20,6 @@ public class EnemyConfusedState : EnemyBaseState
         manager.agent.isStopped = true;
         manager.agent.velocity = Vector3.zero;
         
-        manager.currentWalkSpeed = manager.normalWalkSpeed;
-
         // Initialize look around behaviour based on where they are currently facing
         baseRotation = manager.transform.rotation;
         

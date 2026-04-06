@@ -10,6 +10,10 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float waitTime = 2f;
     [HideInInspector] public Vector3[] waypoints;
 
+    [Header("Path Visuals")] 
+    public float guardPatrollSpeed = 3f;
+    public float guardChaseSpeed = 3f;
+    
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
@@ -29,11 +33,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
              "If this is 4, they will look left, right, left, right before going back to patrolling.")]
     public int amountOfTimesTheGuardTurns = 2;
     public int turnAngle = 40;
-    
-    [Header("Guard Speed")]
-    public float currentWalkSpeed;
-    public float chaseSpeed = 4f;
-    public float normalWalkSpeed = 2f;
     
     [Header("References")]
     public FieldOfView fieldOfView;
@@ -104,8 +103,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             return;
         }
 
-        // Freeze guards until we want them to start moving called in RoundStateManager
-        currentWalkSpeed = 0;
 
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)
@@ -120,17 +117,20 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
         enemyConfusedState.lookAngle = turnAngle;
         
+        // Freeze guards until we want them to start moving called in RoundStateManager
         agent.isStopped = true;
+        agent.speed = 0;
     }
 
-    public void GuardStartMoving()
+    public void InitialiseGuardStartMoving()
     {
-        startingRotation = transform.rotation;
-        
-        currentWalkSpeed = normalWalkSpeed;
-        
-        agent.speed = currentWalkSpeed;
+        agent.speed = guardPatrollSpeed;
         agent.isStopped = false;
+    }
+
+    public void GuardStopMoving()
+    {
+        agent.isStopped = true;
     }
 
     private void SetUpGuardPathingLines()
