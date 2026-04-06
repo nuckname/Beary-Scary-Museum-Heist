@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerFootstepNoise : MonoBehaviour
 {
     private NoiseEmitter noiseEmitter;
-    [SerializeField] private CharacterController controller;
+    [SerializeField] private Rigidbody rb;
 
     [Header("Footstep Settings")]
     [Tooltip("How often a footstep sound triggers when moving (in seconds).")]
@@ -41,7 +41,7 @@ public class PlayerFootstepNoise : MonoBehaviour
 
     private void Update()
     {
-        float currentSpeed = controller.velocity.magnitude;
+        float currentSpeed = rb.linearVelocity.magnitude;
         
         if (currentSpeed > 0.1f && currentSpeed < maxSpeed)
         {

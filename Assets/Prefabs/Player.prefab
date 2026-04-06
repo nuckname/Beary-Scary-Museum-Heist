@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1825642667893727279}
   - component: {fileID: 2913510228741621315}
   - component: {fileID: 8006694737608548581}
-  - component: {fileID: 1325467085621830619}
   - component: {fileID: 3106409119693640108}
   - component: {fileID: 8109495274335677389}
   - component: {fileID: 2621079169374344776}
@@ -73,32 +72,7 @@ MonoBehaviour:
   maxStamina: 5
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
-  controller: {fileID: 1325467085621830619}
---- !u!143 &1325467085621830619
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223815211633026717}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2.09
-  m_Radius: 0.65
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  rb: {fileID: 3292789174107578550}
 --- !u!23 &3106409119693640108
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -656,7 +630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b015d5270392324d913ac5e4b84249a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFootstepNoise
-  controller: {fileID: 1325467085621830619}
+  rb: {fileID: 3292789174107578550}
   stepInterval: 0.5
   baseNoiseRadius: 1.5
   speedMultiplier: 0.25

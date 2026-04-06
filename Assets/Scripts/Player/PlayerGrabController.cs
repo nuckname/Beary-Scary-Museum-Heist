@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerGrabController : MonoBehaviour
@@ -20,17 +21,17 @@ public class PlayerGrabController : MonoBehaviour
         playerFootstepNoise = GetComponentInChildren<PlayerFootstepNoise>(); 
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private void OnCollisionEnter(Collision other)
     {
-        if (hit.gameObject.CompareTag("CanPickUp") && PickedUpObject == null)
+        if (other.gameObject.CompareTag("CanPickUp") && PickedUpObject == null)
         {
-            IPickable[] pickables = hit.gameObject.GetComponents<IPickable>();
+            IPickable[] pickables = other.gameObject.GetComponents<IPickable>();
         
             if (pickables.Length > 0)
             {
                 if (pickables[0].CanBePickedUp && pickables[0].IsOnGround())
                 {
-                    PickUpObject(hit.gameObject, pickables);
+                    PickUpObject(other.gameObject, pickables);
                 }
             }
             else
