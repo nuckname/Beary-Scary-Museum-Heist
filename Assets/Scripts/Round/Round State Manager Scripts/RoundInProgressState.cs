@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class RoundInProgressState : RoundBaseState
@@ -41,7 +42,9 @@ public class RoundInProgressState : RoundBaseState
                 if (!artifact.hasBeenUsed)
                 {
                     manager.currentArtifacts++;
-
+                    
+                    artifact.hasBeenUsed = true; 
+                    
                     manager.UpdateUI();
                 }
             

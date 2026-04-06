@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3016972568219439364}
   - component: {fileID: 3292789174107578550}
   - component: {fileID: 8212258907786603520}
+  - component: {fileID: 5045092649953161578}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -379,7 +380,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &8212258907786603520
 MonoBehaviour:
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223815211633026717}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ea5d19f6f36d9e4cb93070f52b9dee8, type: 3}
   m_Name: 
@@ -396,6 +397,27 @@ MonoBehaviour:
   allowMovementInTopDown: 0
   maxTopDownHoldTime: 3
   swapBackDelay: 1
+--- !u!114 &5045092649953161578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223815211633026717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94667a6f198384b3e9760d1b22b9811f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Detector
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 512
+  forceHideObjects:
+    serializedVersion: 2
+    m_Bits: 4096
+  showDebugRay: 1
+  rayColorHit: {r: 1, g: 0, b: 0, a: 1}
+  rayColorNoHit: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &593090449467370125
 GameObject:
   m_ObjectHideFlags: 0

@@ -120,14 +120,6 @@ public class FieldOfView : MonoBehaviour {
                    spottedPlayer = target;
                    lastKnownPlayerPosition = target.position;
                 }
-
-                if (target.CompareTag("CanPickUp"))
-                {
-                   // Seen object but lets just say its a player for now
-                   seesPlayerThisFrame = true;
-                   spottedPlayer = target;
-                   lastKnownPlayerPosition = target.position;
-                }
              }
           }
        }
