@@ -886,7 +886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94667a6f198384b3e9760d1b22b9811f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Detector
-  cameraTransform: {fileID: 755569146}
   obstructionMask:
     serializedVersion: 2
     m_Bits: 512
@@ -1117,11 +1116,6 @@ Transform:
   - {fileID: 843898873}
   m_Father: {fileID: 1372617713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &755569146 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
-  m_PrefabInstance: {fileID: 5255910882130630127}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &778640265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1747,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1372617713}
     m_Modifications:
+    - target: {fileID: 890964144921329210, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 1423316473779295321, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 93.160034
@@ -1801,6 +1799,14 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4301928350819277730, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389413631013539545, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1819,6 +1825,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1372617713}
     m_Modifications:
+    - target: {fileID: 890964144921329210, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 1423316473779295321, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 122.6
@@ -1866,6 +1876,14 @@ PrefabInstance:
     - target: {fileID: 2687496154255987620, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
       propertyPath: m_Mass
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301928350819277730, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389413631013539545, guid: e45ad6b9569440a40bcb5e192411ed9b, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3086,7 +3104,7 @@ GameObject:
   - component: {fileID: 1680320778}
   - component: {fileID: 1680320780}
   - component: {fileID: 1680320779}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: artefactPedestal1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3237,7 +3255,7 @@ GameObject:
   - component: {fileID: 1728752405}
   - component: {fileID: 1728752407}
   - component: {fileID: 1728752406}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: artefactPedestal1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3510,6 +3528,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3219542328800147008, guid: 63aa034763ba012448e3d7413f2fdd1a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688378781529350941, guid: 63aa034763ba012448e3d7413f2fdd1a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3959541809876040684, guid: 63aa034763ba012448e3d7413f2fdd1a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410920096262937266, guid: 63aa034763ba012448e3d7413f2fdd1a, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5702931061549611650, guid: 63aa034763ba012448e3d7413f2fdd1a, type: 3}
       propertyPath: m_Mass
       value: 1
@@ -3593,6 +3627,70 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 312214972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1893902372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1893902374}
+  - component: {fileID: 1893902373}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1893902373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893902372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 6903
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.33333334
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 57c1ce497aac109469e8797b17014496, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &1893902374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893902372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.04109, y: 3.03856, z: -183.21465}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1949571920
 PrefabInstance:
@@ -4039,7 +4137,7 @@ GameObject:
   - component: {fileID: 2073304867}
   - component: {fileID: 2073304869}
   - component: {fileID: 2073304868}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: artefactPedestal1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7420,3 +7518,4 @@ SceneRoots:
   - {fileID: 171691766}
   - {fileID: 387482766}
   - {fileID: 1824741219}
+  - {fileID: 1893902374}
