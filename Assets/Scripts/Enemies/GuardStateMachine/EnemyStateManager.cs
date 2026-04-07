@@ -163,10 +163,17 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         lineRenderer.startWidth = pathLineWidth;
         lineRenderer.endWidth = pathLineWidth;
 
+        // Make the lines on the ground
+        Vector3[] linePositions = new Vector3[waypoints.Length];
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            linePositions[i] = new Vector3(waypoints[i].x, 0f, waypoints[i].z);
+        }
+        
         lineRenderer.loop = true;
         
-        lineRenderer.positionCount = waypoints.Length;
-        lineRenderer.SetPositions(waypoints);
+        lineRenderer.positionCount = linePositions.Length;
+        lineRenderer.SetPositions(linePositions);
     }
 
     void Update()
