@@ -162,6 +162,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // Width
         lineRenderer.startWidth = pathLineWidth;
         lineRenderer.endWidth = pathLineWidth;
+
+        lineRenderer.loop = true;
         
         lineRenderer.positionCount = waypoints.Length;
         lineRenderer.SetPositions(waypoints);
