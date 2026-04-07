@@ -115,24 +115,32 @@ public class EnemyFollowPathState : EnemyBaseState
 
         if (direction != Vector3.zero)
         {
-            // 1. Get the signed angle (-180 to 180 degrees) from current forward to the target
-            float signedAngle = Vector3.SignedAngle(manager.transform.forward, direction, Vector3.up);
-            
-            // 2. Convert to a 0 to 360 degree range to measure the exact clockwise distance
-            float clockwiseAngle = signedAngle >= 0f ? signedAngle : 360f + signedAngle;
-            
-            float rotationStep = manager.turnSpeed * Time.deltaTime;
-
-            // 3. Check if we are close enough to snap to the exact rotation 
-            // (Using a small threshold near 360f prevents a full spin if the agent starts slightly left)
-            if (clockwiseAngle <= rotationStep || clockwiseAngle >= 359f)
+            if (manager.alwaysTurnRight)
             {
-                manager.transform.rotation = Quaternion.LookRotation(direction);
+                // 1. Get the signed angle (-180 to 180 degrees) from current forward to the target
+                float signedAngle = Vector3.SignedAngle(manager.transform.forward, direction, Vector3.up);
+                
+                // 2. Convert to a 0 to 360 degree range to measure the exact clockwise distance
+                float clockwiseAngle = signedAngle >= 0f ? signedAngle : 360f + signedAngle;
+                
+                float rotationStep = manager.turnSpeed * Time.deltaTime;
+
+                // 3. Check if we are close enough to snap to the exact rotation 
+                // (Using a small threshold near 360f prevents a full spin if the agent starts slightly left)
+                if (clockwiseAngle <= rotationStep || clockwiseAngle >= 359f)
+                {
+                    manager.transform.rotation = Quaternion.LookRotation(direction);
+                }
+                else
+                {
+                    // 4. Always rotate right (positive Y axis rotation)
+                    manager.transform.Rotate(Vector3.up, rotationStep, Space.World);
+                }
             }
             else
             {
-                // 4. Always rotate right (positive Y axis rotation)
-                manager.transform.Rotate(Vector3.up, rotationStep, Space.World);
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                manager.transform.rotation = Quaternion.RotateTowards(manager.transform.rotation, targetRotation, manager.turnSpeed * Time.deltaTime);
             }
         }
     }

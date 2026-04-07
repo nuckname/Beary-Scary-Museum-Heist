@@ -56,6 +56,10 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [SerializeField] private NoiseType whatTypeOfNoiseTheGuardHeard = NoiseType.Nothing;
     private bool hasShoutedAtPlayer = false; // Moved from FieldOfView
     
+    [Header("Movement Settings")]
+    [Tooltip("If true, the guard will only rotate clockwise. If false, they will take the shortest rotation path.")]
+    public bool alwaysTurnRight = false;
+    
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
     [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
