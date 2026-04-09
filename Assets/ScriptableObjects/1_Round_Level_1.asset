@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1_Round_Level_1
   m_EditorClassIdentifier: Assembly-CSharp::RoundConfigurationSO
   amountOfArtifactsToCompleteLevel: 1
+  objectsToRemoveIndices: 
   guardsToSpawn:
   - guardPrefab: {fileID: 1458527298132620225, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
     pathHolderIndex: 0
@@ -21,3 +22,6 @@ MonoBehaviour:
     amountOfTimesTheGuardTurns: 2
     FLOATturnVisionRadiusReductionPercentage: 0.2
     alwaysTurnRight: 0
+  artifactsToSpawn:
+  - artifactPrefab: {fileID: 6030637959745600554, guid: 7261954f3bc58c04f88cc3929a73a9c2, type: 3}
+    spawnPointIndex: 0

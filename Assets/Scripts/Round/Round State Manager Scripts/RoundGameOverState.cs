@@ -9,10 +9,6 @@ public class RoundGameOverState : RoundBaseState
     {
         Debug.Log("Round Over. Threshold Reached.");
         Debug.Log("Seen: " + RoundStateManager.AmountOfTimesPlayerSpottedByGuards);
-
-        // Player also needs to enter?
-        // Then we can switch back to About to start state.
-        manager.currentRoundIndex++;
     }
 
     public override void UpdateState(RoundStateManager manager)

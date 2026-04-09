@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
         
         artifactValueText = GameObject.FindGameObjectWithTag("artifactValueText").GetComponent<TextMeshProUGUI>();
     }
-
+    
     public void UpdateArtifactDisplay(int current, int total)
     {
         artifactValueText.text = $"Artifacts: {current} / {total}";

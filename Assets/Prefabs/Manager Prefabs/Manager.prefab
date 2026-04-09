@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7430978020100226380}
-  - component: {fileID: 8646748489233066784}
   - component: {fileID: 3759329114673022119}
   - component: {fileID: 3078350231022342017}
   m_Layer: 0
@@ -38,19 +37,6 @@ Transform:
   - {fileID: 6087978617593187296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8646748489233066784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2207204159110247818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd288b3e4b04c048b8ec15bff76f438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuotaManager
-  quotaValue: 0
 --- !u!114 &3759329114673022119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5605054876303820595}
   - component: {fileID: 7403544306093083863}
+  - component: {fileID: 1333091676071590625}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -476,14 +463,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef272eb64a634143a9f5b4f1a10e043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundStateManager
-  timer: {fileID: 3759329114673022119}
   currentStateName: 
   amountOfArtifactsToCompleteLevel: 1
   currentArtifacts: 0
-  guards:
-  - {fileID: 0}
   roundConfigurations: []
   currentRoundIndex: 0
   playerTransform: {fileID: 0}
-  guardSpawnPoints: []
   pathHolders: []
+  artifactSpawnPoints: []
+  removableObjects: []
+--- !u!114 &1333091676071590625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6027145252986094694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 818aa203ce919cb4d94a0e76f20f5a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

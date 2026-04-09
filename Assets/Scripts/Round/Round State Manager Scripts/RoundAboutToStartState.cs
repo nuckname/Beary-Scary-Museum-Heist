@@ -7,7 +7,9 @@ public class RoundAboutToStartState : RoundBaseState
         Debug.Log("Round is about to start. you are in green zone.");
         // Floating text here?
         
-        manager.UpdateUI();
+        manager.currentRoundIndex++;
+
+        manager.ResetArtifacts();
     }
 
     public override void UpdateState(RoundStateManager manager)
