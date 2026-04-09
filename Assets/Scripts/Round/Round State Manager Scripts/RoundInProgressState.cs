@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class RoundInProgressState : RoundBaseState
 {
+    private bool playerIsInGreenZone = false;
     public override void EnterState(RoundStateManager manager)
     {
         Debug.Log("Round is in progress.");
@@ -47,22 +48,19 @@ public class RoundInProgressState : RoundBaseState
                     
                     manager.UpdateUI();
                 }
-            
-                if (manager.currentArtifacts >= manager.amountOfArtifactsToCompleteLevel)
-                {
-                    manager.SwitchState(manager.GameOverState);
-                }
             }
         }
     }
 
     private static void HandlePlayerCollision(RoundStateManager manager, Collider other)
     {
+        // If player is in zone and we have all artifacts collected go to next round
         if (other.gameObject.CompareTag("Player"))
         {
-            if(manager.currentArtifacts > manager.amountOfArtifactsToCompleteLevel)
+            if(manager.currentArtifacts == manager.amountOfArtifactsToCompleteLevel)
             {
-                manager.SwitchState(manager.GameOverState);
+                // Round completed text? Pop up?
+                manager.SwitchState(manager.AboutToStartState);
             }
         }
     }

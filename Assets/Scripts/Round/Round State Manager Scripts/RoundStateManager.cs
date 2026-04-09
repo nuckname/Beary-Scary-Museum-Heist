@@ -53,8 +53,7 @@ public class RoundStateManager : MonoBehaviour
     {
         SwitchState(AboutToStartState);
 
-        // need a round counter -> increase with next round state
-        LoadRound(0);
+        LoadRound(currentRoundIndex);
 
         UpdateUI();
 
@@ -103,12 +102,6 @@ public class RoundStateManager : MonoBehaviour
         }
 
         UpdateUI();
-    }
-
-    private void SetUpGuards()
-    {
-        guards.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-
     }
     
     public void MakeGuardsStartMoving()
