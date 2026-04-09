@@ -12,6 +12,7 @@ public class RoundGameOverState : RoundBaseState
        // manager.timer.isPaused = true;
 
         // Find the temp scoreboard in the scene and activate it
+        /*
         scoreboard = Object.FindObjectOfType<TempScoreboard>();
         if (scoreboard != null)
         {
@@ -21,7 +22,7 @@ public class RoundGameOverState : RoundBaseState
         {
             Debug.LogWarning("TempScoreboard script not found in the scene!");
         }
-        
+        */
         // Lets just tp the player for now
     }
 
