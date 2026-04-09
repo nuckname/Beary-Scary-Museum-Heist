@@ -5,6 +5,9 @@ public class RoundAboutToStartState : RoundBaseState
     public override void EnterState(RoundStateManager manager)
     {
         Debug.Log("Round is about to start. you are in green zone.");
+        // Floating text here?
+        
+        manager.UpdateUI();
     }
 
     public override void UpdateState(RoundStateManager manager)
