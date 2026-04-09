@@ -476,8 +476,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef272eb64a634143a9f5b4f1a10e043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundStateManager
-  artifactValueText: {fileID: 0}
   timer: {fileID: 3759329114673022119}
   currentStateName: 
   amountOfArtifactsToCompleteLevel: 1
   currentArtifacts: 0
+  guards:
+  - {fileID: 0}
+  roundConfigurations: []
+  currentRoundIndex: 0
+  playerTransform: {fileID: 0}
+  guardSpawnPoints: []
+  pathHolders: []

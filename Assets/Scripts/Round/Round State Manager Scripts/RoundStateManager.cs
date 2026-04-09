@@ -14,7 +14,6 @@ public class RoundStateManager : MonoBehaviour
 
     private TextMeshProUGUI artifactValueText;
     
-    // dragged in from the inspector
     [HideInInspector] public Timer timer; 
 
     public static int AmountOfTimesPlayerSpottedByGuards = 0;
@@ -24,8 +23,17 @@ public class RoundStateManager : MonoBehaviour
     public int amountOfArtifactsToCompleteLevel = 3;
     public int currentArtifacts = 0;
 
-    public List<GameObject> guards = new List<GameObject>(); 
+    // temp guards to hold in memory.
+    private List<GameObject> guards = new List<GameObject>(); 
 
+    [Header("Round Progression")]
+    public List<RoundConfigurationSO> roundConfigurations;
+    public int currentRoundIndex = 0;
+    
+    [Space(20)]
+    public Transform playerTransform;
+    public List<Transform> pathHolders;
+    
     private void Awake()
     {
         // Standard Singleton pattern
@@ -45,11 +53,56 @@ public class RoundStateManager : MonoBehaviour
     {
         SwitchState(AboutToStartState);
 
-        SetUpGuards();
+        // need a round counter -> increase with next round state
+        LoadRound(0);
 
         UpdateUI();
 
         AmountOfTimesPlayerSpottedByGuards = 0;
+    }
+    
+    public void LoadRound(int roundIndex)
+    {
+        // Clean up existing guards if we are loading a new round mid-game
+        foreach (GameObject guard in guards)
+        {
+            if (guard != null) Destroy(guard);
+        }
+        guards.Clear();
+
+        // Load SO Data
+        if (roundIndex >= roundConfigurations.Count)
+        {
+            Debug.LogWarning("No more rounds available! You beat the game.");
+            return;
+        }
+
+        RoundConfigurationSO currentRound = roundConfigurations[roundIndex];
+        amountOfArtifactsToCompleteLevel = currentRound.amountOfArtifactsToCompleteLevel;
+        currentArtifacts = 0;
+
+        // Spawn and Configure Guards
+        foreach (GuardSpawnData data in currentRound.guardsToSpawn)
+        {
+            Transform assignedPath = pathHolders[data.pathHolderIndex];
+            
+            Transform spawnPoint = assignedPath.GetChild(0);
+            
+            // Spawn the guard
+            GameObject newGuard = Instantiate(data.guardPrefab, spawnPoint.position, spawnPoint.rotation);
+            EnemyStateManager enemyStateManager = newGuard.GetComponent<EnemyStateManager>();
+
+            // Inject scene references and custom SO settings
+            enemyStateManager.SetupGuardFromRoundManager(
+                pathHolders[data.pathHolderIndex], 
+                playerTransform, 
+                data
+            );
+
+            guards.Add(newGuard);
+        }
+
+        UpdateUI();
     }
 
     private void SetUpGuards()

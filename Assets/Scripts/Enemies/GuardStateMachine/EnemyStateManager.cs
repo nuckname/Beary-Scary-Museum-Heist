@@ -107,6 +107,26 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
     void Start()
     {
+        SwitchState(EnemyFollowPathState);
+        enemyConfusedState.lookAngle = turnAngle;
+        
+        // Freeze guards until RoundStateManager tells them to move
+        agent.isStopped = true;
+        agent.speed = 0;
+    }
+    
+    public void SetupGuardFromRoundManager(Transform assignedPathHolder, Transform playerTracker, GuardSpawnData config)
+    {
+        pathHolder = assignedPathHolder;
+        playerTransform = playerTracker;
+
+        // Apply Custom Guard Settings from the ScriptableObject
+        guardPatrollSpeed = config.guardPatrolSpeed;
+        guardChaseSpeed = config.guardChaseSpeed;
+        amountOfTimesTheGuardTurns = config.amountOfTimesTheGuardTurns;
+        turnVisionRadiusReductionPercentage = config.FLOATturnVisionRadiusReductionPercentage;
+        alwaysTurnRight = config.alwaysTurnRight;
+
         if (pathHolder == null)
         {
             Debug.LogError("Path Holder is not assigned on " + gameObject.name);
@@ -124,14 +144,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         {
             SetUpGuardPathingLines();
         }
-
-        SwitchState(EnemyFollowPathState);
-
-        enemyConfusedState.lookAngle = turnAngle;
-        
-        // Freeze guards until we want them to start moving called in RoundStateManager
-        agent.isStopped = true;
-        agent.speed = 0;
     }
 
     public void InitialiseGuardStartMoving()
