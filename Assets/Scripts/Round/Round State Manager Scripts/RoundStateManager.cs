@@ -14,7 +14,7 @@ public class RoundStateManager : MonoBehaviour
 
     private TextMeshProUGUI artifactValueText;
     
-    [HideInInspector] public Timer timer; 
+   // [HideInInspector] public Timer timer; 
 
     public static int AmountOfTimesPlayerSpottedByGuards = 0;
     

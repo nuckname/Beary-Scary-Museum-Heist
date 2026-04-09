@@ -9,7 +9,7 @@ public class RoundGameOverState : RoundBaseState
         Debug.Log("Round Over. Threshold Reached.");
         Debug.Log("Seen: " + RoundStateManager.AmountOfTimesPlayerSpottedByGuards);
         
-        manager.timer.isPaused = true;
+       // manager.timer.isPaused = true;
 
         // Find the temp scoreboard in the scene and activate it
         scoreboard = Object.FindObjectOfType<TempScoreboard>();

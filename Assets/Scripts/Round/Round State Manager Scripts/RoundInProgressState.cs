@@ -7,7 +7,7 @@ public class RoundInProgressState : RoundBaseState
     {
         Debug.Log("Round is in progress.");
 
-        manager.timer.isPaused = false;
+        //manager.timer.isPaused = false;
 
         manager.MakeGuardsStartMoving();
     }
