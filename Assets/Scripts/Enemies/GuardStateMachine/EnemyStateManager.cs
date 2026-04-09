@@ -71,12 +71,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public NavMeshAgent agent;
     
     [SerializeField] private Quaternion startingRotation;
-
-    [Header("Path Visuals")] 
-    [SerializeField] private bool showGuardPaths = true;
+    
+    [Header("Path Visuals Setup")] 
+    public bool showGuardPaths = false;
     [SerializeField] private Color pathColor = Color.red; 
     [SerializeField] private float pathLineWidth = 0.15f;
-    private LineRenderer lineRenderer;
+    [HideInInspector] public LineRenderer lineRenderer;
     
     // Can make this an enum later
     [Header("Debug")]
@@ -113,7 +113,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             return;
         }
 
-
         waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < pathHolder.childCount; i++)
         {
@@ -121,7 +120,10 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
 
-        SetUpGuardPathingLines();
+        if (showGuardPaths)
+        {
+            SetUpGuardPathingLines();
+        }
 
         SwitchState(EnemyFollowPathState);
 
@@ -148,8 +150,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         agent.isStopped = false;
     }
 
-
-    private void SetUpGuardPathingLines()
+    public void SetUpGuardPathingLines()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         
