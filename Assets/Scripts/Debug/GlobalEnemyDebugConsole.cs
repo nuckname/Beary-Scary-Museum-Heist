@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class GlobalEnemyDebugConsole : MonoBehaviour
 {
+    /// <summary>
+    /// Why new fork?
+    /// When play testing we found out that there’s no real point in learning what the guards do. A new score or a higher score wasnt a good incentive to try the level again.
+    /// Each level will have new, guards paths so its cooler to discover. 
+    /// How to make the player learn the guard paths -> same level. Progressive gets harder.
+    /// Right click makes sense. Why am I clicking right, it slows me down -> and I don’t need to learn the guard paths. 
+    /// </summary>
+    
     [Header("Target Enemies")]
     [Tooltip("Drag in your enemies here. If left empty, the script will auto-find all EnemyStateManagers in the scene.")]
     public EnemyStateManager[] enemies;
