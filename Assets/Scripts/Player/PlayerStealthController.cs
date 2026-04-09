@@ -28,6 +28,8 @@ public class PlayerStealthController : MonoBehaviour
 
    private Camera camera;
 
+   [SerializeField] private bool displayDebugSprintBar = true; 
+
    private void Awake()
    {
        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -145,6 +147,10 @@ public class PlayerStealthController : MonoBehaviour
     // https://gemini.google.com/share/b0fd5f70855e
     void OnGUI()
     {
+        if (!displayDebugSprintBar)
+        {
+            return;
+        }
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
 
