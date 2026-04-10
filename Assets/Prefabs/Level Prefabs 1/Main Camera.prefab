@@ -154,11 +154,13 @@ MonoBehaviour:
   player: {fileID: 0}
   offset: {x: 0, y: 17, z: -17}
   normalRotationEuler: {x: 40, y: 0, z: 0}
+  savedNormalOffset: {x: 0, y: 17, z: -17}
+  savedNormalRotation: {x: 40, y: 0, z: 0}
   lockYAxis: 0
   fixedYPosition: 0
   useTopDownView: 0
-  topDownOffset: {x: 0, y: 17, z: -17}
-  topDownRotation: {x: 40, y: 0, z: 0}
+  topDownOffset: {x: 0, y: 30, z: 0}
+  topDownRotation: {x: 90, y: 0, z: 0}
   positionSmoothSpeed: 5
   rotationSmoothSpeed: 5
 --- !u!65 &1933529018202167233

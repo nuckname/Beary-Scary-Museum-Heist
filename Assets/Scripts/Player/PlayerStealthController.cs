@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// Ensures the new camera script is attached to the same GameObject
-[RequireComponent(typeof(PlayerCameraController))] 
 public class PlayerStealthController : MonoBehaviour
 {
     public float walkSpeed;
@@ -20,30 +18,35 @@ public class PlayerStealthController : MonoBehaviour
     public Rigidbody rb;
     private Vector3 moveDirection;
     private float currentSpeed;
-
-    // Locked Y position
     private float lockedY;
 
-   // private PlayerCameraController cameraController;
+    private Camera mainCamera;
+    private CameraFollow cameraFollow; 
 
-   private Camera camera;
+    [SerializeField] private bool displayDebugSprintBar = true; 
 
-   [SerializeField] private bool displayDebugSprintBar = true; 
+    private void Awake()
+    {
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        cameraFollow = mainCamera.GetComponent<CameraFollow>();
+    }
 
-   private void Awake()
-   {
-       camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-   }
-
-   void Start()
+    void Start()
     {
         currentStamina = maxStamina;
-        //cameraController = GetComponent<PlayerCameraController>();
         lockedY = transform.position.y;
     }
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (cameraFollow != null)
+            {
+                cameraFollow.useTopDownView = !cameraFollow.useTopDownView;
+            }
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -54,30 +57,16 @@ public class PlayerStealthController : MonoBehaviour
         HandleMouseRotation();
     }
 
-    // Bool function to determine if movement is currently allowed
-    /*
-    private bool CanMoveNormally()
-    {
-        if (cameraController.IsTopDownActive && !cameraController.allowMovementInTopDown)
-        {
-            return false;
-        }
-        return true;
-    }
-*/
     void HandleSpeed()
     {
-        /*
-        // If we are looking top-down, stop movement completely
-        if (!CanMoveNormally())
+        // Stop movement completely if the camera is in top-down mode
+        if (cameraFollow != null && cameraFollow.useTopDownView)
         {
             currentSpeed = 0f;
-            
-            // Allow stamina to regen while resting and looking around
             RegenStamina();
             return;
         }
-*/
+
         bool isMoving = moveDirection.magnitude >= 0.1f;
         bool isTryingToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving && !isExhausted;
 
@@ -116,7 +105,6 @@ public class PlayerStealthController : MonoBehaviour
     {
         rb.linearVelocity = moveDirection * currentSpeed;
 
-        // Lock Y position
         Vector3 pos = transform.position;
         pos.y = lockedY;
         transform.position = pos;
@@ -124,9 +112,9 @@ public class PlayerStealthController : MonoBehaviour
 
     void HandleMouseRotation()
     {
-        //if (cameraController.MainCam == null) return;
+        if (mainCamera == null) return;
 
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
         if (groundPlane.Raycast(ray, out float rayDistance))
@@ -147,50 +135,37 @@ public class PlayerStealthController : MonoBehaviour
     // https://gemini.google.com/share/b0fd5f70855e
     void OnGUI()
     {
-        if (!displayDebugSprintBar)
-        {
-            return;
-        }
+        if (!displayDebugSprintBar) return;
+        
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
 
-        // --- BAR DIMENSIONS (Made Bigger) ---
         float maxBarWidth = 400f; 
         float barThickness = 24f; 
-
-        // --- POSITIONING (Bottom Middle) ---
         float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
-        float startY = Screen.height - 50f; // Shifted up slightly to fit the thicker bar
+        float startY = Screen.height - 50f; 
 
-        // --- SPRINT TEXT (Top Right of Bar) ---
-        GUIStyle textStyle = new GUIStyle(GUI.skin.label);
-        textStyle.alignment = TextAnchor.LowerLeft;
+        GUIStyle textStyle = new GUIStyle(GUI.skin.label)
+        {
+            alignment = TextAnchor.LowerLeft,
+            fontStyle = FontStyle.Bold,
+            fontSize = 16
+        };
         textStyle.normal.textColor = Color.white;
-        textStyle.fontStyle = FontStyle.Bold;
-        textStyle.fontSize = 16; // Increased font size slightly to match the larger bar
 
-        // Position the text right above the right edge of the bar
         Rect textRect = new Rect(startX + maxBarWidth - 100f, startY - 26f, 100f, 20f);
         GUI.Label(textRect, "Sprint", textStyle);
 
-        // --- DRAW BARS ---
-        // 1. Draw a semi-transparent black background
         GUI.color = new Color(0, 0, 0, 0.6f);
         GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
 
-        // 2. Generate a shifting rainbow color based on time
-        // Mathf.Repeat loops the value between 0 and 1 over time. Multiplier controls speed.
         Color rainbowColor = Color.HSVToRGB(Mathf.Repeat(Time.time * 0.5f, 1f), 1f, 1f);
-
-        // 3. Choose foreground color (Red if exhausted, otherwise Rainbow)
         GUI.color = isExhausted ? Color.red : rainbowColor;
 
-        // 4. Draw the solid stamina block
         float currentWidth = maxBarWidth * staminaPercent;
         Rect activeBarRect = new Rect(startX, startY, currentWidth, barThickness);
         GUI.DrawTexture(activeBarRect, Texture2D.whiteTexture);
 
-        // Restore original color
         GUI.color = originalColor;
     }
 }

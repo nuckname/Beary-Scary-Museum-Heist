@@ -6,65 +6,75 @@ public class CameraFollow : MonoBehaviour
 {
     private Transform player;
 
-    [Header("Normal View Settings")]
-    public Vector3 offset = new Vector3(0f, 2f, -10f);
-    public Vector3 normalRotationEuler = new Vector3(15f, 0f, 0f);
+    [Header("Current Camera Angle")]
+    public Vector3 offset;
+    public Vector3 normalRotationEuler;
+
+    [Header("Saved Normal View Settings")] public Vector3 savedNormalOffset;
+    public Vector3 savedNormalRotation;
     public bool lockYAxis = false;
     public float fixedYPosition = 0f;
 
-    [Header("Top-Down View Settings")]
-    [Tooltip("Toggle this to switch between normal and top-down view")]
+    [Header("Saved Top-Down View Settings")]
     public bool useTopDownView = false;
-    public Vector3 topDownOffset = new Vector3(0f, 15f, 0f); // High up, directly above the player
-    public Vector3 topDownRotation = new Vector3(90f, 0f, 0f); // Looking straight down at the ground
+    public Vector3 topDownOffset;
+    public Vector3 topDownRotation;
 
     [Header("Camera Smoothing")]
-    [Range(1f, 10f)]
+    [Range(1f, 20f)]
     public float positionSmoothSpeed = 5f;
-    [Range(1f, 10f)]
+    [Range(1f, 20f)]
     public float rotationSmoothSpeed = 5f;
 
-    private Quaternion normalRotation;
+    private bool wasTopDownLastFrame = false;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
         
-        // Store the initial rotation of the camera to return to it when top-down is toggled off
-        normalRotation = transform.rotation;
+        if (p != null) 
+        {
+            player = p.transform;
+        }
+   
+        offset = savedNormalOffset;
+        normalRotationEuler = savedNormalRotation;
     }
 
     void LateUpdate()
     {
         if (player == null) return;
 
-        // 1. Determine target position and rotation based on the current mode
-        Vector3 targetPosition;
-        Quaternion targetRotation;
-
-        if (useTopDownView)
+        // Detect if you right-clicked and the boolean changed this frame
+        if (useTopDownView != wasTopDownLastFrame)
         {
-            // Top-Down Mode
-            targetPosition = player.position + topDownOffset;
-            targetRotation = Quaternion.Euler(topDownRotation);
-        }
-        else
-        {
-            // Normal Mode
-            targetPosition = player.position + offset;
-            targetRotation = Quaternion.Euler(normalRotationEuler);
-
-            // Apply Y-axis lock only in normal view (locking Y in top-down usually breaks it)
-            if (lockYAxis)
+            if (useTopDownView)
             {
-                targetPosition.y = fixedYPosition;
+                // Overwrite the live values with Top Down values
+                offset = topDownOffset;
+                normalRotationEuler = topDownRotation;
             }
+            else
+            {
+                // Revert back to the saved Normal values
+                offset = savedNormalOffset;
+                normalRotationEuler = savedNormalRotation;
+            }
+            // Save the state so we don't trigger this overwrite every single frame
+            wasTopDownLastFrame = useTopDownView; 
         }
 
-        // 2. Smoothly move the camera's position
-        transform.position = Vector3.Lerp(transform.position, targetPosition, positionSmoothSpeed * Time.deltaTime);
+        // Apply the live variables to the target
+        Vector3 targetPosition = player.position + offset;
+        Quaternion targetRotation = Quaternion.Euler(normalRotationEuler);
 
-        // 3. Smoothly adjust the camera's rotation
+        if (!useTopDownView && lockYAxis)
+        {
+            targetPosition.y = fixedYPosition;
+        }
+
+        // Move the camera
+        transform.position = Vector3.Lerp(transform.position, targetPosition, positionSmoothSpeed * Time.deltaTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);
     }
 }
