@@ -22,12 +22,7 @@ public class PlayerCameraController : MonoBehaviour
 
     void Start()
     {
-        MainCam = Camera.main;
-        
-        if (MainCam != null)
-        {
-            cameraFollow = MainCam.GetComponent<CameraFollow>();
-        }
+        MainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 
     void Update()
