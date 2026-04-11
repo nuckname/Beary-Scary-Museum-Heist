@@ -32,6 +32,7 @@ public class RoundStateManager : MonoBehaviour
     public Transform playerTransform;
     public List<Transform> pathHolders;
     public List<Transform> artifactSpawnPoints;
+    [SerializeField] private GameObject artefactPedestalPrefab;
     
     [Header("Dynamic Scene Objects")]
     [Tooltip("Master list of objects (doors, walls, cover) that can be removed depending on the round.")]
@@ -109,11 +110,15 @@ public class RoundStateManager : MonoBehaviour
         }
 
         // Spawn Artifacts
-        foreach (ArtifactSpawnData artData in currentRound.artifactsToSpawn)
+        foreach (ArtifactSpawnData artifactSpawnData in currentRound.artifactsToSpawn)
         {
-            Transform spawnPoint = artifactSpawnPoints[artData.spawnPointIndex];
+            Transform spawnPoint = artifactSpawnPoints[artifactSpawnData.spawnPointIndex];
             
-            GameObject newArtifact = Instantiate(artData.artifactPrefab, spawnPoint.position, spawnPoint.rotation);
+            // Artefact Pedestal 
+            Instantiate(artefactPedestalPrefab, spawnPoint.position, spawnPoint.rotation);
+            
+            // Artifact
+            GameObject newArtifact = Instantiate(artifactSpawnData.artifactPrefab, spawnPoint.position, spawnPoint.rotation);
             spawnedArtifacts.Add(newArtifact);
         }
 
