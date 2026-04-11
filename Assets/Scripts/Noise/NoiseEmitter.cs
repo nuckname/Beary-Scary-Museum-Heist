@@ -85,6 +85,9 @@ public class NoiseEmitter : MonoBehaviour
                         if (!Physics.Raycast(originPosition, directionToGuard, out RaycastHit hit, distanceToGuard, obstacleLayer))
                         {
                             listener.OnSoundHeard(originPosition, transform, noiseType);
+                            
+                            guard.SetStateIcon(EnemyStateIcon.HeardASound);
+                            
                             Debug.DrawLine(originPosition, entity.transform.position, Color.green, visualDuration);
                         }
                         else

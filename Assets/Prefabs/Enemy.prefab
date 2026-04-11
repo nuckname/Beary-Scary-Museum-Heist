@@ -216,10 +216,12 @@ MonoBehaviour:
   noiseEmitter: {fileID: 1398979885939180627}
   hearingFOV: {fileID: 9065402207323075465}
   stateSpriteRenderer: {fileID: 2519119033967843050}
-  heardIcon: {fileID: 21300000, guid: dff315b5efdb14e2fafe169be07dab00, type: 3}
-  seenIcon: {fileID: 21300000, guid: 59ef96d1619f84ffdbc97e508a3b847f, type: 3}
+  heardASoundIcon: {fileID: 21300000, guid: e93045e79b8180d49a791712bc5008df, type: 3}
+  chasingPlayerIcon: {fileID: 21300000, guid: 59ef96d1619f84ffdbc97e508a3b847f, type: 3}
   patrollingIcon: {fileID: 0}
-  confusedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
+  lookingAroundConfusedIcon: {fileID: 21300000, guid: 4316425e1b53dbc4e907f0218ba6ae42, type: 3}
+  guardIsStunnedIcon: {fileID: 21300000, guid: 29f149eca3c9a464e8ba4eac4dca1bbb, type: 3}
+  guardHasFinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling: {fileID: 21300000, guid: e2ef9e52e9394274c9d511298578b534, type: 3}
   whatTypeOfNoiseTheGuardHeard: 0
   alwaysTurnRight: 0
   agent: {fileID: 0}

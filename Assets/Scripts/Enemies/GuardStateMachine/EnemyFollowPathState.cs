@@ -10,7 +10,7 @@ public class EnemyFollowPathState : EnemyBaseState
     {
         isWaiting = false;
         waitTimer = 0f;
-        manager.SetStateIcon(EnemyStateIcon.Hide);
+        manager.SetStateIcon(EnemyStateIcon.HideIcon);
 
         manager.agent.angularSpeed = manager.turnSpeed;
 
@@ -120,7 +120,7 @@ public class EnemyFollowPathState : EnemyBaseState
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
 
-            manager.SetStateIcon(EnemyStateIcon.Hide);
+            manager.SetStateIcon(EnemyStateIcon.HideIcon);
         }
     }
     

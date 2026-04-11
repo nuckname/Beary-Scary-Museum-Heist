@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 
@@ -44,6 +45,11 @@ public class EnemyConfusedState : EnemyBaseState
             if (looksCompleted >= targetLooks)
             {
                 manager.GuardStartMoving();
+                
+                Debug.Log("Guard finished looking around and didn't find anything, going back to patrolling.");
+                
+                manager.SetStateIcon(EnemyStateIcon.FinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling);
+                
                 manager.SwitchState(manager.EnemyFollowPathState); 
             }
             else

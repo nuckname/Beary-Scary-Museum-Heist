@@ -1,9 +1,10 @@
 public enum EnemyStateIcon
 {
-    Hide,
-    Heard,
-    Seen,
-    Patrolling,
-    Confused,
-    Stunned
+    HideIcon,
+    HeardASound,
+    ChasingPlayer,
+    Patrolling, // Shrug?
+    LookingAroundConfused,
+    FinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling,
+    GuardIsStunned
 }

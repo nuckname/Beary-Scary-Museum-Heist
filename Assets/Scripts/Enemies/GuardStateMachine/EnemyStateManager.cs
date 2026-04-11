@@ -50,10 +50,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     
     [Header("Guard Icons")]
     [SerializeField] private SpriteRenderer stateSpriteRenderer;
-    [SerializeField] private Sprite heardIcon;
-    [SerializeField] private Sprite seenIcon;
+    [SerializeField] private Sprite heardASoundIcon;
+    [SerializeField] private Sprite chasingPlayerIcon;
     [SerializeField] private Sprite patrollingIcon;
-    [SerializeField] private Sprite confusedIcon;
+    [SerializeField] private Sprite lookingAroundConfusedIcon;
+    [SerializeField] private Sprite guardIsStunnedIcon;
+    [SerializeField] private Sprite guardHasFinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling;
 
     [Header("Noise")]
     [SerializeField] private NoiseType whatTypeOfNoiseTheGuardHeard = NoiseType.Nothing;
@@ -321,25 +323,29 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         switch (iconType)
         {
-            case EnemyStateIcon.Heard:
-                stateSpriteRenderer.sprite = heardIcon;
+            case EnemyStateIcon.HeardASound:
+                stateSpriteRenderer.sprite = heardASoundIcon;
                 stateSpriteRenderer.enabled = true;
                 break;
-            case EnemyStateIcon.Seen:
-                stateSpriteRenderer.sprite = seenIcon;
+            case EnemyStateIcon.ChasingPlayer:
+                stateSpriteRenderer.sprite = chasingPlayerIcon;
                 stateSpriteRenderer.enabled = true;
                 break;
             case EnemyStateIcon.Patrolling:
                 stateSpriteRenderer.sprite = patrollingIcon;
                 stateSpriteRenderer.enabled = true;
                 break;
-            case EnemyStateIcon.Confused:
-                stateSpriteRenderer.sprite = confusedIcon;
+            case EnemyStateIcon.LookingAroundConfused:
+                stateSpriteRenderer.sprite = lookingAroundConfusedIcon;
                 stateSpriteRenderer.enabled = true;
                 break;
-            case EnemyStateIcon.Hide:
+            case EnemyStateIcon.HideIcon:
                 stateSpriteRenderer.sprite = null;
                 stateSpriteRenderer.enabled = false;
+                break;
+            case EnemyStateIcon.FinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling:
+                stateSpriteRenderer.sprite = guardHasFinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling;
+                stateSpriteRenderer.enabled = true;
                 break;
         }
     }
