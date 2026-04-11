@@ -47,9 +47,9 @@ public class RoundStateManager : MonoBehaviour
 
     void Start()
     {
-        SwitchState(AboutToStartState);
-        LoadRound(currentRoundIndex);
         AmountOfTimesPlayerSpottedByGuards = 0;
+        
+        SwitchState(AboutToStartState);
     }
     
     public void LoadRound(int roundIndex)
