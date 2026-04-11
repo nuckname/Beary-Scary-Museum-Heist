@@ -53,17 +53,35 @@ public class EnemyFollowPathState : EnemyBaseState
             if (angleToTarget >= manager.fovTurnAngleThreshold)
             {
                 // The angle variation is 25+ degrees, reduce vision radius
-                manager.fieldOfView.ReduceFOVRadius(manager.turnVisionRadiusReductionPercentage);
+                if (manager.fieldOfViews != null)
+                {
+                    foreach (var fov in manager.fieldOfViews)
+                    {
+                        if (fov != null) fov.ReduceFOVRadius(manager.turnVisionRadiusReductionPercentage);
+                    }
+                }
             }
             else
             {
                 // We are facing mostly forward, return radius to normal
-                manager.fieldOfView.RestoreFOVRadius();
+                if (manager.fieldOfViews != null)
+                {
+                    foreach (var fov in manager.fieldOfViews)
+                    {
+                        if (fov != null) fov.RestoreFOVRadius();
+                    }
+                }
             }
         }
         else
         {
-            manager.fieldOfView.RestoreFOVRadius();
+            if (manager.fieldOfViews != null)
+            {
+                foreach (var fov in manager.fieldOfViews)
+                {
+                    if (fov != null) fov.RestoreFOVRadius();
+                }
+            }
         }
 
         if (isWaiting)

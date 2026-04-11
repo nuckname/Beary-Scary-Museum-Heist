@@ -17,8 +17,13 @@ public class EnemyStunnedState : EnemyBaseState
         
         manager.SetStateIcon(EnemyStateIcon.Stunned);
         
-        manager.fieldOfView.DisableVision();
-        
+        if (manager.fieldOfViews != null)
+        {
+            foreach (var fov in manager.fieldOfViews)
+            {
+                if (fov != null) fov.DisableVision();
+            }
+        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -28,7 +33,13 @@ public class EnemyStunnedState : EnemyBaseState
         if (stunTimer >= stunDuration)
         {
             // Recovering from stun
-            manager.fieldOfView.RestoreVision();
+            if (manager.fieldOfViews != null)
+            {
+                foreach (var fov in manager.fieldOfViews)
+                {
+                    if (fov != null) fov.RestoreVision();
+                }
+            }
           
             // Just act confused?
             manager.SwitchState(manager.enemyConfusedState);

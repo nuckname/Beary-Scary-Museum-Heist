@@ -41,7 +41,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float fovTurnAngleThreshold = 25f;
     
     [Header("References")]
-    public FieldOfView fieldOfView;
+    public FieldOfView[] fieldOfViews;
     public Transform playerTransform;
     [SerializeField] private NoiseEmitter noiseEmitter; 
     
@@ -84,19 +84,31 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
     private void OnEnable()
     {
-        if (fieldOfView != null)
+        if (fieldOfViews != null)
         {
-            fieldOfView.OnPlayerSpotted += HandlePlayerSpotted;
-            fieldOfView.OnPlayerLost += HandlePlayerLost;
+            foreach (var fov in fieldOfViews)
+            {
+                if (fov != null)
+                {
+                    fov.OnPlayerSpotted += HandlePlayerSpotted;
+                    fov.OnPlayerLost += HandlePlayerLost;
+                }
+            }
         }
     }
 
     private void OnDisable()
     {
-        if (fieldOfView != null)
+        if (fieldOfViews != null)
         {
-            fieldOfView.OnPlayerSpotted -= HandlePlayerSpotted;
-            fieldOfView.OnPlayerLost -= HandlePlayerLost;
+            foreach (var fov in fieldOfViews)
+            {
+                if (fov != null)
+                {
+                    fov.OnPlayerSpotted -= HandlePlayerSpotted;
+                    fov.OnPlayerLost -= HandlePlayerLost;
+                }
+            }
         }
     }
 
@@ -187,7 +199,16 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         EnemyCurrentState = state;
         
-        fieldOfView.RestoreFOVRadius();
+        if (fieldOfViews != null)
+        {
+            foreach (var fov in fieldOfViews)
+            {
+                if (fov != null)
+                {
+                    fov.RestoreFOVRadius();
+                }
+            }
+        }
         
         if (EnemyCurrentState != null)
         {
@@ -213,6 +234,28 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // Called from FieldOfView.cs
     private void HandlePlayerLost(Vector3 lastKnownPosition)
     {
+        bool isPlayerStillSeenByAnotherFOV = false;
+        if (fieldOfViews != null)
+        {
+            foreach (var fov in fieldOfViews)
+            {
+                if (fov != null)
+                {
+                    foreach (Transform visibleTarget in fov.visibleTargets)
+                    {
+                        if (visibleTarget != null && visibleTarget.CompareTag("Player"))
+                        {
+                            isPlayerStillSeenByAnotherFOV = true;
+                            break;
+                        }
+                    }
+                }
+                if (isPlayerStillSeenByAnotherFOV) break;
+            }
+        }
+
+        if (isPlayerStillSeenByAnotherFOV) return;
+
         // Investigation logic
         if (makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight)
         {
