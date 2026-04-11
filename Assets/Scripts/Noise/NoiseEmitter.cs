@@ -57,9 +57,13 @@ public class NoiseEmitter : MonoBehaviour
         BroadcastToAI(noiseRadius, emissionPoint, noiseType);
     }
 
-private void BroadcastToAI(float baseRange, Vector3 originPosition, NoiseType noiseType)
+    private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType noiseType)
     {
-        Collider[] entitiesInArea = Physics.OverlapSphere(originPosition, baseRange, enemyLayer);
+        // We need a huge physical net to catch guards who are standing far away 
+        // but have massive hearing ranges. OverlapSphere only finds their physical bodies!
+        float overlapNetRadius = noiseRadius + 50f; 
+        
+        Collider[] entitiesInArea = Physics.OverlapSphere(originPosition, overlapNetRadius, enemyLayer);
 
         foreach (Collider entity in entitiesInArea)
         {
@@ -70,8 +74,8 @@ private void BroadcastToAI(float baseRange, Vector3 originPosition, NoiseType no
                 float distanceToGuard = Vector3.Distance(originPosition, entity.transform.position);
                 float guardHearingRadius = guard.hearingFOV.viewRadius;
 
-                // Do the Noise Circle and the Guard's Hearing Circle overlap?
-                if (distanceToGuard <= (baseRange + guardHearingRadius))
+                // We check if the actual NOISE radius + the GUARD'S HEARING radius overlap.
+                if (distanceToGuard <= (noiseRadius + guardHearingRadius))
                 {
                     if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
                     { 
