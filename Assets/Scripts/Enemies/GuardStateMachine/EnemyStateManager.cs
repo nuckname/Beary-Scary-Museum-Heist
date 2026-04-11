@@ -52,7 +52,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [SerializeField] private SpriteRenderer stateSpriteRenderer;
     [SerializeField] private Sprite heardASoundIcon;
     [SerializeField] private Sprite chasingPlayerIcon;
-    [SerializeField] private Sprite patrollingIcon;
     [SerializeField] private Sprite lookingAroundConfusedIcon;
     [SerializeField] private Sprite guardIsStunnedIcon;
     [SerializeField] private Sprite guardHasFinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling;
@@ -293,6 +292,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // This is the method the NoiseEmitter calls when it hears something
     public void OnSoundHeard(Vector3 targetLocation, Transform sourceTransform, NoiseType noiseType)
     {
+        print("Guard " + gameObject.name + " heard a noise of type " + noiseType + " at location " + targetLocation);
+        SetStateIcon(EnemyStateIcon.HeardASound);
+        
         Debug.Log("OnSoundHeard");
         // VISUAL PRIORITY: If we are actively chasing the player or stunned, ignore ALL other noises. Vision overrides hearing.
         if (EnemyCurrentState == EnemyChasePlayerState || EnemyCurrentState == EnemyStunnedState) 
@@ -311,6 +313,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
                 return; 
             }
         }
+        
+        SetStateIcon(EnemyStateIcon.HeardASound);
 
         // If we made it this far, either we weren't investigating anything, 
         // OR the new noise is higher/equal priority to the old noise, therefore update our targets.
@@ -329,10 +333,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
                 break;
             case EnemyStateIcon.ChasingPlayer:
                 stateSpriteRenderer.sprite = chasingPlayerIcon;
-                stateSpriteRenderer.enabled = true;
-                break;
-            case EnemyStateIcon.Patrolling:
-                stateSpriteRenderer.sprite = patrollingIcon;
                 stateSpriteRenderer.enabled = true;
                 break;
             case EnemyStateIcon.LookingAroundConfused:

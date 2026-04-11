@@ -16,6 +16,7 @@ public class EnemyInvestigateALocationState : EnemyBaseState
     {
         if (manager.agent.remainingDistance < 0.05f)
         {
+
             manager.SwitchState(manager.enemyConfusedState);
         }
     }

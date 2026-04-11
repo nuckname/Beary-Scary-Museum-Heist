@@ -79,21 +79,8 @@ public class NoiseEmitter : MonoBehaviour
                 {
                     if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
                     { 
-                        Vector3 directionToGuard = (entity.transform.position - originPosition).normalized;
-
-                        // Raycast for walls to ensure the sound isn't completely blocked
-                        if (!Physics.Raycast(originPosition, directionToGuard, out RaycastHit hit, distanceToGuard, obstacleLayer))
-                        {
-                            listener.OnSoundHeard(originPosition, transform, noiseType);
-                            
-                            guard.SetStateIcon(EnemyStateIcon.HeardASound);
-                            
-                            Debug.DrawLine(originPosition, entity.transform.position, Color.green, visualDuration);
-                        }
-                        else
-                        {
-                            Debug.DrawLine(originPosition, hit.point, Color.red, visualDuration);
-                        }
+                        // Called in EnemyStateManager
+                        listener.OnSoundHeard(originPosition, transform, noiseType);
                     }
                 }
             }
