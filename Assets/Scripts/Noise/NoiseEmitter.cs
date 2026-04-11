@@ -57,30 +57,41 @@ public class NoiseEmitter : MonoBehaviour
         BroadcastToAI(noiseRadius, emissionPoint, noiseType);
     }
 
-    private void BroadcastToAI(float baseRange, Vector3 originPosition, NoiseType noiseType)
+private void BroadcastToAI(float baseRange, Vector3 originPosition, NoiseType noiseType)
     {
-        Collider[] entitiesInHearingRange = Physics.OverlapSphere(originPosition, baseRange, enemyLayer);
+        Collider[] entitiesInArea = Physics.OverlapSphere(originPosition, baseRange, enemyLayer);
 
-        foreach (Collider entity in entitiesInHearingRange)
+        foreach (Collider entity in entitiesInArea)
         {
-            if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
-            { 
-                Vector3 directionToEntity = entity.transform.position - originPosition;
-                float distanceToEntity = directionToEntity.magnitude;
+            EnemyStateManager guard = entity.GetComponentInParent<EnemyStateManager>();
+            
+            if (guard != null && guard.hearingFOV != null)
+            {
+                float distanceToGuard = Vector3.Distance(originPosition, entity.transform.position);
+                float guardHearingRadius = guard.hearingFOV.viewRadius;
 
-                if (!Physics.Raycast(originPosition, directionToEntity.normalized, out RaycastHit hit, distanceToEntity, obstacleLayer))
+                // Do the Noise Circle and the Guard's Hearing Circle overlap?
+                if (distanceToGuard <= (baseRange + guardHearingRadius))
                 {
-                    listener.OnSoundHeard(originPosition, transform, noiseType);
-                    Debug.DrawLine(originPosition, entity.transform.position, Color.green, visualDuration);
-                }
-                else
-                {
-                    Debug.DrawLine(originPosition, hit.point, Color.red, visualDuration);
+                    if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
+                    { 
+                        Vector3 directionToGuard = (entity.transform.position - originPosition).normalized;
+
+                        // Raycast for walls to ensure the sound isn't completely blocked
+                        if (!Physics.Raycast(originPosition, directionToGuard, out RaycastHit hit, distanceToGuard, obstacleLayer))
+                        {
+                            listener.OnSoundHeard(originPosition, transform, noiseType);
+                            Debug.DrawLine(originPosition, entity.transform.position, Color.green, visualDuration);
+                        }
+                        else
+                        {
+                            Debug.DrawLine(originPosition, hit.point, Color.red, visualDuration);
+                        }
+                    }
                 }
             }
         }
     }
-
     // Ai + Me
     // https://gemini.google.com/share/1d2964621e3c
     private void ShowRadiusInGame(float radius, Vector3 hitPosition)

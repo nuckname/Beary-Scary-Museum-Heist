@@ -45,6 +45,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public Transform playerTransform;
     [SerializeField] private NoiseEmitter noiseEmitter; 
     
+    [Header("Hearing Settings")]
+    public FieldOfView hearingFOV;
+    
     [Header("Guard Icons")]
     [SerializeField] private SpriteRenderer stateSpriteRenderer;
     [SerializeField] private Sprite heardIcon;
