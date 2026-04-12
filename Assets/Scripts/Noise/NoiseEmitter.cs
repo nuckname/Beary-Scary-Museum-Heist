@@ -57,7 +57,7 @@ public class NoiseEmitter : MonoBehaviour
         BroadcastToAI(noiseRadius, emissionPoint, noiseType);
     }
 
-    private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType noiseType)
+private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType noiseType)
     {
         // We need a huge physical net to catch guards who are standing far away 
         // but have massive hearing ranges. OverlapSphere only finds their physical bodies!
@@ -74,18 +74,29 @@ public class NoiseEmitter : MonoBehaviour
                 float distanceToGuard = Vector3.Distance(originPosition, entity.transform.position);
                 float guardHearingRadius = guard.hearingFOV.viewRadius;
 
-                // We check if the actual NOISE radius + the GUARD'S HEARING radius overlap.
+                // Are they close enough to hear?
                 if (distanceToGuard <= (noiseRadius + guardHearingRadius))
                 {
-                    if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
-                    { 
-                        // Called in EnemyStateManager
-                        listener.OnSoundHeard(originPosition, transform, noiseType);
+                    // Is there a wall blocking the sound?
+                    // We raise the raycast slightly off the ground (Vector3.up * 0.5f) 
+                    // so it doesn't accidentally scrape the floor mesh and register as a false collision.
+                    Vector3 raycastStart = originPosition + Vector3.up * 0.5f;
+                    Vector3 raycastTarget = entity.transform.position + Vector3.up * 0.5f;
+
+                    // Linecast returns true if it hits something. 
+                    if (!Physics.Linecast(raycastStart, raycastTarget, obstacleLayer))
+                    {
+                        if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
+                        { 
+                            // Called in EnemyStateManager
+                            listener.OnSoundHeard(originPosition, transform, noiseType);
+                        }
                     }
                 }
             }
         }
     }
+
     // Ai + Me
     // https://gemini.google.com/share/1d2964621e3c
     private void ShowRadiusInGame(float radius, Vector3 hitPosition)
