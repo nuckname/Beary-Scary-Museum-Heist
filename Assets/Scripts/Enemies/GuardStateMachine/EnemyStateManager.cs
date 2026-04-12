@@ -71,7 +71,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyConfusedState enemyConfusedState = new EnemyConfusedState();
     [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
-
+    [HideInInspector] public EnemyTurnToSoundState EnemyTurnToSoundState = new EnemyTurnToSoundState();
+    
     [HideInInspector] public NavMeshAgent agent;
     
     [SerializeField] private Quaternion startingRotation;
@@ -129,12 +130,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             return;
         }
 
-        waypoints = new Vector3[pathHolder.childCount];
-        for (int i = 0; i < pathHolder.childCount; i++)
-        {
-            waypoints[i] = pathHolder.GetChild(i).position;    
-            waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
-        }
+        SetupPatrolRoute();
 
         if (showGuardPaths)
         {
@@ -148,6 +144,16 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // Freeze guards until we want them to start moving called in RoundStateManager
         agent.isStopped = true;
         agent.speed = 0;
+    }
+
+    private void SetupPatrolRoute()
+    {
+        waypoints = new Vector3[pathHolder.childCount];
+        for (int i = 0; i < pathHolder.childCount; i++)
+        {
+            waypoints[i] = pathHolder.GetChild(i).position;    
+            waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
+        }
     }
 
     public void InitialiseGuardStartMoving()
@@ -293,9 +299,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public void OnSoundHeard(Vector3 targetLocation, Transform sourceTransform, NoiseType noiseType)
     {
         print("Guard " + gameObject.name + " heard a noise of type " + noiseType + " at location " + targetLocation);
-        SetStateIcon(EnemyStateIcon.HeardASound);
         
-        Debug.Log("OnSoundHeard");
         // VISUAL PRIORITY: If we are actively chasing the player or stunned, ignore ALL other noises. Vision overrides hearing.
         if (EnemyCurrentState == EnemyChasePlayerState || EnemyCurrentState == EnemyStunnedState) 
             return;
@@ -320,7 +324,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // OR the new noise is higher/equal priority to the old noise, therefore update our targets.
         whatTypeOfNoiseTheGuardHeard = noiseType;
         investigateTargetPosition = targetLocation;
-        SwitchState(EnemyInvestigateState);
+        SwitchState(EnemyTurnToSoundState);
     }
     
     public void SetStateIcon(EnemyStateIcon iconType)
