@@ -41,7 +41,7 @@ public class TempScoreboard : MonoBehaviour
 
         if (totalScoreTMPro != null)
         {
-            totalScoreTMPro.text = $"Total Score: {totalScore}";
+            //totalScoreTMPro.text = $"Total Score: {totalScore}";
         }
 
         // --- 3. Draw Centered OnGUI Debug Board ---
@@ -71,18 +71,36 @@ public class TempScoreboard : MonoBehaviour
         // Row 3: Final Result
         GUI.Label(new Rect(x, y + 160, width, 50), $"FINAL SCORE: {totalScore}", boldStyle);
 
-        // --- 4. Next Level Button ---
+        // --- 4. Navigation Buttons (Restart & Next Level) ---
         float buttonWidth = 250;
         float buttonHeight = 60;
-        float buttonX = x + (width - buttonWidth) / 2f; // Center horizontally
         float buttonY = y + 250; // Position near the bottom
+        
+        // Calculate side-by-side positioning
+        float spacing = 50f; 
+        float restartButtonX = x + (width / 2f) - buttonWidth - (spacing / 2f);
+        float nextButtonX = x + (width / 2f) + (spacing / 2f);
 
         GUIStyle buttonStyle = new GUIStyle(GUI.skin.button) { fontSize = 22, fontStyle = FontStyle.Bold };
 
-        if (GUI.Button(new Rect(buttonX, buttonY, buttonWidth, buttonHeight), "Next Level", buttonStyle))
+        // Restart Level Button
+        if (GUI.Button(new Rect(restartButtonX, buttonY, buttonWidth, buttonHeight), "Restart Level", buttonStyle))
+        {
+            RestartLevel();
+        }
+
+        // Next Level Button
+        if (GUI.Button(new Rect(nextButtonX, buttonY, buttonWidth, buttonHeight), "Next Level", buttonStyle))
         {
             LoadNextLevel();
         }
+    }
+
+    private void RestartLevel()
+    {
+        // Reloads the currently active scene
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
     private void LoadNextLevel()
