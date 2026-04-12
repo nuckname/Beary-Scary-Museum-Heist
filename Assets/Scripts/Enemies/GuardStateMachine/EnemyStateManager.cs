@@ -71,7 +71,14 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public EnemyConfusedState enemyConfusedState = new EnemyConfusedState();
     [HideInInspector] public EnemyStunnedState EnemyStunnedState = new EnemyStunnedState();
     [HideInInspector] public EnemyChasePlayerState EnemyChasePlayerState = new EnemyChasePlayerState();
-    [HideInInspector] public EnemyTurnToSoundState EnemyTurnToSoundState = new EnemyTurnToSoundState();
+    
+    // This is currently keeping track of what waypoint to turn towards when are we are a state.
+    [HideInInspector] public int currentWaypointIndex = 0;
+    
+    // Before we use EnemeyTurnState, we must allow tell it what state to go to afterwards using stateToSwitchToAfterTurning
+    [HideInInspector] public EnemyTurnToPointState EnemyTurnToPointState = new EnemyTurnToPointState();
+    [HideInInspector] public Vector3 turnTargetPosition;
+    public EnemyBaseState stateToSwitchToAfterTurning;
     
     [HideInInspector] public NavMeshAgent agent;
     
@@ -140,6 +147,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         SwitchState(EnemyFollowPathState);
 
         enemyConfusedState.lookAngle = turnAngle;
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         
         // Freeze guards until we want them to start moving called in RoundStateManager
         agent.isStopped = true;
@@ -324,7 +333,11 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // OR the new noise is higher/equal priority to the old noise, therefore update our targets.
         whatTypeOfNoiseTheGuardHeard = noiseType;
         investigateTargetPosition = targetLocation;
-        SwitchState(EnemyTurnToSoundState);
+        
+        turnTargetPosition = targetLocation;
+        stateToSwitchToAfterTurning = EnemyInvestigateState;
+        
+        SwitchState(EnemyTurnToPointState);
     }
     
     public void SetStateIcon(EnemyStateIcon iconType)

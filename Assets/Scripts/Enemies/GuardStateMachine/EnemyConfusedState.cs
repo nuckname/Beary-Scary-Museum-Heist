@@ -49,8 +49,10 @@ public class EnemyConfusedState : EnemyBaseState
                 Debug.Log("Guard finished looking around and didn't find anything, going back to patrolling.");
                 
                 manager.SetStateIcon(EnemyStateIcon.FinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling);
-                
-                manager.SwitchState(manager.EnemyFollowPathState); 
+
+                manager.turnTargetPosition = manager.waypoints[manager.currentWaypointIndex];
+                manager.stateToSwitchToAfterTurning = manager.EnemyFollowPathState;
+                manager.SwitchState(manager.EnemyTurnToPointState); 
             }
             else
             {

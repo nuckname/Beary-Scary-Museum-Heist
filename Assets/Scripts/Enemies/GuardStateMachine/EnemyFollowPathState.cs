@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyFollowPathState : EnemyBaseState
 {
-    private int targetWaypointIndex = 0;
     private float waitTimer = 0f;
     private bool isWaiting = false;
 
@@ -17,10 +16,10 @@ public class EnemyFollowPathState : EnemyBaseState
         manager.GuardStartMoving();
         manager.agent.speed = manager.guardPatrollSpeed;
 
-        // Start heading to the first target
+        // Start heading to the first target using the manager's index
         if (manager.waypoints.Length > 0)
         {
-            manager.agent.SetDestination(manager.waypoints[targetWaypointIndex]);
+            manager.agent.SetDestination(manager.waypoints[manager.currentWaypointIndex]);
         }
     }
 
@@ -28,7 +27,7 @@ public class EnemyFollowPathState : EnemyBaseState
     {
         if (manager.waypoints.Length == 0) return;
 
-        Vector3 targetWaypoint = manager.waypoints[targetWaypointIndex];
+        Vector3 targetWaypoint = manager.waypoints[manager.currentWaypointIndex];
 
         Vector3 desiredDirection = Vector3.zero;
 
@@ -115,7 +114,7 @@ public class EnemyFollowPathState : EnemyBaseState
         // Did we arrive? 
         if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance + 0.1f)
         {
-            targetWaypointIndex = (targetWaypointIndex + 1) % manager.waypoints.Length;
+            manager.currentWaypointIndex = (manager.currentWaypointIndex + 1) % manager.waypoints.Length;
             
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
