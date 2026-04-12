@@ -46,7 +46,6 @@ public class PlayerGrabController : MonoBehaviour
         PickedUpObject = obj;
         CurrentPickables = pickables;
 
-        // Loop through every IPickable script and call OnPickedUp
         foreach (IPickable pickable in CurrentPickables)
         {
             pickable.OnPickedUp();
@@ -54,7 +53,20 @@ public class PlayerGrabController : MonoBehaviour
         
         currentHeldWeight = 0f;
         Rigidbody rb = obj.GetComponent<Rigidbody>();
-        currentHeldWeight = rb.mass;
+        
+        if (rb != null)
+        {
+            currentHeldWeight = rb.mass;
+            
+            rb.isKinematic = true; 
+        }
+
+        // Disable colliders so it doesn't push against the player character
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
         
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
 
@@ -83,6 +95,21 @@ public class PlayerGrabController : MonoBehaviour
             {
                 pickable.OnReleased();
             }
+        }
+
+        // Maybe use a method to do this
+        // Re-enable physics before dropping/throwing
+        Rigidbody rb = PickedUpObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+        }
+
+        // Re-enable colliders so it can bounce off the floor/walls again
+        Collider[] colliders = PickedUpObject.GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = true;
         }
 
         PickedUpObject.transform.SetParent(null);

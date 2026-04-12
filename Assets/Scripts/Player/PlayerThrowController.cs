@@ -80,12 +80,20 @@ public class PlayerThrowController : MonoBehaviour
             currentThrowForce += chargeRate * Time.deltaTime;
             currentThrowForce = Mathf.Clamp(currentThrowForce, minThrowForce, maxThrowForce);
             
-            DrawTrajectory(); 
+           // DrawTrajectory(); 
         }
 
         if (isCharging && Input.GetMouseButtonUp(0))
         {
             ThrowObject();
+        }
+    }
+    
+    private void LateUpdate()
+    {
+        if (isCharging && grabController.PickedUpObject != null)
+        {
+            DrawTrajectory(); 
         }
     }
 

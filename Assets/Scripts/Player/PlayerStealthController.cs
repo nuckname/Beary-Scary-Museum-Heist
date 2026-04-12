@@ -122,8 +122,6 @@ public class PlayerStealthController : MonoBehaviour
 
     void HandleMouseRotation()
     {
-        //if (cameraController.MainCam == null) return;
-
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
@@ -136,7 +134,8 @@ public class PlayerStealthController : MonoBehaviour
             if (lookDirection.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 15f * Time.deltaTime);
+                
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 720f * Time.deltaTime);
             }
         }
     }
