@@ -20,6 +20,8 @@ public class PlayerThrowController : MonoBehaviour
     [SerializeField] private Material lineMaterial;
     [SerializeField] private Gradient lineGradient; // Controls both Color and Transparency (Alpha)
 
+    [SerializeField] private LayerMask collisionLayers;
+    
     private float currentThrowForce;
     private bool isCharging;
 
@@ -37,13 +39,12 @@ public class PlayerThrowController : MonoBehaviour
         lineRenderer.positionCount = linePoints;
         lineRenderer.startWidth = startWidth;
         lineRenderer.endWidth = endWidth;
-        lineRenderer.colorGradient = lineGradient;
+ 
+        // Fixes that for some reason we arent changing the colour
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         
-        // Only apply the material if you assigned one in the Inspector
-        if (lineMaterial != null)
-        {
-            lineRenderer.material = lineMaterial;
-        }
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.green;
         
         // Hide the line to start
         lineRenderer.enabled = false; 
@@ -115,12 +116,37 @@ public class PlayerThrowController : MonoBehaviour
         float effectiveForce = currentThrowForce / mass; 
         Vector3 velocity = throwDirection.normalized * effectiveForce;
 
-        for (int i = 0; i < linePoints; i++)
+        // Reset the line length just in case it was shortened in a previous frame
+        lineRenderer.positionCount = linePoints;
+        
+        Vector3 previousPosition = startPosition;
+        lineRenderer.SetPosition(0, previousPosition);
+
+        // Loop through points, starting at index 1
+        for (int i = 1; i < linePoints; i++)
         {
             float time = i * timeBetweenPoints;
-            Vector3 pointPosition = startPosition + velocity * time + 0.5f * Physics.gravity * (time * time);
+            Vector3 currentPosition = startPosition + velocity * time + 0.5f * Physics.gravity * (time * time);
             
-            lineRenderer.SetPosition(i, pointPosition);
+            // Draw a line from the last point to this new point to check for walls
+            Vector3 segmentDirection = currentPosition - previousPosition;
+            float segmentDistance = segmentDirection.magnitude;
+
+            if (Physics.Raycast(previousPosition, segmentDirection.normalized, out RaycastHit hit, segmentDistance, collisionLayers))
+            {
+                // Cut the LineRenderer short at this index
+                lineRenderer.positionCount = i + 1; 
+                
+                // Snap the final point to exactly where the wall was hit
+                lineRenderer.SetPosition(i, hit.point); 
+                
+                // Stop calculating points since we hit a wall
+                break; 
+            }
+
+            // If no wall was hit, place the point normally
+            lineRenderer.SetPosition(i, currentPosition);
+            previousPosition = currentPosition;
         }
     }
 

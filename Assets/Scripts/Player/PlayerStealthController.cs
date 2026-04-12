@@ -131,10 +131,9 @@ public class PlayerStealthController : MonoBehaviour
             Vector3 lookDirection = point - transform.position;
             lookDirection.y = 0f;
 
-            if (lookDirection.sqrMagnitude > 0.01f)
+            if (lookDirection.sqrMagnitude > 0.5f) 
             {
                 Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 720f * Time.deltaTime);
             }
         }
