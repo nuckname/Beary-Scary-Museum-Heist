@@ -14,9 +14,16 @@ public class EnemyInvestigateALocationState : EnemyBaseState
 
     public override void UpdateState(EnemyStateManager manager)
     {
-        if (manager.agent.remainingDistance < 0.05f)
-        {
+        if (manager.agent.pathPending) return;
 
+        if (manager.agent.remainingDistance <= 1f)
+        {
+            manager.SwitchState(manager.enemyConfusedState);
+        }
+        // Fallback, If the path becomes invalid or unreachable, don't get stuck forever
+        else if (manager.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathPartial || 
+                 manager.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid)
+        {
             manager.SwitchState(manager.enemyConfusedState);
         }
     }
