@@ -37,7 +37,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
             }
         }
 
-        // We use the Rigidbody mass, which is naturally set by your actual PickupItem/Gun script!
         float noiseRadius = rb.mass * finalMultiplier;
         
         audioSource.maxDistance = noiseRadius;
