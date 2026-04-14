@@ -21,6 +21,8 @@ public class PlayerStealthController : MonoBehaviour
     private Vector3 moveDirection;
     private float currentSpeed;
 
+    [SerializeField] private Animator animator;
+    
     // Locked Y position
     private float lockedY;
 
@@ -50,6 +52,10 @@ public class PlayerStealthController : MonoBehaviour
         HandleSpeed();
         MovePlayer();
         HandleMouseRotation();
+        
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        bool isMoving = input.sqrMagnitude > 0.01f; 
+        animator.SetBool("IsMoving", isMoving);
     }
 
     // Bool function to determine if movement is currently allowed
@@ -139,29 +145,26 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
-    // AI
-    // https://gemini.google.com/share/b0fd5f70855e
     void OnGUI()
     {
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
 
-        // --- BAR DIMENSIONS (Made Bigger) ---
+        // --- BAR DIMENSIONS ---
         float maxBarWidth = 400f; 
         float barThickness = 24f; 
 
-        // --- POSITIONING (Bottom Middle) ---
+        // --- POSITIONING ---
         float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
-        float startY = Screen.height - 50f; // Shifted up slightly to fit the thicker bar
+        float startY = Screen.height - 50f; 
 
-        // --- SPRINT TEXT (Top Right of Bar) ---
+        // --- SPRINT TEXT ---
         GUIStyle textStyle = new GUIStyle(GUI.skin.label);
         textStyle.alignment = TextAnchor.LowerLeft;
         textStyle.normal.textColor = Color.white;
         textStyle.fontStyle = FontStyle.Bold;
-        textStyle.fontSize = 16; // Increased font size slightly to match the larger bar
+        textStyle.fontSize = 16; 
 
-        // Position the text right above the right edge of the bar
         Rect textRect = new Rect(startX + maxBarWidth - 100f, startY - 26f, 100f, 20f);
         GUI.Label(textRect, "Sprint", textStyle);
 
@@ -170,14 +173,10 @@ public class PlayerStealthController : MonoBehaviour
         GUI.color = new Color(0, 0, 0, 0.6f);
         GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
 
-        // 2. Generate a shifting rainbow color based on time
-        // Mathf.Repeat loops the value between 0 and 1 over time. Multiplier controls speed.
-        Color rainbowColor = Color.HSVToRGB(Mathf.Repeat(Time.time * 0.5f, 1f), 1f, 1f);
+        Color barColor = isExhausted ? Color.red : new Color(1f, 0.85f, 0f); // Bright Yellow
+        GUI.color = barColor;
 
-        // 3. Choose foreground color (Red if exhausted, otherwise Rainbow)
-        GUI.color = isExhausted ? Color.red : rainbowColor;
-
-        // 4. Draw the solid stamina block
+        // 3. Draw the solid stamina block
         float currentWidth = maxBarWidth * staminaPercent;
         Rect activeBarRect = new Rect(startX, startY, currentWidth, barThickness);
         GUI.DrawTexture(activeBarRect, Texture2D.whiteTexture);

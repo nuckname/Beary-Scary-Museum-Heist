@@ -6537,7 +6537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7251090910040105569, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8006694737608548581, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: maxTopDownHoldTime
@@ -6545,6 +6545,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8006694737608548581, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: allowMovementInTopDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064500453631686875, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
