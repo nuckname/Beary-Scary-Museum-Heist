@@ -899,32 +899,6 @@ Transform:
   - {fileID: 724371711}
   m_Father: {fileID: 7042318095827972519}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &680108514 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
-  m_PrefabInstance: {fileID: 7040815815347221435}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &680108523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680108514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94667a6f198384b3e9760d1b22b9811f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Detector
-  obstructionMask:
-    serializedVersion: 2
-    m_Bits: 512
-  forceHideObjects:
-    serializedVersion: 2
-    m_Bits: 4096
-  showDebugRay: 1
-  rayColorHit: {r: 1, g: 0, b: 0, a: 1}
-  rayColorNoHit: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &724371707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,7 +1922,7 @@ Transform:
   m_GameObject: {fileID: 1355445486}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.9, y: 7.56, z: 0}
+  m_LocalPosition: {x: 15.9, y: 4.05, z: 4.45}
   m_LocalScale: {x: 3.9596424, y: 5.656022, z: 4.973012}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2087,10 +2061,10 @@ MonoBehaviour:
     m_Bits: 1024
   showVisibleRadius: 1
   visualDuration: 1.5
-  radiusMaterial: {fileID: 2100000, guid: ab2cef29061a44b4099e860060b14ee0, type: 2}
-  meshHeightOffset: 1.5
+  radiusMaterial: {fileID: 0}
+  meshHeightOffset: 1
   showOutline: 1
-  outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
+  outlineMaterial: {fileID: 0}
   outlineWidth: 0.1
   outlineHeightOffset: 0.12
   meshResolution: 1
@@ -6971,10 +6945,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 680108523}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
 --- !u!4 &7042318095827972519
 Transform:
