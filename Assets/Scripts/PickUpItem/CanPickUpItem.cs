@@ -10,7 +10,8 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 
     [Header("Throw Settings")]
     [SerializeField] protected bool canBeThrown = true; 
-
+    [SerializeField] protected ItemType typeOfItem = ItemType.None;
+    
     protected Rigidbody rb;
     protected Collider col;
     
@@ -18,6 +19,7 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 
     public float Weight => itemWeight;
     public bool CanThrowItem => canBeThrown; 
+    public ItemType ItemType => typeOfItem;
     
     public virtual bool CanBePickedUp => !isAirborne;
 

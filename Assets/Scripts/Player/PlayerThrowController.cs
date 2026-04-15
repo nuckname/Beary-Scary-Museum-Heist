@@ -113,7 +113,15 @@ public class PlayerThrowController : MonoBehaviour
             mass = Mathf.Max(rb.mass, 0.01f);
         }
 
-        float effectiveForce = currentThrowForce / mass; 
+        // Reduce thrown distance based on what Item we are throwing
+        float typeMultiplier = 1f;
+        IThrowableItem throwable = grabController.PickedUpObject.GetComponent<IThrowableItem>();
+        if (throwable != null && throwable.ItemType == ItemType.Artifact)
+        {
+            typeMultiplier = 0.25f;
+        }
+
+        float effectiveForce = (currentThrowForce / mass) * typeMultiplier; 
         Vector3 velocity = throwDirection.normalized * effectiveForce;
 
         // Reset the line length just in case it was shortened in a previous frame
@@ -160,11 +168,17 @@ public class PlayerThrowController : MonoBehaviour
         Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
         Rigidbody boxRb = objectToThrow.GetComponent<Rigidbody>();
     
-        float effectiveForce = currentThrowForce / Mathf.Max(boxRb.mass, 0.01f); 
-        Vector3 calculatedVelocity = throwDirection.normalized * effectiveForce;
-
         // Check for our interface
         IThrowableItem throwable = objectToThrow.GetComponent<IThrowableItem>();
+
+        float typeMultiplier = 1f;
+        if (throwable != null && throwable.ItemType == ItemType.Artifact)
+        {
+            typeMultiplier = 0.25f; // Reduces throwing effect by 75%, leaving 25%
+        }
+
+        float effectiveForce = (currentThrowForce / Mathf.Max(boxRb.mass, 0.01f)) * typeMultiplier; 
+        Vector3 calculatedVelocity = throwDirection.normalized * effectiveForce;
     
         if (throwable != null)
         {
