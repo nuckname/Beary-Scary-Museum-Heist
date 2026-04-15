@@ -201,6 +201,8 @@ MonoBehaviour:
   waypoints: []
   guardPatrollSpeed: 3
   guardChaseSpeed: 5
+  maxChaseSpeed: 8
+  chaseAcceleration: 2
   investigateTargetPosition: {x: 0, y: 0, z: 0}
   makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight: 1
   makeGuardsCreateNoiseWhenTheySeeThePlayer: 1

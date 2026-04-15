@@ -1,4 +1,4 @@
- using System;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +14,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     public float guardPatrollSpeed = 3f;
     public float guardChaseSpeed = 3f;
     
+    [Header("Chase Escalation Settings")]
+    public float maxChaseSpeed = 7f;
+    public float chaseAcceleration = 1.5f;
+    private float currentChaseSpeed;
+    private bool isCurrentlySeeingPlayer = false;
+
     [Header("Investigation")]
     [HideInInspector] public Vector3 investigateTargetPosition;
 
@@ -211,6 +217,21 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     void Update()
     {
         EnemyCurrentState?.UpdateState(this);
+
+        IncreaseGuardSpeedOverTime();
+    }
+
+    private void IncreaseGuardSpeedOverTime()
+    {
+        if (isCurrentlySeeingPlayer && EnemyCurrentState == EnemyChasePlayerState)
+        {
+            if (currentChaseSpeed < maxChaseSpeed)
+            {
+                currentChaseSpeed += chaseAcceleration * Time.deltaTime;
+                agent.speed = Mathf.Min(currentChaseSpeed, maxChaseSpeed);
+                //Debug.Log("Enemy Speed: " + agent.speed);
+            }
+        }
     }
 
     // Use this to switch states
@@ -240,6 +261,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // Called from FieldOfView.cs
     private void HandlePlayerSpotted(Transform target)
     {
+        isCurrentlySeeingPlayer = true;
+
         // Shouting logic 
         if (!hasShoutedAtPlayer && makeGuardsCreateNoiseWhenTheySeeThePlayer)
         {
@@ -275,6 +298,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
         if (isPlayerStillSeenByAnotherFOV) return;
 
+        isCurrentlySeeingPlayer = false;
+
         // Investigation logic
         if (makeGuardsInvestiageLastPlayerLocationWhenTheyLoseSight)
         {
@@ -293,6 +318,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         EnemyCurrentState?.OnCollisionEnter(this, collision);
     }
+
     public void StartChasing(Transform target)
     {
         playerTransform = target;
@@ -300,6 +326,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // Only switch state if we aren't ALREADY chasing them and NOT stunned
         if (EnemyCurrentState != EnemyChasePlayerState && EnemyCurrentState != EnemyStunnedState)
         {
+            currentChaseSpeed = guardChaseSpeed;
+            agent.speed = currentChaseSpeed;
             SwitchState(EnemyChasePlayerState);
         }
     }
