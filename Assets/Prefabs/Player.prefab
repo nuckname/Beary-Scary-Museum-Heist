@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerThrowController
   minThrowForce: 2
-  maxThrowForce: 15
+  maxThrowForce: 13
   chargeRate: 15
   linePoints: 25
   timeBetweenPoints: 0.1
@@ -547,10 +547,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFootstepNoise
   rb: {fileID: 3292789174107578550}
   stepInterval: 0.5
-  baseNoiseRadius: 2
-  speedMultiplier: 0.5
-  weightToDurationMultiplier: 0.1
-  weightToRadiusMultiplier: 1
+  baseNoiseRadius: 2.5
+  speedMultiplier: 0.75
+  weightToDurationMultiplier: 0.25
+  weightToRadiusMultiplier: 2
 --- !u!82 &5544120613485267522
 AudioSource:
   m_ObjectHideFlags: 0
