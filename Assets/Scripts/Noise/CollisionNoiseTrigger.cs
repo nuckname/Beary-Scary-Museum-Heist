@@ -24,6 +24,8 @@ public class CollisionNoiseTrigger : MonoBehaviour
     {
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
+        
+        // Fixes a bug where if enemy hits an object on the ground we don't want to make a noise or the enemy gets perma stunned as it keeps hitting the enemy.
         if (collision.gameObject.CompareTag("Enemy")) return;
 
         float finalMultiplier = dropSoundMultiplier;
