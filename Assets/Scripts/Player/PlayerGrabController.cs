@@ -1,17 +1,16 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGrabController : MonoBehaviour
 {
     [SerializeField] private Transform playerHand;
+    [SerializeField] private float stackHeightOffset = 0.75f; 
+    
     private PlayerStealthController playerStealthController;
     private PlayerFootstepNoise playerFootstepNoise;
     
-    public GameObject PickedUpObject { get; private set; }
-    
-    // Changed to an array to hold multiple IPickable scripts
-    // (This fixes the issue of only one IPickable being recognized when multiple are on the same object)
-    public IPickable[] CurrentPickables { get; private set; }
+    public List<GameObject> HeldObjects { get; private set; } = new List<GameObject>();
 
     private float currentHeldWeight = 0f;
     
@@ -23,7 +22,8 @@ public class PlayerGrabController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("CanPickUp") && PickedUpObject == null)
+        // Make sure we only pick it up if it's not already in our stack
+        if (other.gameObject.CompareTag("CanPickUp") && !HeldObjects.Contains(other.gameObject))
         {
             IPickable[] pickables = other.gameObject.GetComponents<IPickable>();
         
@@ -43,20 +43,21 @@ public class PlayerGrabController : MonoBehaviour
 
     private void PickUpObject(GameObject obj, IPickable[] pickables)
     {
-        PickedUpObject = obj;
-        CurrentPickables = pickables;
+        // Add item to our stack tracking
+        HeldObjects.Add(obj);
 
-        foreach (IPickable pickable in CurrentPickables)
+        foreach (IPickable pickable in pickables)
         {
             pickable.OnPickedUp();
         }
         
-        currentHeldWeight = 0f;
+        float addedWeight = 0f;
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         
         if (rb != null)
         {
-            currentHeldWeight = rb.mass;
+            addedWeight = rb.mass;
+            currentHeldWeight += addedWeight;
             
             rb.isKinematic = true; 
         }
@@ -75,52 +76,71 @@ public class PlayerGrabController : MonoBehaviour
         
         // Attach to hand
         obj.transform.SetParent(playerHand);
-        obj.transform.localPosition = Vector3.zero;
+        
+        // Stack the object higher depending on how many items we are currently holding
+        float heightOffset = (HeldObjects.Count - 1) * stackHeightOffset;
+        obj.transform.localPosition = new Vector3(0, heightOffset, 0);
         obj.transform.localRotation = Quaternion.identity;
         
         // Re-apply the scale so it doesn't distort
         obj.transform.localScale = originalScale;
 
-        playerStealthController.walkSpeed -= currentHeldWeight;
-        playerStealthController.sprintSpeed -= currentHeldWeight;
+        // Cumulatively subtract speed for every item
+        playerStealthController.walkSpeed -= addedWeight;
+        playerStealthController.sprintSpeed -= addedWeight;
     }
 
-    public void ReleaseObject()
+    public GameObject GetTopObject()
     {
-        if (PickedUpObject == null) return;
+        if (HeldObjects.Count == 0) return null;
+        
+        // The last object added to the list
+        return HeldObjects[HeldObjects.Count - 1]; 
+    }
 
-        if (CurrentPickables != null)
+    public void ReleaseTopObject()
+    {
+        if (HeldObjects.Count == 0) return;
+
+        GameObject objectToDrop = HeldObjects[HeldObjects.Count - 1];
+        IPickable[] pickables = objectToDrop.GetComponents<IPickable>();
+
+        if (pickables != null)
         {
-            foreach (IPickable pickable in CurrentPickables)
+            foreach (IPickable pickable in pickables)
             {
                 pickable.OnReleased();
             }
         }
 
+        float droppedWeight = 0f;
+
         // Maybe use a method to do this
         // Re-enable physics before dropping/throwing
-        Rigidbody rb = PickedUpObject.GetComponent<Rigidbody>();
+        Rigidbody rb = objectToDrop.GetComponent<Rigidbody>();
         if (rb != null)
         {
+            droppedWeight = rb.mass;
             rb.isKinematic = false;
         }
 
         // Re-enable colliders so it can bounce off the floor/walls again
-        Collider[] colliders = PickedUpObject.GetComponentsInChildren<Collider>();
+        Collider[] colliders = objectToDrop.GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
             col.enabled = true;
         }
 
-        PickedUpObject.transform.SetParent(null);
+        objectToDrop.transform.SetParent(null);
         
-        playerStealthController.walkSpeed += currentHeldWeight;
-        playerStealthController.sprintSpeed += currentHeldWeight;
+        // Re-add the individual object's weight back to our speed
+        currentHeldWeight -= droppedWeight;
+        playerStealthController.walkSpeed += droppedWeight;
+        playerStealthController.sprintSpeed += droppedWeight;
   
-        playerFootstepNoise.SetWeightModifier(0f);
+        playerFootstepNoise.SetWeightModifier(currentHeldWeight);
       
-        PickedUpObject = null;
-        CurrentPickables = null;
-        currentHeldWeight = 0f;
+        // Finally remove it from the stack
+        HeldObjects.RemoveAt(HeldObjects.Count - 1);
     }
 }

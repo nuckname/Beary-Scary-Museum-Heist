@@ -52,7 +52,9 @@ public class PlayerThrowController : MonoBehaviour
 
     private void Update()
     {
-        if (grabController.PickedUpObject == null)
+        GameObject topObject = grabController.GetTopObject();
+
+        if (topObject == null)
         {
             isCharging = false;
             currentThrowForce = minThrowForce;
@@ -64,7 +66,7 @@ public class PlayerThrowController : MonoBehaviour
         {
             // Check if the held object can be thrown before starting the charge
             
-            IThrowableItem throwable = grabController.PickedUpObject.GetComponent<IThrowableItem>();
+            IThrowableItem throwable = topObject.GetComponent<IThrowableItem>();
             
             if (throwable != null && !throwable.CanThrowItem)
             {
@@ -92,7 +94,7 @@ public class PlayerThrowController : MonoBehaviour
     
     private void LateUpdate()
     {
-        if (isCharging && grabController.PickedUpObject != null)
+        if (isCharging && grabController.GetTopObject() != null)
         {
             DrawTrajectory(); 
         }
@@ -101,12 +103,14 @@ public class PlayerThrowController : MonoBehaviour
     // AI https://gemini.google.com/share/3ac24891bcfb
     private void DrawTrajectory()
     {
+        GameObject topObject = grabController.GetTopObject();
+
         // Start the line at the exact position of the held object
-        Vector3 startPosition = grabController.PickedUpObject.transform.position; 
+        Vector3 startPosition = topObject.transform.position; 
         Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
 
         float mass = 1f;
-        Rigidbody rb = grabController.PickedUpObject.GetComponent<Rigidbody>();
+        Rigidbody rb = topObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             // Prevents divide by zero errors
@@ -115,7 +119,7 @@ public class PlayerThrowController : MonoBehaviour
 
         // Reduce thrown distance based on what Item we are throwing
         float typeMultiplier = 1f;
-        IThrowableItem throwable = grabController.PickedUpObject.GetComponent<IThrowableItem>();
+        IThrowableItem throwable = topObject.GetComponent<IThrowableItem>();
         if (throwable != null && throwable.ItemType == ItemType.Artifact)
         {
             typeMultiplier = 0.25f;
@@ -160,10 +164,10 @@ public class PlayerThrowController : MonoBehaviour
 
     private void ThrowObject()
     {
-        GameObject objectToThrow = grabController.PickedUpObject;
+        GameObject objectToThrow = grabController.GetTopObject();
     
         // Release the object first (calls IPickable.OnReleased)
-        grabController.ReleaseObject();
+        grabController.ReleaseTopObject();
 
         Vector3 throwDirection = transform.forward + (Vector3.up * 0.5f);
         Rigidbody boxRb = objectToThrow.GetComponent<Rigidbody>();
