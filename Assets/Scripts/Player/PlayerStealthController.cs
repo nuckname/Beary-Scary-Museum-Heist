@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// Ensures the new camera script is attached to the same GameObject
 [RequireComponent(typeof(PlayerCameraController))] 
 public class PlayerStealthController : MonoBehaviour
 {
+    public float sneakSpeed;
     public float walkSpeed;
     public float sprintSpeed;
 
@@ -17,28 +17,25 @@ public class PlayerStealthController : MonoBehaviour
     private float currentStamina;
     private bool isExhausted = false;
 
+    public bool IsSneaking { get; private set; } 
+
     public Rigidbody rb;
     private Vector3 moveDirection;
     private float currentSpeed;
 
     [SerializeField] private Animator animator;
     
-    // Locked Y position
     private float lockedY;
+    private Camera playerCamera;
 
-   // private PlayerCameraController cameraController;
+    private void Awake()
+    {
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    }
 
-   private Camera camera;
-
-   private void Awake()
-   {
-       camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-   }
-
-   void Start()
+    void Start()
     {
         currentStamina = maxStamina;
-        //cameraController = GetComponent<PlayerCameraController>();
         lockedY = transform.position.y;
     }
 
@@ -56,38 +53,21 @@ public class PlayerStealthController : MonoBehaviour
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         bool isMoving = input.sqrMagnitude > 0.01f; 
         animator.SetBool("IsMoving", isMoving);
+        
+        // ??
+        // animator.SetBool("IsSneaking", IsSneaking); 
     }
 
-    // Bool function to determine if movement is currently allowed
-    /*
-    private bool CanMoveNormally()
-    {
-        if (cameraController.IsTopDownActive && !cameraController.allowMovementInTopDown)
-        {
-            return false;
-        }
-        return true;
-    }
-*/
     void HandleSpeed()
     {
-        /*
-        // If we are looking top-down, stop movement completely
-        if (!CanMoveNormally())
-        {
-            currentSpeed = 0f;
-            
-            // Allow stamina to regen while resting and looking around
-            RegenStamina();
-            return;
-        }
-*/
         bool isMoving = moveDirection.magnitude >= 0.1f;
         bool isTryingToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving && !isExhausted;
+        bool isTryingToSneak = Input.GetKey(KeyCode.LeftControl) && isMoving;
 
         if (isTryingToSprint)
         {
             currentSpeed = sprintSpeed;
+            IsSneaking = false; // Cannot sneak while sprinting
             currentStamina -= staminaDepleteRate * Time.deltaTime;
 
             if (currentStamina <= 0)
@@ -96,9 +76,16 @@ public class PlayerStealthController : MonoBehaviour
                 isExhausted = true;
             }
         }
+        else if (isTryingToSneak)
+        {
+            currentSpeed = sneakSpeed;
+            IsSneaking = true;
+            RegenStamina();
+        }
         else
         {
             currentSpeed = walkSpeed;
+            IsSneaking = false;
             RegenStamina();
         }
     }
@@ -120,7 +107,6 @@ public class PlayerStealthController : MonoBehaviour
     {
         rb.linearVelocity = moveDirection * currentSpeed;
 
-        // Lock Y position
         Vector3 pos = transform.position;
         pos.y = lockedY;
         transform.position = pos;
@@ -128,7 +114,7 @@ public class PlayerStealthController : MonoBehaviour
 
     void HandleMouseRotation()
     {
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, transform.position);
 
         if (groundPlane.Raycast(ray, out float rayDistance))
@@ -149,16 +135,11 @@ public class PlayerStealthController : MonoBehaviour
     {
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
-
-        // --- BAR DIMENSIONS ---
         float maxBarWidth = 400f; 
         float barThickness = 24f; 
-
-        // --- POSITIONING ---
         float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
         float startY = Screen.height - 50f; 
 
-        // --- SPRINT TEXT ---
         GUIStyle textStyle = new GUIStyle(GUI.skin.label);
         textStyle.alignment = TextAnchor.LowerLeft;
         textStyle.normal.textColor = Color.white;
@@ -168,20 +149,16 @@ public class PlayerStealthController : MonoBehaviour
         Rect textRect = new Rect(startX + maxBarWidth - 100f, startY - 26f, 100f, 20f);
         GUI.Label(textRect, "Sprint", textStyle);
 
-        // --- DRAW BARS ---
-        // 1. Draw a semi-transparent black background
         GUI.color = new Color(0, 0, 0, 0.6f);
         GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
 
-        Color barColor = isExhausted ? Color.red : new Color(1f, 0.85f, 0f); // Bright Yellow
+        Color barColor = isExhausted ? Color.red : new Color(1f, 0.85f, 0f);
         GUI.color = barColor;
 
-        // 3. Draw the solid stamina block
         float currentWidth = maxBarWidth * staminaPercent;
         Rect activeBarRect = new Rect(startX, startY, currentWidth, barThickness);
         GUI.DrawTexture(activeBarRect, Texture2D.whiteTexture);
 
-        // Restore original color
         GUI.color = originalColor;
     }
 }

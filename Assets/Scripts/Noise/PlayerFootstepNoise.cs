@@ -5,6 +5,8 @@ public class PlayerFootstepNoise : MonoBehaviour
 {
     private NoiseEmitter noiseEmitter;
     [SerializeField] private Rigidbody rb;
+    
+    private PlayerStealthController stealthController; 
 
     [Header("Footstep Settings")]
     [Tooltip("How often a footstep sound triggers when moving (in seconds).")]
@@ -15,6 +17,9 @@ public class PlayerFootstepNoise : MonoBehaviour
     
     [Tooltip("How much the players speed multiplies the noise. Walking vs Sprinting.")]
     public float speedMultiplier = 1f;
+
+    [Tooltip("Multiplier applied to the noise radius when sneaking (e.g., 0.2 means 20% normal volume).")]
+    public float sneakNoiseMultiplier = 0.2f;
 
     [Header("Weight Settings")]
     [Tooltip("How much each unit of weight adds to the step duration interval (in seconds).")]
@@ -32,6 +37,7 @@ public class PlayerFootstepNoise : MonoBehaviour
     private void Start()
     {
         noiseEmitter = GetComponent<NoiseEmitter>();
+        stealthController = GetComponentInParent<PlayerStealthController>(); 
     }
 
     public void SetWeightModifier(float weight)
@@ -60,6 +66,12 @@ public class PlayerFootstepNoise : MonoBehaviour
     private void TriggerFootstep(float speed)
     {
         float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier) + (currentHeldWeight * weightToRadiusMultiplier);
+
+        // Shrink the noise radius drastically if the player is sneaking
+        if (stealthController != null && stealthController.IsSneaking)
+        {
+            calculatedRadius *= sneakNoiseMultiplier;
+        }
 
         noiseEmitter.EmitNoise(calculatedRadius, NoiseType.Player);
     }

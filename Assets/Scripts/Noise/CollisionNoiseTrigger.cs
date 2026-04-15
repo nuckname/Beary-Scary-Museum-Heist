@@ -24,6 +24,7 @@ public class CollisionNoiseTrigger : MonoBehaviour
     {
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
+        if (collision.gameObject.CompareTag("Enemy")) return;
 
         float finalMultiplier = dropSoundMultiplier;
 
