@@ -9,6 +9,8 @@ public class EnemyChasePlayerState : EnemyBaseState
         
         manager.GuardStartMoving();
         
+        manager.animator.SetBool("IsChasing", true);
+        
         manager.agent.speed = manager.guardChaseSpeed;
     }
 
@@ -22,6 +24,9 @@ public class EnemyChasePlayerState : EnemyBaseState
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            // Hit animation
+            manager.animator.SetBool("IsCollideWithPlayer", true);
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

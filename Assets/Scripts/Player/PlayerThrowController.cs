@@ -21,6 +21,9 @@ public class PlayerThrowController : MonoBehaviour
     [SerializeField] private Gradient lineGradient; // Controls both Color and Transparency (Alpha)
 
     [SerializeField] private LayerMask collisionLayers;
+
+    [Header("Animation Settings")]
+    [SerializeField] private Animator animator;
     
     private float currentThrowForce;
     private bool isCharging;
@@ -73,6 +76,11 @@ public class PlayerThrowController : MonoBehaviour
                 return;
             }
             
+
+            print("Animating throw false");
+            //animator.SetBool("HasThrown", false);
+         
+
             isCharging = true;
             currentThrowForce = minThrowForce;
             lineRenderer.enabled = true; 
@@ -88,6 +96,9 @@ public class PlayerThrowController : MonoBehaviour
 
         if (isCharging && Input.GetMouseButtonUp(0))
         {
+            print("Animating throw false");
+            
+            //animator.SetBool("HasThrown", false);
             ThrowObject();
         }
     }
@@ -188,6 +199,10 @@ public class PlayerThrowController : MonoBehaviour
         {
             throwable.OnThrown(calculatedVelocity);
         }
+
+        print("Animating throw true");
+            //animator.SetBool("HasThrown", true);
+       
         
         isCharging = false;
         currentThrowForce = minThrowForce;

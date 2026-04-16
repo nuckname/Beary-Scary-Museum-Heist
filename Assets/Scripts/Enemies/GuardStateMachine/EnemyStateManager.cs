@@ -95,6 +95,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [SerializeField] private Color pathColor = Color.red; 
     [SerializeField] private float pathLineWidth = 0.15f;
     [HideInInspector] public LineRenderer lineRenderer;
+
+    public Animator animator;
     
     // Can make this an enum later
     [Header("Debug")]
@@ -155,12 +157,23 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         enemyConfusedState.lookAngle = turnAngle;
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        //ResetAnimations();
         
         // Freeze guards until we want them to start moving called in RoundStateManager
         agent.isStopped = true;
         agent.speed = 0;
     }
 
+    public void ResetAnimations()
+    {
+        animator.SetBool("IsWalking", true);
+        animator.SetBool("IsChasing", false);
+        animator.SetBool("IsCollideWithPlayer", false);
+        animator.SetBool("IsStunned", false);
+        animator.SetBool("IsAlerted", false);
+    }
+    
     private void SetupPatrolRoute()
     {
         waypoints = new Vector3[pathHolder.childCount];
@@ -237,6 +250,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // Use this to switch states
     public void SwitchState(EnemyBaseState state)
     {
+        Debug.Log($"Switching State TO: {state.GetType().Name}");
+        
         EnemyCurrentState = state;
         
         if (fieldOfViews != null)

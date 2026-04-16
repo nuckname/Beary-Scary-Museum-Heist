@@ -9,6 +9,9 @@ public class EnemyInvestigateALocationState : EnemyBaseState
         manager.agent.speed = manager.guardPatrollSpeed;
         manager.GuardStartMoving(); 
         
+        manager.animator.SetBool("IsAlerted", true);
+        manager.animator.SetBool("IsWalking", true);
+        
         manager.agent.SetDestination(manager.investigateTargetPosition);
     }
 

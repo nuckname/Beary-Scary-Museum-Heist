@@ -15,6 +15,8 @@ public class EnemyStunnedState : EnemyBaseState
         manager.agent.isStopped = true;
         manager.agent.velocity = Vector3.zero;
         
+        manager.animator.SetBool("IsStunned", true);
+        
         manager.SetStateIcon(EnemyStateIcon.GuardIsStunned);
         
         if (manager.fieldOfViews != null)

@@ -1,3 +1,4 @@
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class EnemyFollowPathState : EnemyBaseState
@@ -16,6 +17,9 @@ public class EnemyFollowPathState : EnemyBaseState
         manager.GuardStartMoving();
         manager.agent.speed = manager.guardPatrollSpeed;
 
+        Debug.Log("print bool");
+        manager.animator.SetBool("IsWalking", true);
+        
         // Start heading to the first target using the manager's index
         if (manager.waypoints.Length > 0)
         {
@@ -40,6 +44,7 @@ public class EnemyFollowPathState : EnemyBaseState
         {
             // When walking, the steeringTarget is the immediate next corner in the NavMesh path
             desiredDirection = (manager.agent.steeringTarget - manager.transform.position).normalized;
+            
         }
 
         desiredDirection.y = 0; // Flatten
@@ -103,6 +108,8 @@ public class EnemyFollowPathState : EnemyBaseState
                 isWaiting = false;
                 waitTimer = 0f;
                 
+                manager.animator.SetBool("IsWalking", true);
+                
                 // Wait and turn is over, tell the agent to resume moving
                 manager.agent.isStopped = false;
                 manager.agent.SetDestination(targetWaypoint); 
@@ -115,6 +122,8 @@ public class EnemyFollowPathState : EnemyBaseState
         if (!manager.agent.pathPending && manager.agent.remainingDistance <= manager.agent.stoppingDistance + 0.1f)
         {
             manager.currentWaypointIndex = (manager.currentWaypointIndex + 1) % manager.waypoints.Length;
+            
+            manager.animator.SetBool("IsWalking", false);
             
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
