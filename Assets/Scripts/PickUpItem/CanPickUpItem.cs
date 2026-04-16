@@ -10,7 +10,7 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 
     [Header("Throw Settings")]
     [SerializeField] protected bool canBeThrown = true; 
-    [SerializeField] protected ItemType typeOfItem = ItemType.None;
+    public ItemType typeOfItem = ItemType.None;
     
     protected Rigidbody rb;
     protected Collider col;

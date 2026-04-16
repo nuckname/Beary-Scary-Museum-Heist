@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerGrabController : MonoBehaviour
@@ -51,6 +52,8 @@ public class PlayerGrabController : MonoBehaviour
             pickable.OnPickedUp();
         }
         
+        CheckAlarm(obj, true);
+        
         float addedWeight = 0f;
         Rigidbody rb = obj.GetComponent<Rigidbody>();
         
@@ -90,6 +93,24 @@ public class PlayerGrabController : MonoBehaviour
         playerStealthController.sprintSpeed -= addedWeight;
     }
 
+    private static void CheckAlarm(GameObject obj, bool turnOnAlarm)
+    {
+        if(obj.TryGetComponent(out IsKey key))
+        {
+            if (key.IsAlarmKey)
+            {
+                if (turnOnAlarm)
+                {
+                    obj.GetComponent<AlarmComponent>().StartAlarm();
+                }
+                else
+                {
+                    obj.GetComponent<AlarmComponent>().StopAlarm();
+                }
+            }
+        }
+    }
+
     public GameObject GetTopObject()
     {
         if (HeldObjects.Count == 0) return null;
@@ -112,6 +133,9 @@ public class PlayerGrabController : MonoBehaviour
                 pickable.OnReleased();
             }
         }
+        
+        CheckAlarm(objectToDrop, false);
+        
 
         float droppedWeight = 0f;
 

@@ -1,16 +1,16 @@
 using UnityEngine;
-using System.Collections;
 
 public class CameraAlarmState : CameraBaseState
 {
-    private Coroutine alarmCoroutine;
-
     public override void EnterState(SecurityCameraController camera)
     {
         Debug.Log("Camera Alarm Triggered!");
         
-        // Start the repeating alarm coroutine and save the reference
-        alarmCoroutine = camera.StartCoroutine(AlarmRoutine(camera));
+        // Trigger the alarm on the reusable component
+        if (camera.alarmComponent != null)
+        {
+            camera.alarmComponent.StartAlarm();
+        }
     }
 
     public override void UpdateState(SecurityCameraController camera)
@@ -37,23 +37,11 @@ public class CameraAlarmState : CameraBaseState
     public override void ExitState(SecurityCameraController camera)
     {
         Debug.Log("Player escaped! Stopping alarm.");
-        if (alarmCoroutine != null)
+        
+        // Stop the alarm on the reusable component
+        if (camera.alarmComponent != null)
         {
-            camera.StopCoroutine(alarmCoroutine);
-        }
-    }
-
-    private IEnumerator AlarmRoutine(SecurityCameraController camera)
-    {
-        // loop forever until StopCoroutine is called
-        while (true) 
-        {
-            if (camera.noiseEmitter != null)
-            {
-                camera.noiseEmitter.EmitNoise(camera.alarmNoiseRadius, NoiseType.Player);
-            }
-            
-            yield return new WaitForSeconds(camera.alarmBeepInterval);
+            camera.alarmComponent.StopAlarm();
         }
     }
 }

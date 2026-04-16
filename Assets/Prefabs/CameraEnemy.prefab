@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1523291737050807841}
   - component: {fileID: 1398979885939180627}
   - component: {fileID: 8280131184714761953}
+  - component: {fileID: 3949548190309273348}
   m_Layer: 10
   m_Name: CameraEnemy
   m_TagString: Enemy
@@ -105,7 +106,23 @@ MonoBehaviour:
   pauseTimeAtEdges: 1.5
   alarmNoiseRadius: 100
   alarmBeepInterval: 3
+  alarmComponent: {fileID: 0}
   currentStateName: 
+--- !u!114 &3949548190309273348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458527298132620225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba224dd1e9374646ac4aa9cbc0b57b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  alarmBeepInterval: 1
+  alarmNoiseRadius: 10
+  noiseEmitter: {fileID: 1398979885939180627}
 --- !u!1 &6034622216592793170
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,7 +131,7 @@ public class PlayerThrowController : MonoBehaviour
         // Reduce thrown distance based on what Item we are throwing
         float typeMultiplier = 1f;
         IThrowableItem throwable = topObject.GetComponent<IThrowableItem>();
-        if (throwable != null && throwable.ItemType == ItemType.Artifact)
+        if (throwable != null && throwable.ItemType == ItemType.Artifact || throwable.ItemType == ItemType.KeySmallThrow)
         {
             typeMultiplier = 0.25f;
         }

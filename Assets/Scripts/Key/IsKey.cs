@@ -3,5 +3,6 @@ using UnityEngine;
 public class IsKey : MonoBehaviour, IKey
 {
     [field: SerializeField] public bool hasBeenUsed { get; set; }
+    [field: SerializeField] public bool IsAlarmKey { get; set; }
 
 }

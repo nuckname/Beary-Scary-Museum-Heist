@@ -23,6 +23,8 @@ public class SecurityCameraController : MonoBehaviour
     public readonly CameraSweepState SweepState = new CameraSweepState();
     public readonly CameraAlarmState AlarmState = new CameraAlarmState();
 
+    public AlarmComponent alarmComponent;
+    
     [Header("Debug")]
     public string currentStateName;
 

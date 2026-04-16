@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 8430622584522496057}
   - component: {fileID: 2679273713518980412}
   - component: {fileID: 4657543837702301226}
+  - component: {fileID: 6597828376095059733}
+  - component: {fileID: 4663383456219567960}
   m_Layer: 13
   m_Name: Item_key
   m_TagString: CanPickUp
@@ -33,7 +35,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3534125092866860444}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.2, y: -1.1100001, z: -5.6}
   m_LocalScale: {x: 1.1554736, y: 1.084966, z: 1.1639845}
   m_ConstrainProportionsScale: 0
@@ -303,7 +305,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckBuffer: 3
   canBeThrown: 1
-  typeOfItem: 1
+  typeOfItem: 2
 --- !u!114 &4657543837702301226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,3 +323,31 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6597828376095059733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534125092866860444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7b1cbcd54e74a64cb0fc3311e01dd0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  <hasBeenUsed>k__BackingField: 0
+--- !u!114 &4663383456219567960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534125092866860444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba224dd1e9374646ac4aa9cbc0b57b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AlarmComponent
+  alarmBeepInterval: 1
+  alarmNoiseRadius: 10
+  noiseEmitter: {fileID: 8430622584522496057}

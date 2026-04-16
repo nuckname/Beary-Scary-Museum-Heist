@@ -6,6 +6,8 @@ using UnityEngine;
 public enum ItemType
 {
     None,
+    KeySmallThrow,
+    KeyBigThrow,
     Item,
     Artifact
 }
