@@ -39,6 +39,14 @@ public class CollisionNoiseTrigger : MonoBehaviour
                 finalMultiplier = dropSoundMultiplier * (1f + (impactVelocity * velocityScale));
             }
         }
+        
+        // Spawn impact image
+        Vector3 spawnPosition = collision.contacts[0].point + (Vector3.up * Random.Range(2f, 3f));
+            
+        if (ImagePopUpSpawnerManager.Instance != null)
+        {
+            ImagePopUpSpawnerManager.Instance.SpawnRandomImpact(spawnPosition);
+        }
 
         float noiseRadius = rb.mass * finalMultiplier;
         

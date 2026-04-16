@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &521321528404950467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4545999811945812967}
+  - component: {fileID: 2560152419120309657}
+  m_Layer: 0
+  m_Name: Image Pop Up Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4545999811945812967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521321528404950467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7430978020100226380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2560152419120309657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521321528404950467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d1817a78a98934f954d0e6c39e02cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  impactPrefabs: []
 --- !u!1 &2207204159110247818
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +54,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7430978020100226380}
-  - component: {fileID: 8646748489233066784}
   - component: {fileID: 3759329114673022119}
   - component: {fileID: 3078350231022342017}
   m_Layer: 0
@@ -36,21 +80,9 @@ Transform:
   - {fileID: 8178699499829455419}
   - {fileID: 5605054876303820595}
   - {fileID: 6087978617593187296}
+  - {fileID: 4545999811945812967}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8646748489233066784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2207204159110247818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd288b3e4b04c048b8ec15bff76f438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuotaManager
-  quotaValue: 0
 --- !u!114 &3759329114673022119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,8 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef272eb64a634143a9f5b4f1a10e043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundStateManager
-  artifactValueText: {fileID: 0}
   timer: {fileID: 3759329114673022119}
   currentStateName: 
   amountOfArtifactsToCompleteLevel: 1
   currentArtifacts: 0
+  guards: []
