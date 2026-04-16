@@ -41,8 +41,15 @@ public class CollisionNoiseTrigger : MonoBehaviour
         }
         
         // Spawn impact image
-        Vector3 spawnPosition = collision.contacts[0].point + (Vector3.up * Random.Range(2f, 3f));
-            
+        float horizontalSpread = 1.5f; 
+
+        float randomX = Random.Range(-horizontalSpread, horizontalSpread);
+        float randomZ = Random.Range(-horizontalSpread, horizontalSpread); 
+        float randomY = Random.Range(2f, 3f);
+
+        Vector3 randomOffset = new Vector3(randomX, randomY, randomZ);
+        Vector3 spawnPosition = collision.contacts[0].point + randomOffset;
+
         if (ImagePopUpSpawnerManager.Instance != null)
         {
             ImagePopUpSpawnerManager.Instance.SpawnRandomImpact(spawnPosition);

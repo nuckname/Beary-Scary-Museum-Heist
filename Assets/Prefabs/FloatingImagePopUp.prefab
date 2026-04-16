@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 938345253737105296}
   - component: {fileID: 2719702698198029482}
   - component: {fileID: 8378713477733349753}
+  - component: {fileID: 1433584602543475870}
   m_Layer: 0
   m_Name: FloatingImagePopUp
   m_TagString: Untagged
@@ -117,3 +118,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d528b49c54271c4880756ab6379e7b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  lifetime: 1.5
+--- !u!114 &1433584602543475870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497636729361993972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b319107abf3859f439d28d0a9a9a41ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  impactSprites:
+  - {fileID: -395012908, guid: ddb4d1d0aaf50f24c855cec644ab7b63, type: 3}
+  - {fileID: 740823860, guid: ddb4d1d0aaf50f24c855cec644ab7b63, type: 3}
+  - {fileID: -274200453, guid: ddb4d1d0aaf50f24c855cec644ab7b63, type: 3}
+  - {fileID: 1506501788, guid: ddb4d1d0aaf50f24c855cec644ab7b63, type: 3}
