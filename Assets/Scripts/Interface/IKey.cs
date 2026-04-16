@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public interface IArtifact
+public interface IKey
 {
     public bool hasBeenUsed { get; set; }
-    
 }

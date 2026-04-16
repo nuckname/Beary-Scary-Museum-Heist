@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IsArtifact : MonoBehaviour, IArtifact
+public class IsKey : MonoBehaviour, IKey
 {
     [field: SerializeField] public bool hasBeenUsed { get; set; }
 
