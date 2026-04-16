@@ -52,28 +52,21 @@ public class PlayerGrabController : MonoBehaviour
             pickable.OnPickedUp();
         }
         
+        DestroyGameobjects(obj);
+
         CheckAlarm(obj, true);
         
-        float addedWeight = 0f;
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        
-        if (rb != null)
-        {
-            addedWeight = rb.mass;
-            currentHeldWeight += addedWeight;
-            
-            rb.isKinematic = true; 
-        }
+        float addedWeight = AddWeight(obj);
 
-        // Disable colliders so it doesn't push against the player character
-        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
-        foreach (Collider col in colliders)
-        {
-            col.enabled = false;
-        }
-        
+        DisableAllColliders(obj);
+
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
 
+        SetUpPlayerHand(obj, addedWeight);
+    }
+
+    private void SetUpPlayerHand(GameObject obj, float addedWeight)
+    {
         // Store the object's original world scale before parenting
         Vector3 originalScale = obj.transform.localScale;
         
@@ -93,7 +86,44 @@ public class PlayerGrabController : MonoBehaviour
         playerStealthController.sprintSpeed -= addedWeight;
     }
 
-    private static void CheckAlarm(GameObject obj, bool turnOnAlarm)
+    private float AddWeight(GameObject obj)
+    {
+        float addedWeight = 0f;
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        
+        if (rb != null)
+        {
+            addedWeight = rb.mass;
+            currentHeldWeight += addedWeight;
+            
+            rb.isKinematic = true; 
+        }
+
+        return addedWeight;
+    }
+
+    // Disable colliders so it doesn't push against the player character
+    private void DisableAllColliders(GameObject obj)
+    {
+        Collider[] colliders = obj.GetComponentsInChildren<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+    }
+
+    // Current in use for the painting so it can float.
+    private void DestroyGameobjects(GameObject obj)
+    {
+        IDestroyOnGrab destroyableComponent = obj.GetComponentInChildren<IDestroyOnGrab>();
+        if (destroyableComponent != null)
+        {
+            // Destroy only the child game object that has the script
+            Destroy(destroyableComponent.gameObject);
+        }
+    }
+
+    private void CheckAlarm(GameObject obj, bool turnOnAlarm)
     {
         if(obj.TryGetComponent(out IsKey key))
         {
