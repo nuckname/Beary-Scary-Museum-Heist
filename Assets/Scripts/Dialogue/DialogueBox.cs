@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// reference https://www.youtube.com/watch?v=DB41v0ANCew
 public class DialogueBox : MonoBehaviour
 {
     [SerializeField] [TextArea] private List<string> dialogueLines;
