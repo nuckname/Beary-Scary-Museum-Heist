@@ -2661,14 +2661,14 @@ MonoBehaviour:
   minPitch: 0.8
   maxPitch: 1.2
   waveSpeed: 1
-  waveHeight: 0.5
+  waveHeight: 1.5
   rainbowColorSpeed: 3
   shakeAmount: 2
   ghostFadeSpeed: 3
   glitchChance: 0.1
-  glitchIntensity: 5
-  explosionForce: 50
-  explosionGravity: 20
+  glitchIntensity: 2
+  explosionForce: 15
+  explosionGravity: 10
 --- !u!82 &1232212428
 AudioSource:
   m_ObjectHideFlags: 0

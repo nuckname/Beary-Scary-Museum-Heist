@@ -232,7 +232,7 @@ public class TutorialFollowPath : MonoBehaviour
                 for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v] = charColor;
             }
 
-            if (isWave)
+            if (isWave || isRainbow)
             {
                 float waveOffset = Mathf.Sin(Time.time * waveSpeed + i * 1f) * waveHeight;
                 for (int v = 0; v < 4; v++) vertices[vertexIndex + v].y += waveOffset;
