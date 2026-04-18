@@ -97,6 +97,9 @@ public class PlayerGrabController : MonoBehaviour
             currentHeldWeight += addedWeight;
             
             rb.isKinematic = true; 
+            
+            rb.useGravity = false;
+            rb.interpolation = RigidbodyInterpolation.None; 
         }
 
         return addedWeight;
@@ -140,7 +143,7 @@ public class PlayerGrabController : MonoBehaviour
             }
         }
     }
-
+    
     public GameObject GetTopObject()
     {
         if (HeldObjects.Count == 0) return null;
@@ -176,6 +179,9 @@ public class PlayerGrabController : MonoBehaviour
         {
             droppedWeight = rb.mass;
             rb.isKinematic = false;
+            
+            rb.useGravity = true;
+            rb.interpolation = RigidbodyInterpolation.Interpolate; 
         }
 
         // Re-enable colliders so it can bounce off the floor/walls again
