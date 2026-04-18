@@ -32,15 +32,33 @@ public class CollisionNoiseTrigger : MonoBehaviour
 
         if (useVelocityScaling)
         {
-            float impactVelocity = collision.relativeVelocity.magnitude;
-            
-            if (impactVelocity >= minVelocityThreshold)
-            {
-                finalMultiplier = dropSoundMultiplier * (1f + (impactVelocity * velocityScale));
-            }
+            finalMultiplier = GetVelocity(collision, finalMultiplier);
         }
         
-        // Spawn impact image
+        SpawnFloatingCartoonImage(collision);
+
+        float noiseRadius = rb.mass * finalMultiplier;
+        
+        audioSource.maxDistance = noiseRadius;
+        audioSource.Play();
+        
+        noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
+    }
+
+    private float GetVelocity(Collision collision, float finalMultiplier)
+    {
+        float impactVelocity = collision.relativeVelocity.magnitude;
+
+        if (impactVelocity >= minVelocityThreshold)
+        {
+            finalMultiplier = dropSoundMultiplier * (1f + (impactVelocity * velocityScale));
+        }
+
+        return finalMultiplier;
+    }
+
+    private void SpawnFloatingCartoonImage(Collision collision)
+    {
         float horizontalSpread = 1.5f; 
 
         float randomX = Random.Range(-horizontalSpread, horizontalSpread);
@@ -54,12 +72,5 @@ public class CollisionNoiseTrigger : MonoBehaviour
         {
             ImagePopUpSpawnerManager.Instance.SpawnRandomImpact(spawnPosition);
         }
-
-        float noiseRadius = rb.mass * finalMultiplier;
-        
-        audioSource.maxDistance = noiseRadius;
-        audioSource.Play();
-        
-        noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
     }
 }
