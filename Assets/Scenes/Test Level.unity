@@ -2644,11 +2644,30 @@ MonoBehaviour:
     dialogueText: good bye
   - targetTransform: {fileID: 773785485}
     waitTime: 0
-    dialogueText: 
+    dialogueText: '<wave>Bounce</wave> \n
+
+      <ghost>Spooky</ghost> \n
+
+      <shake>Angry</shake>
+      \n
+
+      <glitch>ERROR</glitch>'
   moveSpeed: 5
   floatingText: {fileID: 1726203128}
   textTypeSpeed: 0.05
   currentWaypointIndex: 0
+  voiceBlip: {fileID: 0}
+  minPitch: 0.8
+  maxPitch: 1.2
+  waveSpeed: 1
+  waveHeight: 0.5
+  rainbowColorSpeed: 3
+  shakeAmount: 2
+  ghostFadeSpeed: 3
+  glitchChance: 0.1
+  glitchIntensity: 5
+  explosionForce: 50
+  explosionGravity: 20
 --- !u!1 &1232214483
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,7 +4284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: hello my name\n is dog
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8727,7 +8746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1825642667893727279, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -168.1
+      value: -186.5
       objectReference: {fileID: 0}
     - target: {fileID: 1825642667893727279, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalRotation.w

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// gameobject follows a path with diagloue 
+/// </summary>
+
 [System.Serializable]
 public struct Waypoint
 {
@@ -14,6 +18,7 @@ public struct Waypoint
     public string dialogueText; 
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class TutorialFollowPath : MonoBehaviour
 {
     [Header("Path Settings")]
@@ -22,13 +27,39 @@ public class TutorialFollowPath : MonoBehaviour
 
     [Header("Dialogue Settings")]
     public TMP_Text floatingText;
+    
+    [Tooltip("The time in seconds between each letter appearing.")]
     public float textTypeSpeed = 0.05f; 
+    
+    [Tooltip("Tracks which waypoint the object is currently traveling to or acting upon.")]
     public int currentWaypointIndex = 0; 
 
-    [Header("Wave & Rainbow Settings")]
+    [Header("Animal Crossing Voice")]
+    public AudioClip voiceBlip;
+    [Range(0.5f, 2f)] public float minPitch = 0.8f;
+    [Range(0.5f, 2f)] public float maxPitch = 1.2f;
+    private AudioSource audioSource;
+
+    [Header("Text Effects Settings")]
     public float waveSpeed = 5f;
     public float waveHeight = 10f;
     public float rainbowColorSpeed = 1f;
+    public float shakeAmount = 2f;
+    public float ghostFadeSpeed = 3f;
+    [Range(0f, 1f)] public float glitchChance = 0.1f;
+    public float glitchIntensity = 5f;
+
+    [Header("Explosion Settings")]
+    public float explosionForce = 50f;
+    public float explosionGravity = 20f;
+    private bool isExploding = false;
+    private float explosionStartTime;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
 
     private void Start()
     {
@@ -55,18 +86,23 @@ public class TutorialFollowPath : MonoBehaviour
 
             transform.position = point.targetTransform.position;
 
-            // Trigger the dialogue
+            // Trigger the dialogue for this specific waypoint
             if (!string.IsNullOrEmpty(point.dialogueText))
             {
                 yield return StartCoroutine(TypeText(point.dialogueText));
             }
 
-            // Wait
+            // Wait for the specified amount of time at this transform
             if (point.waitTime > 0)
             {
                 yield return new WaitForSeconds(point.waitTime);
             }
 
+            // Explode the special text at the end of the wait time before moving on
+            TriggerExplosion();
+            yield return new WaitForSeconds(1.5f); 
+            
+            isExploding = false;
             floatingText.maxVisibleCharacters = 0; 
             floatingText.text = "";
         }
@@ -74,10 +110,19 @@ public class TutorialFollowPath : MonoBehaviour
         Debug.Log("Path complete!");
     }
 
+    // Slowly write out the text
+    // Text effect
     private IEnumerator TypeText(string rawText)
     {
-        // Secretly convert <rainbow> tags into TMP <link> tags so we can find them in the Update loop
-        string processedText = Regex.Replace(rawText, @"<rainbow>(.*?)</rainbow>", "<link=\"rainbow\">$1</link>");
+        string processedText = rawText;
+        processedText = Regex.Replace(processedText, @"<rainbow>(.*?)</rainbow>", "<link=\"rainbow\">$1</link>");
+        processedText = Regex.Replace(processedText, @"<wave>(.*?)</wave>", "<link=\"wave\">$1</link>");
+        processedText = Regex.Replace(processedText, @"<shake>(.*?)</shake>", "<link=\"shake\">$1</link>");
+        processedText = Regex.Replace(processedText, @"<ghost>(.*?)</ghost>", "<link=\"ghost\">$1</link>");
+        processedText = Regex.Replace(processedText, @"<glitch>(.*?)</glitch>", "<link=\"glitch\">$1</link>");
+        
+        // Added explicit explode tag!
+        processedText = Regex.Replace(processedText, @"<explode>(.*?)</explode>", "<link=\"explode\">$1</link>");
 
         floatingText.text = processedText;
         floatingText.ForceMeshUpdate();
@@ -88,60 +133,138 @@ public class TutorialFollowPath : MonoBehaviour
         for (int i = 0; i <= totalVisibleCharacters; i++)
         {
             floatingText.maxVisibleCharacters = i;
+
+            if (i > 0 && i <= floatingText.textInfo.characterCount)
+            {
+                char c = floatingText.textInfo.characterInfo[i - 1].character;
+                if (c != ' ' && voiceBlip != null)
+                {
+                    audioSource.pitch = Random.Range(minPitch, maxPitch);
+                    audioSource.PlayOneShot(voiceBlip, 0.5f);
+                }
+            }
+
             yield return new WaitForSeconds(textTypeSpeed);
         }
     }
 
-    // This handles the mesh manipulation every frame
+    public void TriggerExplosion()
+    {
+        isExploding = true;
+        explosionStartTime = Time.time;
+    }
+
     private void AnimateSpecialText()
     {
         if (floatingText == null || floatingText.textInfo == null || floatingText.textInfo.characterCount == 0) return;
 
-        // Force mesh update to reset vertices to their default positions before we move them
         floatingText.ForceMeshUpdate();
         TMP_TextInfo textInfo = floatingText.textInfo;
+        
+        float timeSinceExplosion = Time.time - explosionStartTime;
 
-        // Look through the text for our hidden "rainbow" links
-        foreach (TMP_LinkInfo link in textInfo.linkInfo)
+        for (int i = 0; i < textInfo.characterCount; i++)
         {
-            if (link.GetLinkID() == "rainbow")
+            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+            if (!charInfo.isVisible) continue;
+
+            int materialIndex = charInfo.materialReferenceIndex;
+            int vertexIndex = charInfo.vertexIndex;
+
+            Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
+            Color32[] vertexColors = textInfo.meshInfo[materialIndex].colors32;
+
+            // --- 1. FIND TAGS FIRST ---
+            bool hasAnyTag = false;
+            bool isRainbow = false, isWave = false, isShake = false, isGhost = false, isGlitch = false;
+
+            foreach (TMP_LinkInfo link in textInfo.linkInfo)
             {
-                // Loop through every character inside that specific word
-                for (int i = link.linkTextfirstCharacterIndex; i < link.linkTextfirstCharacterIndex + link.linkTextLength; i++)
+                if (i >= link.linkTextfirstCharacterIndex && i < link.linkTextfirstCharacterIndex + link.linkTextLength)
                 {
-                    TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+                    hasAnyTag = true;
+                    string linkId = link.GetLinkID();
+                    
+                    if (linkId == "rainbow") isRainbow = true;
+                    if (linkId == "wave") isWave = true;
+                    if (linkId == "shake") isShake = true;
+                    if (linkId == "ghost") isGhost = true;
+                    if (linkId == "glitch") isGlitch = true;
+                    // If it's "explode", it triggers hasAnyTag to be true, which is all we need!
+                }
+            }
 
-                    // Skip spaces or letters that haven't been typed yet
-                    if (!charInfo.isVisible) continue; 
+            // --- 2. EXPLOSION OVERRIDE ---
+            if (isExploding)
+            {
+                // Fade out ALL text smoothly during the explosion phase
+                byte fadeAlpha = (byte)Mathf.Clamp(255 - (timeSinceExplosion * 150), 0, 255);
+                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v].a = fadeAlpha;
 
-                    int materialIndex = charInfo.materialReferenceIndex;
-                    int vertexIndex = charInfo.vertexIndex;
+                // BUT if the character has a tag, physically explode it outward!
+                if (hasAnyTag)
+                {
+                    Random.InitState(i * 100); 
+                    Vector3 randomDir = new Vector3(Random.Range(-1f, 1f), Random.Range(0.5f, 1.5f), 0).normalized;
+                    
+                    Vector3 explosionOffset = randomDir * explosionForce * timeSinceExplosion;
+                    explosionOffset.y -= explosionGravity * (timeSinceExplosion * timeSinceExplosion); 
 
-                    // --- 1. FLOWING RAINBOW COLOR ---
-                    // Use Time.time to make the colors shift over time
-                    float hue = (Time.time * rainbowColorSpeed + i * 0.1f) % 1f; 
-                    Color32 charColor = Color.HSVToRGB(hue, 1f, 1f);
+                    Matrix4x4 matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 0, Random.Range(-300f, 300f) * timeSinceExplosion));
+                    Vector3 center = (vertices[vertexIndex + 0] + vertices[vertexIndex + 2]) / 2f;
 
-                    Color32[] vertexColors = textInfo.meshInfo[materialIndex].colors32;
-                    vertexColors[vertexIndex + 0] = charColor;
-                    vertexColors[vertexIndex + 1] = charColor;
-                    vertexColors[vertexIndex + 2] = charColor;
-                    vertexColors[vertexIndex + 3] = charColor;
+                    for (int v = 0; v < 4; v++)
+                    {
+                        vertices[vertexIndex + v] = center + matrix.MultiplyPoint3x4(vertices[vertexIndex + v] - center) + explosionOffset;
+                    }
+                }
+                
+                continue; // Skip the standard wobbles and shakes if we are exploding
+            }
 
-                    // --- 2. BOUNCING SINE WAVE ---
-                    // Calculate a wave offset based on time and the letter's position
-                    float waveOffset = Mathf.Sin(Time.time * waveSpeed + i * 1f) * waveHeight; 
+            // --- 3. STANDARD LINK EFFECTS ---
+            if (isRainbow)
+            {
+                float hue = (Time.time * rainbowColorSpeed + i * 0.1f) % 1f;
+                Color32 charColor = Color.HSVToRGB(hue, 1f, 1f);
+                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v] = charColor;
+            }
 
-                    Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
-                    vertices[vertexIndex + 0].y += waveOffset;
-                    vertices[vertexIndex + 1].y += waveOffset;
-                    vertices[vertexIndex + 2].y += waveOffset;
-                    vertices[vertexIndex + 3].y += waveOffset;
+            if (isWave)
+            {
+                float waveOffset = Mathf.Sin(Time.time * waveSpeed + i * 1f) * waveHeight;
+                for (int v = 0; v < 4; v++) vertices[vertexIndex + v].y += waveOffset;
+            }
+
+            if (isShake)
+            {
+                Vector3 jitterOffset = new Vector3(Random.Range(-shakeAmount, shakeAmount), Random.Range(-shakeAmount, shakeAmount), 0);
+                for (int v = 0; v < 4; v++) vertices[vertexIndex + v] += jitterOffset;
+            }
+
+            if (isGhost)
+            {
+                float alphaFloat = (Mathf.Sin(Time.time * ghostFadeSpeed + i) + 1f) / 2f;
+                byte alphaByte = (byte)(alphaFloat * 255);
+                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v].a = alphaByte;
+            }
+
+            if (isGlitch)
+            {
+                if (Random.value < glitchChance)
+                {
+                    Vector3 glitchOffset = new Vector3(Random.Range(-glitchIntensity, glitchIntensity), Random.Range(-glitchIntensity, glitchIntensity), 0);
+                    Color32 glitchColor = Random.value > 0.5f ? Color.cyan : Color.magenta;
+
+                    for (int v = 0; v < 4; v++)
+                    {
+                        vertices[vertexIndex + v] += glitchOffset;
+                        vertexColors[vertexIndex + v] = glitchColor;
+                    }
                 }
             }
         }
 
-        // Push our modified vertex data back into the visible mesh
         floatingText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
     }
 }
