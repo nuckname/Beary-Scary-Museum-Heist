@@ -52,7 +52,7 @@ public class SecurityCameraController : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void StartCamaeraMovement()
     {
         SwitchState(SweepState);
     }

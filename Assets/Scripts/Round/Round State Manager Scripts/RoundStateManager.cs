@@ -24,7 +24,8 @@ public class RoundStateManager : MonoBehaviour
     public int amountOfArtifactsToCompleteLevel = 3;
     public int currentArtifacts = 0;
 
-    public List<GameObject> guards = new List<GameObject>(); 
+    public List<GameObject> enemies = new List<GameObject>(); 
+    public List<GameObject> cameras = new List<GameObject>(); 
 
     private void Awake()
     {
@@ -45,22 +46,45 @@ public class RoundStateManager : MonoBehaviour
     {
         SwitchState(AboutToStartState);
 
-        SetUpGuards();
+        GetAllEnemies();
 
         UpdateUI();
 
         AmountOfTimesPlayerSpottedByGuards = 0;
     }
 
-    private void SetUpGuards()
+    private void GetAllEnemies()
     {
-        guards.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
-    }
+    }    
     
     public void MakeGuardsStartMoving()
     {
-        foreach (GameObject guard in guards)
+        foreach (GameObject enemy in enemies)
+        {
+            // set up guards
+            EnemyStateManager enemyStateManager = enemy.GetComponent<EnemyStateManager>();
+            
+            if(enemyStateManager != null)
+            {
+                enemyStateManager.InitialiseGuardStartMoving();
+            }
+            
+            // Set up cameras
+            SecurityCameraController securityCameraController = enemy.GetComponent<SecurityCameraController>();
+
+            if (securityCameraController != null)
+            {
+                securityCameraController.StartCamaeraMovement();   
+            }
+        }
+    }
+
+
+    public void MakeCamerassStartMoving()
+    {
+        foreach (GameObject guard in enemies)
         {
             EnemyStateManager enemyStateManager = guard.GetComponent<EnemyStateManager>();
             if(enemyStateManager != null)
@@ -70,6 +94,7 @@ public class RoundStateManager : MonoBehaviour
         }
     }
 
+    
     void Update()
     {
         CurrentState?.UpdateState(this);
