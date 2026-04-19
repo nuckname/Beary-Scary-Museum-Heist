@@ -1513,6 +1513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1372617713}
     m_Modifications:
+    - target: {fileID: 3499240631103670951, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
+      propertyPath: meshResolution
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6248622856224337595, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 74.17
@@ -7932,7 +7936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2208696689726385067, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.875
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3106409119693640108, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

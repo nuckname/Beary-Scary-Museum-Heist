@@ -14,8 +14,6 @@ public class NoiseEmitter : MonoBehaviour
     public bool showVisibleRadius = true;
     public float visualDuration = 1.5f;
     public Material radiusMaterial;
-    [Tooltip("Height offset above the surface for the inner circle mesh.")]
-    public float meshHeightOffset = 1f;
     
     [Header("Outline Settings")]
     [Tooltip("Check to draw an outline around the noise radius.")]
@@ -57,7 +55,7 @@ public class NoiseEmitter : MonoBehaviour
         BroadcastToAI(noiseRadius, emissionPoint, noiseType);
     }
 
-private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType noiseType)
+    private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType noiseType)
     {
         // We need a huge physical net to catch guards who are standing far away 
         // but have massive hearing ranges. OverlapSphere only finds their physical bodies!
@@ -105,7 +103,7 @@ private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType 
         GameObject visualMeshObj = new GameObject("NoiseVisual");
         
         // Use the new specific offset for the Mesh
-        visualMeshObj.transform.position = hitPosition + new Vector3(0, meshHeightOffset, 0);
+        visualMeshObj.transform.position = hitPosition + new Vector3(0, outlineHeightOffset, 0);
 
         MeshFilter meshFilter = visualMeshObj.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = visualMeshObj.AddComponent<MeshRenderer>();
@@ -138,8 +136,9 @@ private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType 
 
             viewPoints.Add(targetPoint);
             
-            // Use the specific offset for the LineRenderer Outline
-            outlinePoints.Add(targetPoint + new Vector3(0, outlineHeightOffset, 0)); 
+            // The outline is now perfectly aligned with visualMeshObj's height
+            Vector3 flatOutlinePoint = new Vector3(targetPoint.x, visualMeshObj.transform.position.y, targetPoint.z);
+            outlinePoints.Add(flatOutlinePoint); 
         }
 
         // Build the Mesh
@@ -150,7 +149,11 @@ private void BroadcastToAI(float noiseRadius, Vector3 originPosition, NoiseType 
         vertices[0] = Vector3.zero; // The center of the mesh is local Vector3.zero
         for (int i = 0; i < vertexCount - 1; i++)
         {
-            vertices[i + 1] = visualMeshObj.transform.InverseTransformPoint(viewPoints[i]);
+            Vector3 localVertex = visualMeshObj.transform.InverseTransformPoint(viewPoints[i]);
+            
+            localVertex.y = 0f; 
+            
+            vertices[i + 1] = localVertex;
 
             if (i < vertexCount - 2)
             {

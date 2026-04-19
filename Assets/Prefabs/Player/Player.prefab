@@ -490,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 4172558463754720018}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.64, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -517,12 +517,11 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: 2b6d1bfaad13e934fb564b7a69fc5411, type: 2}
-  meshHeightOffset: 1
   showOutline: 1
   outlineMaterial: {fileID: 2100000, guid: fca9c2d7c422d1940b0c6639e9db4dc6, type: 2}
   outlineWidth: 0.1
-  outlineHeightOffset: 0.1
-  meshResolution: 1
+  outlineHeightOffset: 0.05
+  meshResolution: 2
 --- !u!114 &4018978504740902728
 MonoBehaviour:
   m_ObjectHideFlags: 0
