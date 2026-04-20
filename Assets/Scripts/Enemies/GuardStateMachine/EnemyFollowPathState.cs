@@ -23,6 +23,8 @@ public class EnemyFollowPathState : EnemyBaseState
         // Start heading to the first target using the manager's index
         if (manager.waypoints.Length > 0)
         {
+            CheckWhichWaypointToGoTo(manager);
+
             manager.agent.SetDestination(manager.waypoints[manager.currentWaypointIndex]);
         }
     }
@@ -129,6 +131,23 @@ public class EnemyFollowPathState : EnemyBaseState
             manager.agent.isStopped = true; // Stop the agent from walking while waiting
 
             manager.SetStateIcon(EnemyStateIcon.HideIcon);
+        }
+    }
+    
+    // Check which waypoint is closer: the current one or the next one. 
+    // This prevents weird pathing where the guard will go backs when they get off their path.
+    private void CheckWhichWaypointToGoTo(EnemyStateManager manager)
+    {
+        int currentIndex = manager.currentWaypointIndex;
+        int nextIndex = (currentIndex + 1) % manager.waypoints.Length;
+
+        float distanceToCurrent = Vector3.Distance(manager.transform.position, manager.waypoints[currentIndex]);
+        float distanceToNext = Vector3.Distance(manager.transform.position, manager.waypoints[nextIndex]);
+
+        // Check if the +1 waypoint is closer than the current one
+        if (distanceToNext < distanceToCurrent)
+        {
+            manager.currentWaypointIndex = nextIndex;
         }
     }
     
