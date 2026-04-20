@@ -186,6 +186,13 @@ public class EnemyFollowPathState : EnemyBaseState
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 manager.transform.rotation = Quaternion.RotateTowards(manager.transform.rotation, targetRotation, manager.turnSpeed * Time.deltaTime);
+
+                // if the guards default is to always turn right then set it.
+                // but only set it when we rotate the fastest way to the next waypoint.
+                if (manager.defaultAlwaysTurnRight)
+                {
+                    manager.alwaysTurnRight = true;
+                }
             }
         }
     }

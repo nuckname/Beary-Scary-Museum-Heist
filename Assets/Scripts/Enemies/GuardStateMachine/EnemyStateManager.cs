@@ -70,6 +70,10 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [Tooltip("If true, the guard will only rotate clockwise. If false, they will take the shortest rotation path.")]
     public bool alwaysTurnRight = false;
     
+    // Add this to remember the guard's specific inspector setting
+    [HideInInspector] public bool defaultAlwaysTurnRight;
+    
+    
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
     [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
@@ -134,6 +138,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
 
     private void Awake()
     {
+        defaultAlwaysTurnRight = alwaysTurnRight;
+        
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -264,6 +270,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
                 }
             }
         }
+
+        // Always turn false but then override this for something in a specific state. 
+        alwaysTurnRight = false;
         
         if (EnemyCurrentState != null)
         {
