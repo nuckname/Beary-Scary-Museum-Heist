@@ -6,7 +6,9 @@ public class EnemyInvestigateALocationState : EnemyBaseState
     {
         manager.SetStateIcon(EnemyStateIcon.LookingAroundConfused);
         
-        manager.agent.speed = manager.guardPatrollSpeed;
+        manager.agent.speed = manager.guardChaseSpeed;
+        
+        
         manager.GuardStartMoving(); 
         
         manager.animator.SetBool("IsAlerted", true);
