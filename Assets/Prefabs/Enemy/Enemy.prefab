@@ -497,6 +497,7 @@ MonoBehaviour:
   guardHasFinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling: {fileID: 0}
   whatTypeOfNoiseTheGuardHeard: 0
   alwaysTurnRight: 0
+  defaultAlwaysTurnRight: 0
   currentWaypointIndex: 0
   turnTargetPosition: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
@@ -528,7 +529,6 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
-  meshHeightOffset: 1
   showOutline: 1
   outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
   outlineWidth: 0.05
@@ -1443,7 +1443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8866816931264410936
 Transform:
   m_ObjectHideFlags: 0

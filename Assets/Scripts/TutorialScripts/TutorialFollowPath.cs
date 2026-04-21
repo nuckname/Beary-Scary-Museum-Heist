@@ -34,6 +34,9 @@ public class TutorialFollowPath : MonoBehaviour
     public List<Waypoint> waypoints = new List<Waypoint>();
     public float moveSpeed = 5f;
 
+    [Header("Animation Integration")]
+    public DogWalkAnimation walkAnimation;
+
     [Header("Dialogue Settings")]
     public TMP_Text floatingText;
     
@@ -178,6 +181,12 @@ public class TutorialFollowPath : MonoBehaviour
         {
             Waypoint point = waypoints[currentWaypointIndex];
 
+            // Turn on the walking animation while moving to the next point
+            if (walkAnimation != null) 
+            {
+                walkAnimation.isWalking = true;
+            }
+
             // Move towards the transform
             while (Vector3.Distance(transform.position, point.targetTransform.position) > 0.01f)
             {
@@ -188,6 +197,12 @@ public class TutorialFollowPath : MonoBehaviour
             transform.position = point.targetTransform.position;
 
             // Trigger the dialogue for this specific waypoint
+            if (walkAnimation != null)
+            {
+                walkAnimation.isWalking = false;
+                walkAnimation.ResetPosture();
+            }
+
             if (!string.IsNullOrEmpty(point.dialogueText))
             {
                 yield return StartCoroutine(TypeText(point.dialogueText));
@@ -208,6 +223,12 @@ public class TutorialFollowPath : MonoBehaviour
             floatingText.text = "";
         }
         
+        if (walkAnimation != null)
+        {
+            walkAnimation.isWalking = false;
+            walkAnimation.ResetPosture();
+        }
+
         Debug.Log("Path complete!");
     }
 
