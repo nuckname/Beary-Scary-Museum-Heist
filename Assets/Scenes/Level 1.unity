@@ -688,6 +688,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BombItem (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6774066252667396190, guid: eb1269d5eaa1e9b4294d29934a138f3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3345,6 +3349,10 @@ PrefabInstance:
       value: 17.09
       objectReference: {fileID: 0}
     - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
+      propertyPath: waitTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: chaseSpeed
       value: 3
       objectReference: {fileID: 0}
@@ -3353,8 +3361,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 748312512}
     - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
+      propertyPath: guardChaseSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: normalWalkSpeed
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
+      propertyPath: guardPatrollSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: startingRotation.w
