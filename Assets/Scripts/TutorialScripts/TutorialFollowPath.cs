@@ -68,10 +68,20 @@ public class TutorialFollowPath : MonoBehaviour
     private bool isExploding = false;
     private float explosionStartTime;
 
+    private Transform playerTransform;
+    private bool isPaused = false;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
+
+        // Try to find the player early if they exist in the scene right away
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerTransform = playerObj.transform;
+        }
     }
 
     private IEnumerator Start()
@@ -93,6 +103,26 @@ public class TutorialFollowPath : MonoBehaviour
     private void Update()
     {
         AnimateSpecialText();
+
+        if (isPaused)
+        {
+            if (playerTransform == null)
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null) playerTransform = playerObj.transform;
+            }
+
+            if (playerTransform != null)
+            {
+                Vector3 directionToPlayer = playerTransform.position - transform.position;
+                
+                if (directionToPlayer != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+            }
+        }
     }
 
     
@@ -188,6 +218,11 @@ public class TutorialFollowPath : MonoBehaviour
                 walkAnimation.isWalking = true;
             }
 
+            isPaused = false;
+            
+            Vector3 currentVelocity = Vector3.zero;
+            float smoothTime = 0.3f;
+
             // Move towards the transform
             while (Vector3.Distance(transform.position, point.targetTransform.position) > 0.01f)
             {
@@ -201,11 +236,19 @@ public class TutorialFollowPath : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 }
 
-                transform.position = Vector3.MoveTowards(transform.position, point.targetTransform.position, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.SmoothDamp(
+                    transform.position, 
+                    point.targetTransform.position, 
+                    ref currentVelocity, 
+                    smoothTime,
+                    moveSpeed 
+                );
                 yield return null; 
             }
 
             transform.position = point.targetTransform.position;
+            
+            isPaused = true;
 
             // Trigger the dialogue for this specific waypoint
             if (walkAnimation != null)
