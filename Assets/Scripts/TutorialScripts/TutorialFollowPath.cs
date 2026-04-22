@@ -14,6 +14,25 @@ using System.Text.RegularExpressions;
 
 // linking AI to google sheets
 // https://gemini.google.com/share/e83ef3f4d00d
+
+public enum SpecialAction
+{
+    None,
+    PlayDeadAndRevive
+}
+
+[System.Serializable]
+public struct CustomParameters
+{
+    public SpecialAction action; 
+    public float timeSpentDead;
+    
+    [Header("Revive Settings")]
+    public float reviveHeight; 
+    public float reviveDuration; 
+    public float reviveSpinSpeed; 
+}
+
 [System.Serializable]
 public struct Waypoint
 {
@@ -22,6 +41,9 @@ public struct Waypoint
     
     [TextArea(2, 5)]
     public string dialogueText; 
+
+    // Changed to a List so you can add multiple parameters/actions per waypoint
+    public List<CustomParameters> customParameters; 
 }
 
 [RequireComponent(typeof(AudioSource))]
@@ -247,6 +269,73 @@ public class TutorialFollowPath : MonoBehaviour
             }
 
             transform.position = point.targetTransform.position;
+
+            // Loop through all custom parameters added to this specific waypoint
+            if (point.customParameters != null && point.customParameters.Count > 0)
+            {
+                foreach (CustomParameters customParam in point.customParameters)
+                {
+                    if (customParam.action == SpecialAction.PlayDeadAndRevive)
+                    {
+                        Vector3 currentRot = transform.eulerAngles;
+                        transform.eulerAngles = new Vector3(currentRot.x, currentRot.y, 180f);
+
+                        if (walkAnimation != null)
+                        {
+                            walkAnimation.isWalking = false;
+                            walkAnimation.ResetPosture();
+                        }
+
+                        yield return new WaitForSeconds(customParam.timeSpentDead);
+
+                        // Find out where the player is so we can calculate the final angle
+                        float startAngle = transform.eulerAngles.y;
+                        float targetAngle = startAngle;
+
+                        if (playerTransform != null)
+                        {
+                            Vector3 dirToPlayer = playerTransform.position - transform.position;
+                            dirToPlayer.y = 0;
+                            if (dirToPlayer != Vector3.zero)
+                            {
+                                targetAngle = Quaternion.LookRotation(dirToPlayer).eulerAngles.y;
+                            }
+                        }
+
+                        float rDuration = customParam.reviveDuration > 0f ? customParam.reviveDuration : 2f;
+                        float rHeight = customParam.reviveHeight > 0f ? customParam.reviveHeight : 2f;
+                        float rSpinSpeed = customParam.reviveSpinSpeed > 0f ? customParam.reviveSpinSpeed : 1000f;
+
+                        // Calculate the exact degrees needed to smoothly land on the target angle
+                        float rawTotalDegrees = 0.5f * rDuration * rSpinSpeed;
+                        float angleDifference = Mathf.DeltaAngle(startAngle + rawTotalDegrees, targetAngle);
+                        float totalDegrees = rawTotalDegrees + angleDifference;
+
+                        Vector3 groundPos = transform.position;
+                        float elapsedTime = 0f;
+
+                        while (elapsedTime < rDuration)
+                        {
+                            elapsedTime += Time.deltaTime;
+                            float timeNormalized = Mathf.Clamp01(elapsedTime / rDuration);
+
+                            // Float up and down using Sine
+                            float heightOffset = Mathf.Sin(timeNormalized * Mathf.PI) * rHeight;
+                            transform.position = groundPos + (Vector3.up * heightOffset);
+
+                            // Spin smoothly using quadratic ease-out, ending exactly on the player
+                            float easeOut = (2f * timeNormalized) - (timeNormalized * timeNormalized);
+                            float currentYAngle = startAngle + (totalDegrees * easeOut);
+                            
+                            transform.rotation = Quaternion.Euler(0f, currentYAngle, 0f);
+
+                            yield return null;
+                        }
+
+                        transform.position = groundPos;
+                    }
+                }
+            }
             
             isPaused = true;
 
