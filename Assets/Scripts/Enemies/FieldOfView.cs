@@ -59,9 +59,13 @@ public class FieldOfView : MonoBehaviour {
     }
 
     void Start() {
-       viewMesh = new Mesh ();
-       viewMesh.name = "View Mesh";
-       viewMeshFilter.mesh = viewMesh;
+
+       if (viewMeshFilter != null)
+       {
+          viewMesh = new Mesh ();
+          viewMesh.name = "View Mesh";
+          viewMeshFilter.mesh = viewMesh;
+       }
 
        // Setup the Line Renderer's material, color, and width at start
        if (edgeLineRenderer != null) {
@@ -88,7 +92,10 @@ public class FieldOfView : MonoBehaviour {
     }
 
     void LateUpdate() {
-       DrawFieldOfView ();
+       if (viewMeshFilter != null)
+       {
+            DrawFieldOfView ();
+       }
     }
 
     void FindVisibleTargets() {
