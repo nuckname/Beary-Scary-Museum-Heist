@@ -33,6 +33,7 @@ public class TutorialFollowPath : MonoBehaviour
     [Header("Path Settings")]
     public List<Waypoint> waypoints = new List<Waypoint>();
     public float moveSpeed = 5f;
+    public float rotationSpeed = 10f;
 
     [Header("Animation Integration")]
     public DogWalkAnimation walkAnimation;
@@ -190,6 +191,16 @@ public class TutorialFollowPath : MonoBehaviour
             // Move towards the transform
             while (Vector3.Distance(transform.position, point.targetTransform.position) > 0.01f)
             {
+                Vector3 directionToTarget = point.targetTransform.position - transform.position;
+                
+                // directionToTarget.y = 0; 
+
+                if (directionToTarget != Vector3.zero) 
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+
                 transform.position = Vector3.MoveTowards(transform.position, point.targetTransform.position, moveSpeed * Time.deltaTime);
                 yield return null; 
             }
