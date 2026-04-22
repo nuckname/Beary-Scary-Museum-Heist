@@ -142,9 +142,18 @@ public class FieldOfView : MonoBehaviour {
           // called in EnemyStateManager.cs
           OnPlayerSpotted?.Invoke(spottedPlayer);
        }
-       else if (wasSeeingPlayer && !seesPlayerThisFrame) 
-       {
-          // called in EnemyStateManager.cs
+       else if (wasSeeingPlayer && !seesPlayerThisFrame) {
+          Vector3 dirToLastPos = (lastKnownPlayerPosition - transform.position).normalized;
+          float angle = Vector3.SignedAngle(transform.forward, dirToLastPos, Vector3.up);
+
+          if (angle > 0) {
+             // Player left to the RIGHT
+             enemyStateManager.playerLeftTheGuardsFovOnRightSide = true;
+          } else {
+             // Player left to the LEFT
+             enemyStateManager.playerLeftTheGuardsFovOnRightSide = false;
+          }
+
           OnPlayerLost?.Invoke(lastKnownPlayerPosition);
        }
 

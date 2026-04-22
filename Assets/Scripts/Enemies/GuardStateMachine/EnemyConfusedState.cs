@@ -26,9 +26,8 @@ public class EnemyConfusedState : EnemyBaseState
         targetLooks = manager.amountOfTimesTheGuardTurns;
         
         looksCompleted = 0;
-        
-        // Randomly choose to look left or right first
-        lookingRight = Random.value > 0.5f; 
+
+        lookingRight = manager.playerLeftTheGuardsFovOnRightSide;
         SetNextLookRotation();
     }
 

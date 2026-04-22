@@ -73,7 +73,6 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     // Add this to remember the guard's specific inspector setting
     [HideInInspector] public bool defaultAlwaysTurnRight;
     
-    
     // State Instances
     [HideInInspector] public EnemyBaseState EnemyCurrentState; 
     [HideInInspector] public EnemyFollowPathState EnemyFollowPathState = new EnemyFollowPathState();
@@ -101,7 +100,7 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [HideInInspector] public LineRenderer lineRenderer;
 
     public Animator animator;
-    
+    public bool playerLeftTheGuardsFovOnRightSide = false;
     // Can make this an enum later
     [Header("Debug")]
     public string currentStateName;

@@ -480,7 +480,7 @@ MonoBehaviour:
   makeGuardsCreateNoiseWhenTheySeeThePlayer: 1
   guardNoiseRadiusWhenTheySeeThePlayer: 5
   amountOfTimesTheGuardTurns: 2
-  turnAngle: 40
+  turnAngle: 90
   turnVisionRadiusReductionPercentage: 0.25
   fovTurnAngleThreshold: 1
   fieldOfViews:
@@ -507,6 +507,7 @@ MonoBehaviour:
   pathLineWidth: 0.15
   lineRenderer: {fileID: 0}
   animator: {fileID: 3275835476326511001}
+  playerLeftTheGuardsFovOnRightSide: 0
   currentStateName: 
 --- !u!114 &1398979885939180627
 MonoBehaviour:
