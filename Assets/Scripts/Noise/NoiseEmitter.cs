@@ -82,6 +82,8 @@ public class NoiseEmitter : MonoBehaviour
                     Vector3 raycastTarget = entity.transform.position + Vector3.up * 0.5f;
 
                     // Linecast returns true if it hits something. 
+                    // This causes a bug that even if we hit a wall but the sound
+                    // goes around the wall the guard wont hear us.
                     if (!Physics.Linecast(raycastStart, raycastTarget, obstacleLayer))
                     {
                         if (entity.GetComponentInChildren<ISoundListener>() is ISoundListener listener)
@@ -112,6 +114,8 @@ public class NoiseEmitter : MonoBehaviour
         {
             meshRenderer.material = radiusMaterial;
         }
+        
+        visualMeshObj.layer = LayerMask.NameToLayer("Target");
 
         // Calculate vertices
         int stepCount = Mathf.RoundToInt(360f * meshResolution);
