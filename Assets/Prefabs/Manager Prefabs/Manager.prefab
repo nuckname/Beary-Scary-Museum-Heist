@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7430978020100226380}
   - component: {fileID: 3759329114673022119}
-  - component: {fileID: 3078350231022342017}
+  - component: {fileID: 297760625094623853}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -101,7 +101,7 @@ MonoBehaviour:
   runOnStart: 0
   _currentTime: 0
   isPaused: 1
---- !u!114 &3078350231022342017
+--- !u!114 &297760625094623853
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,13 +110,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2207204159110247818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91a73e08432b8ff4dabcf1ee36039782, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ab3529cde18d1f48bf9b24c62aec3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxPossibleTimeScore: 10000
-  pointsLostPerSecond: 100
-  penaltyPerSpot: 500
-  isGameOver: 0
+  scoreThresholds: []
+  timer: {fileID: 3759329114673022119}
 --- !u!1 &2304484593865273556
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,4 +511,7 @@ MonoBehaviour:
   currentStateName: 
   amountOfArtifactsToCompleteLevel: 1
   currentArtifacts: 0
-  guards: []
+  enemies: []
+  cameras: []
+  scoreboardPrefab: {fileID: 3697802860098587430, guid: c6932a412fc884208ba60cd06a959026, type: 3}
+  scoreCalculator: {fileID: 297760625094623853}

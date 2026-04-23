@@ -25,8 +25,11 @@ public class RoundStateManager : MonoBehaviour
     public int currentArtifacts = 0;
 
     public List<GameObject> enemies = new List<GameObject>(); 
-    public List<GameObject> cameras = new List<GameObject>(); 
+    public List<GameObject> cameras = new List<GameObject>();
 
+    public GameObject scoreboardPrefab;
+    public ScoreCalculator scoreCalculator;
+    
     private void Awake()
     {
         // Standard Singleton pattern
@@ -94,6 +97,25 @@ public class RoundStateManager : MonoBehaviour
         }
     }
 
+    public void SetUpScoreboard()
+    {
+        GameObject scoreboard = Instantiate(scoreboardPrefab, Vector3.zero, Quaternion.identity);
+        ScoreboardUi scoreboardUi = scoreboard.GetComponent<ScoreboardUi>();
+        
+        // Format time for display
+        int minutes = Mathf.FloorToInt(timer._currentTime / 60);
+        int seconds = Mathf.FloorToInt(timer._currentTime % 60);
+        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+        
+        int penalties = AmountOfTimesPlayerSpottedByGuards;
+        
+        // Get data from our updated ScoreCalculator
+        int score = scoreCalculator.CalculateRawScore();
+        float starsEarned = scoreCalculator.CalculateFinalStars(score);
+
+        scoreboardUi.PopulateScoreboard(timeString, penalties, score, starsEarned);
+   
+    }
     
     void Update()
     {
