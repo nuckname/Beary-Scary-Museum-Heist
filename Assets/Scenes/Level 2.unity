@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.5167144, g: 0.5188679, b: 0.5164204, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.006
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
@@ -5432,7 +5432,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5474,7 +5474,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -5725,7 +5725,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5767,7 +5767,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -5888,7 +5888,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5930,7 +5930,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 200
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -7212,7 +7212,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -7254,7 +7254,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -8434,7 +8434,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -8476,7 +8476,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -9671,7 +9671,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9713,7 +9713,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 200
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -9829,7 +9829,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9871,7 +9871,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -10224,7 +10224,7 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10266,7 +10266,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -10518,7 +10518,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 100
+  m_Intensity: 20
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10560,7 +10560,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 400
+  m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -11220,6 +11220,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 273052906401602028, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 54f8e2bb5076543c5b81052151eee134, type: 2}
+    - target: {fileID: 273052906401602028, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3331802454596745447, guid: 54f8e2bb5076543c5b81052151eee134, type: 2}
+    - target: {fileID: 273052906401602028, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4585689642408973261, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 54f8e2bb5076543c5b81052151eee134, type: 2}
+    - target: {fileID: 4585689642408973261, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3331802454596745447, guid: 54f8e2bb5076543c5b81052151eee134, type: 2}
+    - target: {fileID: 4585689642408973261, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4738904206945453531, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_Pivot.x
       value: 0
