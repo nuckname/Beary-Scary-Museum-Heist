@@ -561,6 +561,30 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[7].targetTransform
       value: 
       objectReference: {fileID: 1564657691}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[0].customParameters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[1].customParameters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[0].customParameters.Array.data[0].action
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[1].customParameters.Array.data[0].action
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[1].customParameters.Array.data[0].bottomText
+      value: Example bottom text element 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[1].customParameters.Array.data[0].displayDuration
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7252521754438279207, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_Name
       value: Dog
@@ -1745,7 +1769,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.016666668
+  m_VoxelSize: 0.5
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: da331f932e5e5fb4f9c614a2f8c063e2, type: 2}
   m_BuildHeightMesh: 0

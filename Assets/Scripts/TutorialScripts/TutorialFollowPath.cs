@@ -21,7 +21,8 @@ using System.Text.RegularExpressions;
 public enum SpecialAction
 {
     None,
-    PlayDeadAndRevive
+    PlayDeadAndRevive,
+    ShowBottomText
 }
 
 [System.Serializable]
@@ -34,6 +35,12 @@ public struct CustomParameters
     public float reviveHeight; 
     public float reviveDuration; 
     public float reviveSpinSpeed; 
+
+    [Header("Bottom Text Settings")]
+    [TextArea(2, 5)]
+    public string bottomText; 
+    [Tooltip("How long the bottom text stays on screen before disappearing. (0 = stays until next waypoint)")]
+    public float displayDuration; 
 }
 
 [System.Serializable]
@@ -65,6 +72,7 @@ public class TutorialFollowPath : MonoBehaviour
 
     [Header("Dialogue Settings")]
     public TMP_Text floatingText;
+    public TMP_Text bottomScreenText;
     
     [Tooltip("The time in seconds between each letter appearing.")]
     public float textTypeSpeed = 0.05f; 
@@ -107,6 +115,9 @@ public class TutorialFollowPath : MonoBehaviour
         {
             playerTransform = playerObj.transform;
         }
+
+        bottomScreenText = GameObject.FindGameObjectWithTag("TutorialBottomText").GetComponent<TMP_Text>();
+        bottomScreenText.text = "";
     }
 
     private IEnumerator Start()
@@ -337,6 +348,20 @@ public class TutorialFollowPath : MonoBehaviour
 
                         transform.position = groundPos;
                     }
+                    else if (customParam.action == SpecialAction.ShowBottomText)
+                    {
+                        if (bottomScreenText != null && !string.IsNullOrEmpty(customParam.bottomText))
+                        {
+                            yield return StartCoroutine(TypeText(customParam.bottomText, bottomScreenText));
+
+                            if (customParam.displayDuration > 0f)
+                            {
+                                yield return new WaitForSeconds(customParam.displayDuration);
+                                bottomScreenText.maxVisibleCharacters = 0;
+                                bottomScreenText.text = "";
+                            }
+                        }
+                    }
                 }
             }
             
@@ -349,9 +374,9 @@ public class TutorialFollowPath : MonoBehaviour
                 walkAnimation.ResetPosture();
             }
 
-            if (!string.IsNullOrEmpty(point.dialogueText))
+            if (!string.IsNullOrEmpty(point.dialogueText) && floatingText != null)
             {
-                yield return StartCoroutine(TypeText(point.dialogueText));
+                yield return StartCoroutine(TypeText(point.dialogueText, floatingText));
             }
 
             // Wait for the specified amount of time at this transform
@@ -365,8 +390,18 @@ public class TutorialFollowPath : MonoBehaviour
             yield return new WaitForSeconds(1.5f); 
             
             isExploding = false;
-            floatingText.maxVisibleCharacters = 0; 
-            floatingText.text = "";
+            
+            if (floatingText != null)
+            {
+                floatingText.maxVisibleCharacters = 0; 
+                floatingText.text = "";
+            }
+
+            if (bottomScreenText != null)
+            {
+                bottomScreenText.maxVisibleCharacters = 0; 
+                bottomScreenText.text = "";
+            }
         }
         
         if (walkAnimation != null)
@@ -380,8 +415,10 @@ public class TutorialFollowPath : MonoBehaviour
 
     // Slowly write out the text
     // Text effect
-    private IEnumerator TypeText(string rawText)
+    private IEnumerator TypeText(string rawText, TMP_Text targetTextComponent)
     {
+        if (targetTextComponent == null) yield break;
+
         string processedText = rawText;
         processedText = Regex.Replace(processedText, @"<rainbow>(.*?)</rainbow>", "<link=\"rainbow\">$1</link>");
         processedText = Regex.Replace(processedText, @"<wave>(.*?)</wave>", "<link=\"wave\">$1</link>");
@@ -392,19 +429,19 @@ public class TutorialFollowPath : MonoBehaviour
         // Added explicit explode tag!
         processedText = Regex.Replace(processedText, @"<explode>(.*?)</explode>", "<link=\"explode\">$1</link>");
 
-        floatingText.text = processedText;
-        floatingText.ForceMeshUpdate();
+        targetTextComponent.text = processedText;
+        targetTextComponent.ForceMeshUpdate();
 
-        floatingText.maxVisibleCharacters = 0;
-        int totalVisibleCharacters = floatingText.textInfo.characterCount;
+        targetTextComponent.maxVisibleCharacters = 0;
+        int totalVisibleCharacters = targetTextComponent.textInfo.characterCount;
 
         for (int i = 0; i <= totalVisibleCharacters; i++)
         {
-            floatingText.maxVisibleCharacters = i;
+            targetTextComponent.maxVisibleCharacters = i;
 
-            if (i > 0 && i <= floatingText.textInfo.characterCount)
+            if (i > 0 && i <= targetTextComponent.textInfo.characterCount)
             {
-                char c = floatingText.textInfo.characterInfo[i - 1].character;
+                char c = targetTextComponent.textInfo.characterInfo[i - 1].character;
                 if (c != ' ' && voiceBlip != null)
                 {
                     audioSource.pitch = Random.Range(minPitch, maxPitch);
@@ -425,10 +462,16 @@ public class TutorialFollowPath : MonoBehaviour
     // AI
     private void AnimateSpecialText()
     {
-        if (floatingText == null || floatingText.textInfo == null || floatingText.textInfo.characterCount == 0) return;
+        ApplyTextEffectsToComponent(floatingText);
+        ApplyTextEffectsToComponent(bottomScreenText);
+    }
 
-        floatingText.ForceMeshUpdate();
-        TMP_TextInfo textInfo = floatingText.textInfo;
+    private void ApplyTextEffectsToComponent(TMP_Text targetText)
+    {
+        if (targetText == null || targetText.textInfo == null || targetText.textInfo.characterCount == 0) return;
+
+        targetText.ForceMeshUpdate();
+        TMP_TextInfo textInfo = targetText.textInfo;
         
         float timeSinceExplosion = Time.time - explosionStartTime;
 
@@ -534,6 +577,6 @@ public class TutorialFollowPath : MonoBehaviour
             }
         }
 
-        floatingText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
+        targetText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
     }
 }
