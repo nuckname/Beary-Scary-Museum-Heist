@@ -25,6 +25,9 @@ public class CameraFollow : MonoBehaviour
     public float rotationSmoothSpeed = 5f;
 
     private Quaternion normalRotation;
+    
+    private Transform panTarget;
+    private float currentPanSpeed = 0f;
 
     void Start()
     {
@@ -34,8 +37,24 @@ public class CameraFollow : MonoBehaviour
         normalRotation = transform.rotation;
     }
 
+    void Update()
+    {
+        // Toggle top-down view on right-click (press, not hold)
+        if (Input.GetMouseButtonDown(1))
+        {
+            useTopDownView = !useTopDownView;
+        }
+    }
+
     void LateUpdate()
     {
+        if (panTarget != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, panTarget.position, positionSmoothSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, panTarget.rotation, rotationSmoothSpeed * Time.deltaTime);
+            return;
+        }
+
         if (player == null) return;
 
         // 1. Determine target position and rotation based on the current mode
@@ -66,5 +85,17 @@ public class CameraFollow : MonoBehaviour
 
         // 3. Smoothly adjust the camera's rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);
+    }
+
+    public void StartPanning(Transform target, float speed)
+    {
+        panTarget = target;
+        currentPanSpeed = speed;
+    }
+
+    public void StopPanning()
+    {
+        panTarget = null;
+        currentPanSpeed = 0f;
     }
 }

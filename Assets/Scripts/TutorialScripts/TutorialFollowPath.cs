@@ -22,7 +22,8 @@ public enum SpecialAction
 {
     None,
     PlayDeadAndRevive,
-    ShowBottomText
+    ShowBottomText,
+    PanCamera
 }
 
 [System.Serializable]
@@ -41,6 +42,14 @@ public struct CustomParameters
     public string bottomText; 
     [Tooltip("How long the bottom text stays on screen before disappearing. (0 = stays until next waypoint)")]
     public float displayDuration; 
+
+    [Header("Camera Pan Settings")]
+    [Tooltip("The empty GameObject transform the camera should move to.")]
+    public Transform cameraPanTarget;
+    [Tooltip("How long the camera stays at the target before returning to the player.")]
+    public float cameraPanDuration;
+    [Tooltip("How fast the camera moves to the target. (0 = uses default camera speed)")]
+    public float cameraPanSpeed; // NEW
 }
 
 [System.Serializable]
@@ -103,7 +112,8 @@ public class TutorialFollowPath : MonoBehaviour
 
     private Transform playerTransform;
     private bool isPaused = false;
-
+    private GameObject camObj;
+    
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -115,9 +125,13 @@ public class TutorialFollowPath : MonoBehaviour
         {
             playerTransform = playerObj.transform;
         }
+        
+        camObj = GameObject.FindGameObjectWithTag("MainCamera");
 
-        bottomScreenText = GameObject.FindGameObjectWithTag("TutorialBottomText").GetComponent<TMP_Text>();
-        bottomScreenText.text = "";
+        if (bottomScreenText != null)
+        {
+            bottomScreenText.text = "";
+        }
     }
 
     private IEnumerator Start()
@@ -244,6 +258,12 @@ public class TutorialFollowPath : MonoBehaviour
 
     private IEnumerator FollowPath()
     {
+        CameraFollow mainCameraScript = null;
+        if (camObj != null)
+        {
+            mainCameraScript = camObj.GetComponent<CameraFollow>();
+        }
+
         for (currentWaypointIndex = 0; currentWaypointIndex < waypoints.Count; currentWaypointIndex++)
         {
             Waypoint point = waypoints[currentWaypointIndex];
@@ -359,6 +379,19 @@ public class TutorialFollowPath : MonoBehaviour
                                 yield return new WaitForSeconds(customParam.displayDuration);
                                 bottomScreenText.maxVisibleCharacters = 0;
                                 bottomScreenText.text = "";
+                            }
+                        }
+                    }
+                    else if (customParam.action == SpecialAction.PanCamera)
+                    {
+                        if (mainCameraScript != null && customParam.cameraPanTarget != null)
+                        {
+                            mainCameraScript.StartPanning(customParam.cameraPanTarget, customParam.cameraPanSpeed);
+
+                            if (customParam.cameraPanDuration > 0f)
+                            {
+                                yield return new WaitForSeconds(customParam.cameraPanDuration);
+                                mainCameraScript.StopPanning();
                             }
                         }
                     }

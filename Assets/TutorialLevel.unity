@@ -495,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.12798288
+      value: 1.08
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -570,6 +570,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[2].customParameters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: waypoints.Array.data[0].customParameters.Array.data[0].action
       value: 2
       objectReference: {fileID: 0}
@@ -578,12 +582,28 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[2].customParameters.Array.data[0].action
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: waypoints.Array.data[1].customParameters.Array.data[0].bottomText
       value: Example bottom text element 0
       objectReference: {fileID: 0}
     - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[2].customParameters.Array.data[0].cameraPanSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: waypoints.Array.data[1].customParameters.Array.data[0].displayDuration
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[2].customParameters.Array.data[0].cameraPanTarget
+      value: 
+      objectReference: {fileID: 1436591940}
+    - target: {fileID: 3787743137548848637, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
+      propertyPath: waypoints.Array.data[2].customParameters.Array.data[0].cameraPanDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7252521754438279207, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_Name
@@ -2929,6 +2949,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1372617713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1436591939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1436591940}
+  m_Layer: 0
+  m_Name: CameraPanToo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1436591940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436591939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 51.3, y: 3.6, z: -189.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1492726823
 GameObject:
@@ -7014,3 +7065,4 @@ SceneRoots:
   - {fileID: 5987535997646057658}
   - {fileID: 271469646}
   - {fileID: 109902395}
+  - {fileID: 1436591940}
