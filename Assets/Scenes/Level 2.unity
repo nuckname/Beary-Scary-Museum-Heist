@@ -149,15 +149,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.6
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.04
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -191.52994
+      value: -208.3
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1142,7 +1142,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5432,7 +5432,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5725,7 +5725,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5888,7 +5888,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -7212,7 +7212,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -8434,7 +8434,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9671,7 +9671,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9829,7 +9829,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10224,7 +10224,7 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10518,7 +10518,7 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 0.5283019, g: 0.5258099, b: 0.5258099, a: 1}
-  m_Intensity: 20
+  m_Intensity: 66.6
   m_Range: 22.35538
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -13305,7 +13305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 35ec92c48899547b8a8e91af0cbc827a, type: 2}
+  - {fileID: 2100000, guid: 995f5411eaf47ae47b041bfd4084e99f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
