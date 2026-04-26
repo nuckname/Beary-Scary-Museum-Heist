@@ -102,10 +102,7 @@ public class RoundStateManager : MonoBehaviour
         GameObject scoreboard = Instantiate(scoreboardPrefab, Vector3.zero, Quaternion.identity);
         ScoreboardUi scoreboardUi = scoreboard.GetComponent<ScoreboardUi>();
         
-        // Format time for display
-        int minutes = Mathf.FloorToInt(timer._currentTime / 60);
-        int seconds = Mathf.FloorToInt(timer._currentTime % 60);
-        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+        float targetTime = timer._currentTime;
         
         int penalties = AmountOfTimesPlayerSpottedByGuards;
         
@@ -113,7 +110,7 @@ public class RoundStateManager : MonoBehaviour
         int score = scoreCalculator.CalculateRawScore();
         float starsEarned = scoreCalculator.CalculateFinalStars(score);
 
-        scoreboardUi.PopulateScoreboard(timeString, penalties, score, starsEarned);
+        scoreboardUi.PopulateScoreboard(targetTime, penalties, score, starsEarned);
    
     }
     

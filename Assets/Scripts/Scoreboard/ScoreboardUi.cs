@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class ScoreboardUi : MonoBehaviour
 {
     [Header("Settings")]
+    [SerializeField] private float timeLerpDuration = 0.75f;
     [SerializeField] private float timeToPenaltiesDelay = 1.0f; 
     [SerializeField] private float penaltiesToScoreDelay = 0.5f;
     [SerializeField] private float lerpDuration = 0.75f;
@@ -22,7 +23,7 @@ public class ScoreboardUi : MonoBehaviour
     public GameObject[] fullStars = new GameObject[3];
     public GameObject[] halfStars = new GameObject[3];
 
-    public void PopulateScoreboard(string timeString, int penalties, int score, float starRating)
+    public void PopulateScoreboard(float targetTime, int penalties, int score, float starRating)
     {
         timeText.gameObject.SetActive(false);
         penaltiesText.gameObject.SetActive(false);
@@ -34,14 +35,28 @@ public class ScoreboardUi : MonoBehaviour
             halfStars[i].SetActive(false);
         }
 
-        StartCoroutine(AnimateScoreSequence(timeString, penalties, score, starRating));
+        StartCoroutine(AnimateScoreSequence(targetTime, penalties, score, starRating));
     }
 
-    private IEnumerator AnimateScoreSequence(string timeString, int penalties, int targetScore, float starRating)
+    private IEnumerator AnimateScoreSequence(float targetTime, int penalties, int targetScore, float starRating)
     {
         // Pop in time
-        timeText.text = timeString;
+        timeText.text = FormatTime(0f);
         timeText.gameObject.SetActive(true);
+
+        float timeElapsed = 0f;
+        while (timeElapsed < timeLerpDuration)
+        {
+            timeElapsed += Time.deltaTime;
+            float pct = timeElapsed / timeLerpDuration;
+            
+            float currentTime = Mathf.Lerp(0, targetTime, pct);
+            timeText.text = FormatTime(currentTime);
+            
+            yield return null; 
+        }
+
+        timeText.text = FormatTime(targetTime);
 
         yield return new WaitForSeconds(timeToPenaltiesDelay);
 
@@ -151,6 +166,13 @@ public class ScoreboardUi : MonoBehaviour
         }
         cg.alpha = 0f; 
         return cg;
+    }
+
+    private string FormatTime(float timeInSeconds)
+    {
+        int minutes = Mathf.FloorToInt(timeInSeconds / 60F);
+        int seconds = Mathf.FloorToInt(timeInSeconds % 60F);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
     
     // Called on button click
