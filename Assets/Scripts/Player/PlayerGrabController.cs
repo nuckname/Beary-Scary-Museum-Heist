@@ -6,7 +6,9 @@ using UnityEngine;
 public class PlayerGrabController : MonoBehaviour
 {
     [SerializeField] private Transform playerHand;
-    [SerializeField] private float stackHeightOffset = 0.75f; 
+    [SerializeField] private float stackHeightOffset = 0.75f;
+
+    [SerializeField] private bool allowWeightToAffectPlayerSpeed = false;
     
     private PlayerStealthController playerStealthController;
     private PlayerFootstepNoise playerFootstepNoise;
@@ -82,8 +84,11 @@ public class PlayerGrabController : MonoBehaviour
         obj.transform.localScale = originalScale;
 
         // Cumulatively subtract speed for every item
-        playerStealthController.walkSpeed -= addedWeight;
-        playerStealthController.sprintSpeed -= addedWeight;
+        if (allowWeightToAffectPlayerSpeed)
+        {
+            playerStealthController.walkSpeed -= addedWeight;
+            playerStealthController.sprintSpeed -= addedWeight;
+        }
     }
 
     private float AddWeight(GameObject obj)
