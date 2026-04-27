@@ -147,9 +147,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 7519654748551696328, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
+      propertyPath: topDownOffset.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519654748551696328, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
+      propertyPath: topDownOffset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519654748551696328, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
+      propertyPath: topDownRotation.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 56
+      value: 15.9
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7007,6 +7019,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1816664545458113180, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d35798881ba7494f8aef4488ae5004a, type: 2}
     - target: {fileID: 1825642667893727279, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.13981
@@ -7057,6 +7073,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7054688617635493894, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: meshHeightOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212258907786603520, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

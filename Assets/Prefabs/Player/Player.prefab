@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGrabController
   playerHand: {fileID: 3579593975554375172}
   stackHeightOffset: 0.75
+  allowWeightToAffectPlayerSpeed: 0
 --- !u!114 &4009258880554653775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,9 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea5d19f6f36d9e4cb93070f52b9dee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  allowMovementInTopDown: 0
-  maxTopDownHoldTime: 3
-  swapBackDelay: 1
+  cameraFollowScript: {fileID: 0}
 --- !u!114 &5045092649953161578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,6 +724,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4798837061040927365, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d35798881ba7494f8aef4488ae5004a, type: 2}
+    - target: {fileID: -3604975368359213571, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d35798881ba7494f8aef4488ae5004a, type: 2}
+    - target: {fileID: -1114589837731360797, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d35798881ba7494f8aef4488ae5004a, type: 2}
     - target: {fileID: 919132149155446097, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
       propertyPath: m_Name
       value: Model + Animator
