@@ -37,15 +37,6 @@ public class CameraFollow : MonoBehaviour
         normalRotation = transform.rotation;
     }
 
-    void Update()
-    {
-        // Toggle top-down view on right-click (press, not hold)
-        if (Input.GetMouseButtonDown(1))
-        {
-            useTopDownView = !useTopDownView;
-        }
-    }
-
     void LateUpdate()
     {
         if (panTarget != null)
@@ -85,6 +76,11 @@ public class CameraFollow : MonoBehaviour
 
         // 3. Smoothly adjust the camera's rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);
+    }
+
+    public void SetTopDownMode(bool state)
+    {
+        useTopDownView = state;
     }
 
     public void StartPanning(Transform target, float speed)
