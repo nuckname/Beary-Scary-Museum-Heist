@@ -36,7 +36,7 @@ public struct CustomParameters
     public float reviveHeight; 
     public float reviveDuration; 
     public float reviveSpinSpeed; 
-
+    
     [Header("Bottom Text Settings")]
     [TextArea(2, 5)]
     public string bottomText; 
@@ -49,7 +49,7 @@ public struct CustomParameters
     [Tooltip("How long the camera stays at the target before returning to the player.")]
     public float cameraPanDuration;
     [Tooltip("How fast the camera moves to the target. (0 = uses default camera speed)")]
-    public float cameraPanSpeed; // NEW
+    public float cameraPanSpeed;
 }
 
 [System.Serializable]
@@ -68,9 +68,6 @@ public struct Waypoint
 [RequireComponent(typeof(AudioSource))]
 public class TutorialFollowPath : MonoBehaviour
 {
-    [Header("Google Sheets Setup")]
-    public string sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS0_hZ3F0hbX0W6UluFPqagRX76o1_C_MjZRToBaMjkonON9I9fpmpX2pyyf5azqzx6p2Wxh0RwXPUf/pub?output=tsv";
-
     [Header("Path Settings")]
     public List<Waypoint> waypoints = new List<Waypoint>();
     public float moveSpeed = 5f;
@@ -78,6 +75,7 @@ public class TutorialFollowPath : MonoBehaviour
 
     [Header("Animation Integration")]
     public DogWalkAnimation walkAnimation;
+    [HideInInspector] public bool forceWakeUp = false;
 
     [Header("Dialogue Settings")]
     public TMP_Text floatingText;
@@ -134,19 +132,8 @@ public class TutorialFollowPath : MonoBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        // 1. Download the Google Sheet data first
-        if (!string.IsNullOrEmpty(sheetURL))
-        {
-            yield return StartCoroutine(FetchSheetData());
-        }
-        else
-        {
-            Debug.LogWarning("No Sheet URL provided! Proceeding with inspector data.");
-        }
-
-        // 2. Start moving only after data is loaded
         StartCoroutine(FollowPath());
     }
 
@@ -176,86 +163,6 @@ public class TutorialFollowPath : MonoBehaviour
     }
 
     
-    // AI
-    private IEnumerator FetchSheetData()
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get(sheetURL))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error fetching Google Sheet: " + www.error);
-            }
-            else
-            {
-                ParseTSV(www.downloadHandler.text);
-            }
-        }
-    }
-
-    // AI
-   private void ParseTSV(string data)
-    {
-        // 1. Sanity Check: Print the start of the data so we can see if it's HTML or a CSV
-        Debug.Log("Raw Downloaded Data (First 100 chars):\n" + data.Substring(0, Mathf.Min(data.Length, 100)));
-
-        // 2. Strip out invisible carriage returns that Windows/Mac sometimes add
-        data = data.Replace("\r", "");
-        
-        // 3. Split into rows
-        string[] rows = data.Trim().Split('\n');
-
-        if (rows.Length <= 1) 
-        {
-            Debug.LogError("The downloaded file only has 1 line or is empty. Check your URL!");
-            return;
-        }
-
-        int updatedCount = 0;
-
-        // 4. Parse the rows
-        for (int i = 1; i < rows.Length; i++)
-        {
-            int waypointIndex = i - 1;
-
-            if (waypointIndex >= waypoints.Count)
-            {
-                Debug.LogWarning($"Skipped Sheet Row {i+1}: You need to add more waypoints in the Unity Inspector!");
-                break;
-            }
-
-            // Split by Tab
-            string[] columns = rows[i].Split('\t');
-
-            if (columns.Length >= 2)
-            {
-                Waypoint updatedWaypoint = waypoints[waypointIndex];
-
-                if (float.TryParse(columns[0].Trim().Trim('"'), out float parsedWaitTime))
-                {
-                    updatedWaypoint.waitTime = parsedWaitTime;
-                }
-
-                // This strips away any rogue double quotes that Google Sheets adds, THEN replaces the line breaks
-                string cleanText = columns[1].Trim().Trim('"');
-                updatedWaypoint.dialogueText = cleanText.Replace("\\n", "\n");
-                
-                waypoints[waypointIndex] = updatedWaypoint;
-                
-                updatedCount++;
-                Debug.Log($"Success! Waypoint {waypointIndex} updated -> Time: {updatedWaypoint.waitTime} | Text: {updatedWaypoint.dialogueText}");
-            }
-            else
-            {
-                // If it fails, this will tell us exactly why!
-                Debug.LogError($"Row {i+1} failed to split! It only found {columns.Length} column(s). The row looks like this: {rows[i]}");
-            }
-        }
-        
-        Debug.Log($"Finished! Successfully updated {updatedCount} waypoints.");
-    }
-
     private IEnumerator FollowPath()
     {
         CameraFollow mainCameraScript = null;
@@ -320,7 +227,13 @@ public class TutorialFollowPath : MonoBehaviour
                             walkAnimation.ResetPosture();
                         }
 
-                        yield return new WaitForSeconds(customParam.timeSpentDead);
+                        float deadTimer = 0f;
+                        while (deadTimer < customParam.timeSpentDead && !forceWakeUp)
+                        {
+                            deadTimer += Time.deltaTime;
+                            yield return null;
+                        }
+                        forceWakeUp = false;
 
                         // Find out where the player is so we can calculate the final angle
                         float startAngle = transform.eulerAngles.y;

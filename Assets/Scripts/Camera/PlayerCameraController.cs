@@ -1,104 +1,62 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerStealthController))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerCameraController : MonoBehaviour
 {
-    [Header("Top-Down View Settings")]
-    public bool allowMovementInTopDown = false; 
+    [Header("References")]
+    public CameraFollow cameraFollowScript;
     
-    public float maxTopDownHoldTime = 3f;
-    public float swapBackDelay = 1f;
+    private PlayerStealthController stealthController;
+    private Rigidbody rb;
+    private Animator animator;
 
-    public bool IsTopDownActive { get; private set; } = false;
-
-    public Camera MainCam { get; private set; }
-    
-    private float currentTopDownTimer = 0f;
-    private bool canUseTopDown = true;
-    private bool isWaitingToSwap = false;
-
-    private CameraFollow cameraFollow;
-
-    void Start()
+    private void Awake()
     {
-        MainCam = Camera.main;
-        
-        if (MainCam != null)
+        stealthController = GetComponent<PlayerStealthController>();
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
+
+        if (cameraFollowScript == null && Camera.main != null)
         {
-            cameraFollow = MainCam.GetComponent<CameraFollow>();
+            cameraFollowScript = Camera.main.GetComponent<CameraFollow>();
         }
     }
 
-    void Update()
+    private void Update()
     {
-        HandleTopDownView();
+        if (cameraFollowScript == null) return;
+
+        // Listen for Right-Click (Hold down to view, release to return)
+        if (Input.GetMouseButtonDown(1))
+        {
+            ToggleTopDownView(true);
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            ToggleTopDownView(false);
+        }
     }
 
-    private void HandleTopDownView()
+    private void ToggleTopDownView(bool state)
     {
-        if (isWaitingToSwap) return; 
+        cameraFollowScript.SetTopDownMode(state);
 
-        // Right Mouse Button
-        if (Input.GetMouseButton(1) && canUseTopDown)
+        if (state)
         {
-            IsTopDownActive = true;
-            currentTopDownTimer += Time.deltaTime;
+            stealthController.enabled = false;
 
-            if (currentTopDownTimer >= maxTopDownHoldTime)
+            rb.linearVelocity = Vector3.zero;
+
+            // Force the movement animation to stop
+            if (animator != null)
             {
-                // Force the player to release the button to use it again
-                canUseTopDown = false; 
-                StartSwapBack();
+                animator.SetBool("IsMoving", false);
             }
         }
         else
         {
-            // If we were in top down, but just let go of Right Click
-            if (IsTopDownActive) 
-            {
-                StartSwapBack();
-            }
-            
-            // Reset the ability to use top-down view once the player lets go of Right Click
-            if (!Input.GetMouseButton(1))
-            {
-                currentTopDownTimer = 0f;
-                canUseTopDown = true;
-            }
+            stealthController.enabled = true;
         }
-        
-        // Update camera state if not waiting
-        if (!isWaitingToSwap && cameraFollow != null)
-        {
-            cameraFollow.useTopDownView = IsTopDownActive;
-        }
-    }
-
-    // Checks if we are holding Left Click before swapping
-    private void StartSwapBack()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            StartCoroutine(DelaySwapBackRoutine());
-        }
-        else
-        {
-            // If not holding Left Click, swap immediately
-            IsTopDownActive = false;
-            if (cameraFollow != null) cameraFollow.useTopDownView = false;
-        }
-    }
-
-    private IEnumerator DelaySwapBackRoutine()
-    {
-        isWaitingToSwap = true;
-
-        // We wait UNTIL the player lets go of Left Mouse,
-        yield return new WaitUntil(() => !Input.GetMouseButton(0));
-
-        IsTopDownActive = false;
-        if (cameraFollow != null) cameraFollow.useTopDownView = false;
-        isWaitingToSwap = false;
     }
 }
