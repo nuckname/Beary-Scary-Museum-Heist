@@ -1,12 +1,20 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: ff4688b25be239142b2069310eda3ae6
+=======
+guid: 41a875c0307cb9f49a0dbaac5991f3a0
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
+<<<<<<< HEAD
     enableMipMap: 1
+=======
+    enableMipMap: 0
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,6 +45,7 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
+<<<<<<< HEAD
     wrapU: 0
     wrapV: 0
     wrapW: 0
@@ -44,6 +53,15 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 0
+=======
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +70,15 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
+<<<<<<< HEAD
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
+=======
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -93,14 +117,103 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
   spriteSheet:
     serializedVersion: 2
     sprites: []
+=======
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HUD test_0
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 917
+        width: 217
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b56456c819188448cf0abb01df4876
+      internalID: -383850538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HUD test_1
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 908
+        width: 343
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3437f0e2966923a4e8045cdf7034068f
+      internalID: -1374997921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HUD test_2
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 38
+        width: 626
+        height: 148
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 739110491bf3346458c9cd9442905785
+      internalID: 143287407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
     outline: []
     customData: 
     physicsShape: []
     bones: []
+<<<<<<< HEAD
     spriteID: 
+=======
+    spriteID: f584607facb3b2e4aacac616ff738ae4
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
     internalID: 0
     vertices: []
     indices: 
@@ -108,8 +221,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
+<<<<<<< HEAD
       entries: []
     nameFileIdTable: {}
+=======
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      HUD test_0: -383850538
+      HUD test_1: -1374997921
+      HUD test_2: 143287407
+>>>>>>> d67855969c4d52fd47b886788ba2dcafa1468f17
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
