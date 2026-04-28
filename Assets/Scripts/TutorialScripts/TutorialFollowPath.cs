@@ -1,3 +1,6 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
@@ -30,20 +33,20 @@ public enum SpecialAction
 public struct CustomParameters
 {
     public SpecialAction action; 
-    public float timeSpentDead;
     
-    [Header("Revive Settings")]
+    // Revive Settings
+    public float timeSpentDead;
     public float reviveHeight; 
     public float reviveDuration; 
     public float reviveSpinSpeed; 
     
-    [Header("Bottom Text Settings")]
+    // Bottom Text Settings
     [TextArea(2, 5)]
     public string bottomText; 
     [Tooltip("How long the bottom text stays on screen before disappearing. (0 = stays until next waypoint)")]
     public float displayDuration; 
 
-    [Header("Camera Pan Settings")]
+    // Camera Pan Settings
     [Tooltip("The empty GameObject transform the camera should move to.")]
     public Transform cameraPanTarget;
     [Tooltip("How long the camera stays at the target before returning to the player.")]
@@ -130,6 +133,8 @@ public class TutorialFollowPath : MonoBehaviour
         {
             bottomScreenText.text = "";
         }
+        
+        
     }
 
     private void Start()
@@ -526,3 +531,96 @@ public class TutorialFollowPath : MonoBehaviour
         targetText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
     }
 }
+
+#if UNITY_EDITOR
+[CustomPropertyDrawer(typeof(CustomParameters))]
+public class CustomParametersDrawer : PropertyDrawer
+{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        // Base height for the Action enum dropdown
+        float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+        SerializedProperty actionProp = property.FindPropertyRelative("action");
+        SpecialAction action = (SpecialAction)actionProp.enumValueIndex;
+
+        // Add height based on which action is selected
+        switch (action)
+        {
+            case SpecialAction.PlayDeadAndRevive:
+                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4; 
+                break;
+            
+            case SpecialAction.ShowBottomText:
+                SerializedProperty textProp = property.FindPropertyRelative("bottomText");
+                height += EditorGUI.GetPropertyHeight(textProp) + EditorGUIUtility.standardVerticalSpacing; // TextArea
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; // displayDuration
+                break;
+            
+            case SpecialAction.PanCamera:
+                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3; 
+                break;
+        }
+
+        return height;
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        EditorGUI.BeginProperty(position, label, property);
+
+        // Calculate the rect for the action dropdown
+        Rect currentRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+        
+        SerializedProperty actionProp = property.FindPropertyRelative("action");
+        EditorGUI.PropertyField(currentRect, actionProp);
+        
+        // Move the rect down to prepare for the next property
+        currentRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+        SpecialAction action = (SpecialAction)actionProp.enumValueIndex;
+
+        // Indent the parameters slightly to make it look clean
+        EditorGUI.indentLevel++;
+
+        // Draw only the parameters relevant to the selected action
+        switch (action)
+        {
+            case SpecialAction.PlayDeadAndRevive:
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("timeSpentDead"));
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveHeight"));
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveDuration"));
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveSpinSpeed"));
+                break;
+
+            case SpecialAction.ShowBottomText:
+                SerializedProperty textProp = property.FindPropertyRelative("bottomText");
+                float textHeight = EditorGUI.GetPropertyHeight(textProp);
+                currentRect.height = textHeight;
+                EditorGUI.PropertyField(currentRect, textProp);
+                
+                currentRect.y += textHeight + EditorGUIUtility.standardVerticalSpacing;
+                currentRect.height = EditorGUIUtility.singleLineHeight; // Reset height to standard
+
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("displayDuration"));
+                break;
+
+            case SpecialAction.PanCamera:
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanTarget"));
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanDuration"));
+                DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanSpeed"));
+                break;
+        }
+
+        EditorGUI.indentLevel--;
+        EditorGUI.EndProperty();
+    }
+
+    // Helper method to draw a standard 1-line property and shift the Y position down
+    private void DrawStandardProperty(ref Rect rect, SerializedProperty prop)
+    {
+        EditorGUI.PropertyField(rect, prop);
+        rect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+    }
+}
+#endif
