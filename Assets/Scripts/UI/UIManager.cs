@@ -25,6 +25,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateArtifactDisplay(int current, int total)
     {
-        artifactValueText.text = $"Artifacts: {current} / {total}";
+        artifactValueText.text = $"{current} / {total}";
     }
 }

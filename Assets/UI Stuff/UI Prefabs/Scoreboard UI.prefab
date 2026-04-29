@@ -848,10 +848,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d6032d18f2eb04bb2ac03dc5b4417c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  timeToPenaltiesDelay: 1
+  timeLerpDuration: 0.5
+  timeToPenaltiesDelay: 0.5
   penaltiesToScoreDelay: 0.5
-  lerpDuration: 0.75
-  starFadeDuration: 1
+  lerpDuration: 0.5
+  starFadeDuration: 0.5
   delayBetweenStars: 0.15
   timeText: {fileID: 2998654773416171748}
   penaltiesText: {fileID: 8511871386547717969}

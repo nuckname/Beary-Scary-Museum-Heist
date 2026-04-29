@@ -130,7 +130,7 @@ public class PlayerStealthController : MonoBehaviour
             }
         }
     }
-
+/*
     void OnGUI()
     {
         Color originalColor = GUI.color;
@@ -161,4 +161,5 @@ public class PlayerStealthController : MonoBehaviour
 
         GUI.color = originalColor;
     }
+    */
 }

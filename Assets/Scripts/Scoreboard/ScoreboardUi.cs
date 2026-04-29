@@ -7,12 +7,12 @@ using System.Collections.Generic;
 public class ScoreboardUi : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float timeLerpDuration = 0.75f;
-    [SerializeField] private float timeToPenaltiesDelay = 1.0f; 
-    [SerializeField] private float penaltiesToScoreDelay = 0.5f;
-    [SerializeField] private float lerpDuration = 0.75f;
-    [SerializeField] private float starFadeDuration = 0.4f;
-    [SerializeField] private float delayBetweenStars = 0.15f;
+    [SerializeField] private float timeLerpDuration = 0.5f;
+    [SerializeField] private float timeToPenaltiesDelay = 0.50f; 
+    [SerializeField] private float penaltiesToScoreDelay = 0.25f;
+    [SerializeField] private float lerpDuration = 0.5f;
+    [SerializeField] private float starFadeDuration = 0.2f;
+    [SerializeField] private float delayBetweenStars = 0.1f;
 
     [Header("Text Elements")]
     public TextMeshProUGUI timeText;
