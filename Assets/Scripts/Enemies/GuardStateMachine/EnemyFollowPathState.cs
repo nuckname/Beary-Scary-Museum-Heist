@@ -17,8 +17,7 @@ public class EnemyFollowPathState : EnemyBaseState
         manager.GuardStartMoving();
         manager.agent.speed = manager.guardPatrollSpeed;
 
-        Debug.Log("print bool");
-        manager.animator.SetBool("IsWalking", true);
+        manager.animator.SetBool("isMoving", true);
         
         // Start heading to the first target using the manager's index
         if (manager.waypoints.Length > 0)
@@ -41,6 +40,8 @@ public class EnemyFollowPathState : EnemyBaseState
         {
             // When waiting, the guard is manually rotating towards the next waypoint
             desiredDirection = (targetWaypoint - manager.transform.position).normalized;
+            manager.animator.SetBool("isMoving", false);
+            
         }
         else if (manager.agent.hasPath)
         {
@@ -110,7 +111,7 @@ public class EnemyFollowPathState : EnemyBaseState
                 isWaiting = false;
                 waitTimer = 0f;
                 
-                manager.animator.SetBool("IsWalking", true);
+                manager.animator.SetBool("isMoving", true);
                 
                 // Wait and turn is over, tell the agent to resume moving
                 manager.agent.isStopped = false;
@@ -125,7 +126,7 @@ public class EnemyFollowPathState : EnemyBaseState
         {
             manager.currentWaypointIndex = (manager.currentWaypointIndex + 1) % manager.waypoints.Length;
             
-            manager.animator.SetBool("IsWalking", false);
+            manager.animator.SetBool("isMoving", false);
             
             isWaiting = true; 
             manager.agent.isStopped = true; // Stop the agent from walking while waiting

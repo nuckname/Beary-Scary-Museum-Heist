@@ -168,15 +168,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
         // Freeze guards until we want them to start moving called in RoundStateManager
         agent.isStopped = true;
         agent.speed = 0;
-    }
-
-    public void ResetAnimations()
-    {
-        animator.SetBool("IsWalking", true);
-        animator.SetBool("IsChasing", false);
-        animator.SetBool("IsCollideWithPlayer", false);
-        animator.SetBool("IsStunned", false);
-        animator.SetBool("IsAlerted", false);
+        
+        animator.SetBool("isMoving", false);
+        
     }
     
     private void SetupPatrolRoute()
@@ -292,6 +286,8 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
             noiseEmitter.EmitNoise(guardNoiseRadiusWhenTheySeeThePlayer, NoiseType.Nothing);
             hasShoutedAtPlayer = true;
         }
+        
+        animator.SetBool("isAlert", true);
         
         StartChasing(target);
     }

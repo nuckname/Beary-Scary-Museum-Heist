@@ -5,6 +5,9 @@ public class EnemyTurnToPointState : EnemyBaseState
     public override void EnterState(EnemyStateManager manager)
     {
         manager.GuardStopMoving();
+        
+        manager.animator.SetBool("isAlert", true);
+        manager.animator.SetBool("isMoving", false);
     }
 
     // AI
@@ -36,6 +39,9 @@ public class EnemyTurnToPointState : EnemyBaseState
         {
             // Go to whatever state the manager told us to go to!
             manager.SwitchState(manager.stateToSwitchToAfterTurning);
+            
+            //done rotating
+            manager.animator.SetBool("isAlert", false);
         }
     }
 

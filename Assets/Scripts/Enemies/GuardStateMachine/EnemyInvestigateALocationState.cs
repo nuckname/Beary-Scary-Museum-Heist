@@ -11,8 +11,8 @@ public class EnemyInvestigateALocationState : EnemyBaseState
         
         manager.GuardStartMoving(); 
         
-        manager.animator.SetBool("IsAlerted", true);
-        manager.animator.SetBool("IsWalking", true);
+        manager.animator.SetBool("isMoving", true);
+
         
         manager.agent.SetDestination(manager.investigateTargetPosition);
     }

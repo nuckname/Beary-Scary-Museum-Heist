@@ -29,6 +29,10 @@ public class EnemyConfusedState : EnemyBaseState
 
         lookingRight = manager.playerLeftTheGuardsFovOnRightSide;
         SetNextLookRotation();
+
+        manager.animator.SetBool("isMoving", false);
+        manager.animator.SetBool("isChasing", false);
+        
     }
 
     public override void UpdateState(EnemyStateManager manager)
@@ -46,6 +50,8 @@ public class EnemyConfusedState : EnemyBaseState
                 manager.GuardStartMoving();
                 
                 Debug.Log("Guard finished looking around and didn't find anything, going back to patrolling.");
+                
+                manager.animator.SetBool("isMoving", true);
                 
                 manager.SetStateIcon(EnemyStateIcon.FinishedLookingAroundAndDidntFindAnythingSoBackToPatrolling);
 
