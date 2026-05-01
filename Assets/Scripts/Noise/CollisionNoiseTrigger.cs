@@ -1,21 +1,29 @@
 using UnityEngine;
 
-[RequireComponent(typeof(NoiseEmitter), typeof(AudioSource), typeof(Rigidbody))]
+[RequireComponent(typeof(NoiseEmitter), typeof(Rigidbody))]
 public class CollisionNoiseTrigger : MonoBehaviour
 {
     [Header("Collision Sound Settings")]
+    [SerializeField] private AudioClip impactClip; 
     [SerializeField] private float dropSoundMultiplier = 1f;
     [SerializeField] private bool useVelocityScaling = true;
     [SerializeField] private float velocityScale = 0.5f; 
     [SerializeField] private float minVelocityThreshold = 2f;
 
+    [Header("Pitch Scaling Settings")]
+    [SerializeField] private bool usePitchScaling = true;
+    [Tooltip("The pitch when the noise radius is very small (High pitch)")]
+    [SerializeField] private float maxPitch = 1.2f; 
+    [Tooltip("The pitch when the noise radius is massive (Deep pitch)")]
+    [SerializeField] private float minPitch = 0.4f; 
+    [Tooltip("The noise radius size required to hit the absolute lowest/deepest pitch")]
+    [SerializeField] private float maxExpectedRadius = 30f; 
+
     private NoiseEmitter noiseEmitter;
-    private AudioSource audioSource;
     private Rigidbody rb;
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         noiseEmitter = GetComponent<NoiseEmitter>();
         rb = GetComponent<Rigidbody>();
     }
@@ -39,8 +47,21 @@ public class CollisionNoiseTrigger : MonoBehaviour
 
         float noiseRadius = rb.mass * finalMultiplier;
         
-        audioSource.maxDistance = noiseRadius;
-        audioSource.Play();
+        // --- NEW: Calculate the pitch, then send it to the AudioManager ---
+        float targetPitch = 1f;
+
+        if (usePitchScaling)
+        {
+            float normalizedRadius = Mathf.Clamp01(noiseRadius / maxExpectedRadius);
+            targetPitch = Mathf.Lerp(maxPitch, minPitch, normalizedRadius);
+        }
+
+        // Send the clip and the specific pitch to the global manager
+        if (AudioManager.instance != null && impactClip != null)
+        {
+            AudioManager.instance.PlaySFXWithExactPitch(impactClip, targetPitch);
+        }
+        // ------------------------------------------------------------------
         
         noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
     }

@@ -14,6 +14,15 @@ public class PlayerStealthController : MonoBehaviour
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
 
+    [Header("Footstep Settings")]
+    public float walkStepInterval = 0.5f;
+    public float sprintStepInterval = 0.3f;
+    public float sneakStepInterval = 0.8f;
+    private float stepTimer;
+
+    [Header("UI Settings")]
+    public Transform staminaBarLocation;
+
     private float currentStamina;
     private bool isExhausted = false;
 
@@ -56,6 +65,35 @@ public class PlayerStealthController : MonoBehaviour
         
         // ??
         // animator.SetBool("IsSneaking", IsSneaking); 
+
+        HandleFootsteps(isMoving);
+    }
+
+    void HandleFootsteps(bool isMoving)
+    {
+        if (isMoving)
+        {
+            stepTimer -= Time.deltaTime;
+            
+            if (stepTimer <= 0f)
+            {
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayFootstep();
+                }
+
+                if (currentSpeed == sprintSpeed)
+                    stepTimer = sprintStepInterval;
+                else if (currentSpeed == sneakSpeed)
+                    stepTimer = sneakStepInterval;
+                else
+                    stepTimer = walkStepInterval;
+            }
+        }
+        else
+        {
+            stepTimer = 0f; 
+        }
     }
 
     void HandleSpeed()
@@ -130,15 +168,29 @@ public class PlayerStealthController : MonoBehaviour
             }
         }
     }
-/*
+
     void OnGUI()
     {
         Color originalColor = GUI.color;
         float staminaPercent = currentStamina / maxStamina;
         float maxBarWidth = 400f; 
         float barThickness = 24f; 
+        
+        // Override theses
         float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
         float startY = Screen.height - 50f; 
+
+        // Transform
+        if (staminaBarLocation != null && playerCamera != null)
+        {
+            Vector3 screenPos = playerCamera.WorldToScreenPoint(staminaBarLocation.position);
+            
+            if (screenPos.z > 0)
+            {
+                startX = screenPos.x;
+                startY = Screen.height - screenPos.y;
+            }
+        }
 
         GUIStyle textStyle = new GUIStyle(GUI.skin.label);
         textStyle.alignment = TextAnchor.LowerLeft;
@@ -152,7 +204,9 @@ public class PlayerStealthController : MonoBehaviour
         GUI.color = new Color(0, 0, 0, 0.6f);
         GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
 
-        Color barColor = isExhausted ? Color.red : new Color(1f, 0.85f, 0f);
+        Color customBlue = new Color(47f / 255f, 106f / 255f, 192f / 255f);
+        Color barColor = isExhausted ? Color.red : customBlue;
+        
         GUI.color = barColor;
 
         float currentWidth = maxBarWidth * staminaPercent;
@@ -161,5 +215,4 @@ public class PlayerStealthController : MonoBehaviour
 
         GUI.color = originalColor;
     }
-    */
 }
