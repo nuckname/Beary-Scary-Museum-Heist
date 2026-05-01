@@ -19,6 +19,8 @@ Multiplayer Services SDK
 https://docs.unity.com/en-us/mps-sdk
 
 
-Sam's Playtest - 
-https://youtu.be/kN89UZFEhmQ
-Note are in video's description.
+Sam's Playtest - Note are in video's description.
+
+1. https://youtu.be/kN89UZFEhmQ
+
+2. https://youtu.be/m-7GQsk2-74
