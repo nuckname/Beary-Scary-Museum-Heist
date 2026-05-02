@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerCameraController))] 
 public class PlayerStealthController : MonoBehaviour
@@ -21,7 +22,7 @@ public class PlayerStealthController : MonoBehaviour
     private float stepTimer;
 
     [Header("UI Settings")]
-    public Transform staminaBarLocation;
+    public Image staminaBarFill; 
 
     private float currentStamina;
     private bool isExhausted = false;
@@ -40,6 +41,7 @@ public class PlayerStealthController : MonoBehaviour
     private void Awake()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        staminaBarFill = GameObject.FindGameObjectWithTag("SprintBarFill").GetComponent<Image>();
     }
 
     void Start()
@@ -62,11 +64,11 @@ public class PlayerStealthController : MonoBehaviour
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         bool isMoving = input.sqrMagnitude > 0.01f; 
         animator.SetBool("IsMoving", isMoving);
-        
-        // ??
-        // animator.SetBool("IsSneaking", IsSneaking); 
 
         HandleFootsteps(isMoving);
+        
+        // Update the visual UI Canvas bar
+        UpdateStaminaUI();
     }
 
     void HandleFootsteps(bool isMoving)
@@ -169,50 +171,12 @@ public class PlayerStealthController : MonoBehaviour
         }
     }
 
-    void OnGUI()
+    // Handles the modern Canvas UI updating
+    void UpdateStaminaUI()
     {
-        Color originalColor = GUI.color;
-        float staminaPercent = currentStamina / maxStamina;
-        float maxBarWidth = 400f; 
-        float barThickness = 24f; 
-        
-        // Override theses
-        float startX = (Screen.width / 2f) - (maxBarWidth / 2f);
-        float startY = Screen.height - 50f; 
-
-        // Transform
-        if (staminaBarLocation != null && playerCamera != null)
+        if (staminaBarFill != null)
         {
-            Vector3 screenPos = playerCamera.WorldToScreenPoint(staminaBarLocation.position);
-            
-            if (screenPos.z > 0)
-            {
-                startX = screenPos.x;
-                startY = Screen.height - screenPos.y;
-            }
+            staminaBarFill.fillAmount = currentStamina / maxStamina;
         }
-
-        GUIStyle textStyle = new GUIStyle(GUI.skin.label);
-        textStyle.alignment = TextAnchor.LowerLeft;
-        textStyle.normal.textColor = Color.white;
-        textStyle.fontStyle = FontStyle.Bold;
-        textStyle.fontSize = 16; 
-
-        Rect textRect = new Rect(startX + maxBarWidth - 100f, startY - 26f, 100f, 20f);
-        GUI.Label(textRect, "Sprint", textStyle);
-
-        GUI.color = new Color(0, 0, 0, 0.6f);
-        GUI.DrawTexture(new Rect(startX, startY, maxBarWidth, barThickness), Texture2D.whiteTexture);
-
-        Color customBlue = new Color(47f / 255f, 106f / 255f, 192f / 255f);
-        Color barColor = isExhausted ? Color.red : customBlue;
-        
-        GUI.color = barColor;
-
-        float currentWidth = maxBarWidth * staminaPercent;
-        Rect activeBarRect = new Rect(startX, startY, currentWidth, barThickness);
-        GUI.DrawTexture(activeBarRect, Texture2D.whiteTexture);
-
-        GUI.color = originalColor;
     }
 }

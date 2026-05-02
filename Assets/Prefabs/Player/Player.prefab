@@ -72,6 +72,12 @@ MonoBehaviour:
   maxStamina: 5
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
+  walkStepInterval: 0.5
+  sprintStepInterval: 0.3
+  sneakStepInterval: 0.8
+  useCustomUIPosition: 1
+  uiX: 740
+  uiY: 955
   rb: {fileID: 3292789174107578550}
   animator: {fileID: 9102284141675805480}
 --- !u!23 &3106409119693640108
