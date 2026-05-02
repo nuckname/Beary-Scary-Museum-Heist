@@ -3,7 +3,27 @@ guid: d0b859a26c05ac04fac77e11289d79be
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: colourMap
+    second: {fileID: 2100000, guid: 846bd56befb54bc409845713c53967ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: highTextureMap
+    second: {fileID: 2100000, guid: b13f4bd3cf6a9584abb3bfc97849ca3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: paintingMAT
+    second: {fileID: 2100000, guid: 2e5e3fa2d79e5e54f8e27ff687e83210, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plaqueMAT
+    second: {fileID: 2100000, guid: b546662fa71a9584ea4b777714a1d0fe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +88,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60

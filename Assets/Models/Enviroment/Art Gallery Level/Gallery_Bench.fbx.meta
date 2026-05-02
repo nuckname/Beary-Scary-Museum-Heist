@@ -3,7 +3,12 @@ guid: b992c6e3bb24ab64cba1a41edca0d9b8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: highTextureMap
+    second: {fileID: 2100000, guid: b13f4bd3cf6a9584abb3bfc97849ca3e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
