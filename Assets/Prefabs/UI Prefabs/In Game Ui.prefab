@@ -454,14 +454,14 @@ RectTransform:
   m_GameObject: {fileID: 2949082452165905004}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.71378, y: 0.64888996, z: 0.64888996}
+  m_LocalScale: {x: 0.81313556, y: 0.8131345, z: 0.8131345}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4738904206945453531}
+  m_Father: {fileID: 1508673293136543079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: -148}
+  m_AnchoredPosition: {x: -1.9366255, y: -759.7643}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2703195013286199292
@@ -817,6 +817,8 @@ RectTransform:
   m_LocalScale: {x: 0.87781173, y: 0.79801065, z: 0.79801065}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8917451380359488753}
+  - {fileID: 3923812443907259402}
   - {fileID: 971246834954425185}
   - {fileID: 8990288101629496330}
   - {fileID: 8176884242250769148}
@@ -1241,14 +1243,14 @@ RectTransform:
   m_GameObject: {fileID: 6759983722705597752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.71378, y: 0.64888996, z: 0.64888996}
+  m_LocalScale: {x: 0.8131355, y: 0.8131345, z: 0.8131345}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4738904206945453531}
+  m_Father: {fileID: 1508673293136543079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -148}
+  m_AnchoredPosition: {x: 2.6201463, y: -759.7643}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8926181008515867620
@@ -1400,8 +1402,6 @@ RectTransform:
   - {fileID: 9142537102302190791}
   - {fileID: 2217501372658171621}
   - {fileID: 7151718028326707269}
-  - {fileID: 8917451380359488753}
-  - {fileID: 3923812443907259402}
   - {fileID: 4813268952676673938}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
