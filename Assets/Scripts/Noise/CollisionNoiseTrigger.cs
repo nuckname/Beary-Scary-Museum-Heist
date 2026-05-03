@@ -22,6 +22,8 @@ public class CollisionNoiseTrigger : MonoBehaviour
     private NoiseEmitter noiseEmitter;
     private Rigidbody rb;
 
+    [SerializeField] private bool dontMakeSoundOnFirstDrop = false;
+
     private void Awake()
     {
         noiseEmitter = GetComponent<NoiseEmitter>();
@@ -30,6 +32,12 @@ public class CollisionNoiseTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (dontMakeSoundOnFirstDrop)
+        {
+            dontMakeSoundOnFirstDrop = false;
+            return;
+        }
+        
         // Ignore collisions with the player
         if (collision.gameObject.CompareTag("Player")) return;
         

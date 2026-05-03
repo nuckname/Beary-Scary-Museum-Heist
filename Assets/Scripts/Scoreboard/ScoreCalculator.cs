@@ -37,6 +37,7 @@ public class ScoreCalculator : MonoBehaviour
         float finalTime = timer._currentTime;
         int penalties = RoundStateManager.AmountOfTimesPlayerSpottedByGuards;
 
+        // (Easier way to add minus points per second?)
         // Calculate how much time has passed as a percentage (0.0 to 1.0)
         // Clamp01 ensures this value never goes above 1 (100%), even if they take 5 minutes
         float timeFraction = Mathf.Clamp01(finalTime / maxTimeLimit);
