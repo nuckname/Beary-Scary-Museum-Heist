@@ -75,9 +75,7 @@ MonoBehaviour:
   walkStepInterval: 0.5
   sprintStepInterval: 0.3
   sneakStepInterval: 0.8
-  useCustomUIPosition: 1
-  uiX: 740
-  uiY: 955
+  staminaBarFill: {fileID: 0}
   rb: {fileID: 3292789174107578550}
   animator: {fileID: 9102284141675805480}
 --- !u!23 &3106409119693640108
@@ -522,7 +520,7 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: 2b6d1bfaad13e934fb564b7a69fc5411, type: 2}
-  showOutline: 1
+  showOutline: 0
   outlineMaterial: {fileID: 2100000, guid: fca9c2d7c422d1940b0c6639e9db4dc6, type: 2}
   outlineWidth: 0.1
   outlineHeightOffset: 0.05
@@ -544,8 +542,8 @@ MonoBehaviour:
   baseNoiseRadius: 2.5
   speedMultiplier: 0.75
   sneakNoiseMultiplier: 0.2
-  weightToDurationMultiplier: 0.25
-  weightToRadiusMultiplier: 2
+  weightToDurationMultiplier: 0
+  weightToRadiusMultiplier: 0
 --- !u!82 &5544120613485267522
 AudioSource:
   m_ObjectHideFlags: 0
