@@ -12,8 +12,8 @@ public class KeyChecker : MonoBehaviour
             other.gameObject.TryGetComponent(out IKey key);
             if (key != null && !key.hasBeenUsed)
             {
-                doorToOpen.SetActive(false);
                 key.hasBeenUsed = true;
+                doorToOpen.SetActive(false);
             }
         }
     }

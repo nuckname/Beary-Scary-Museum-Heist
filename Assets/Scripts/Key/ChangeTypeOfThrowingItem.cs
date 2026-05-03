@@ -18,7 +18,6 @@ public class ChangeTypeOfThrowingItem : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            // yes
             if(other.gameObject.GetComponentInChildren<IsKey>())
             {
                 IsKey key = other.gameObject.GetComponentInChildren<IsKey>();

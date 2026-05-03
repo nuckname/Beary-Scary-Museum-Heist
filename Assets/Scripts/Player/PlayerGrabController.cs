@@ -200,8 +200,12 @@ public class PlayerGrabController : MonoBehaviour
         
         // Re-add the individual object's weight back to our speed
         currentHeldWeight -= droppedWeight;
-        playerStealthController.walkSpeed += droppedWeight;
-        playerStealthController.sprintSpeed += droppedWeight;
+        
+        if (allowWeightToAffectPlayerSpeed)
+        {
+            playerStealthController.walkSpeed += droppedWeight;
+            playerStealthController.sprintSpeed += droppedWeight;
+        }
   
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
       
