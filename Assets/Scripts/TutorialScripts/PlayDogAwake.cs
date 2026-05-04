@@ -12,6 +12,8 @@ public class PlayDogAwake : MonoBehaviour
     // Optional: If your dialogue prefab doesn't have a Screen Space Canvas built in, drag your scene's main canvas here
     [SerializeField] private Transform mainCanvas;
     
+    [SerializeField] private DialogueTrigger dialogueTrigger;
+    
     // Stubs for your custom parameters
     [System.Serializable]
     public struct CustomAnimationParams
@@ -104,7 +106,8 @@ public class PlayDogAwake : MonoBehaviour
             yield return null;
         }
         
-        Instantiate(dialoguePrefab);
+        GameObject dialoguePrefabGO = Instantiate(dialoguePrefab);
+        dialogueTrigger.existingDialogueUI = dialoguePrefabGO.GetComponent<DialogueHandler>();
         
         dogTransform.position = groundPos;
         isAnimating = false;
