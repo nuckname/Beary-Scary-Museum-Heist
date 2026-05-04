@@ -43,7 +43,6 @@ public class DialogueHandler : MonoBehaviour
     private float explosionStartTime;
     private Coroutine typingCoroutine;
 
-    
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();

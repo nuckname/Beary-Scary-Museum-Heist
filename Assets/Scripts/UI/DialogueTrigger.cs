@@ -7,7 +7,8 @@ public class DialogueTrigger : MonoBehaviour
     [Tooltip("The ScriptableObject containing the conversation.")]
     [SerializeField] private DialogueSequence sequenceToPlay;
     
-    public DialogueHandler existingDialogueUI;
+    [Tooltip("Drag the existing Dialogue Box UI from your scene hierarchy here.")]
+    [SerializeField] private DialogueHandler existingDialogueUI;
 
     [Header("Interaction Settings")]
     [Tooltip("If true, you must Left Click to start the dialogue. If false, it plays automatically when you walk into the trigger.")]
