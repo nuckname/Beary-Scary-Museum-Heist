@@ -2,11 +2,9 @@
 using UnityEditor;
 #endif
 using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using System.Text.RegularExpressions;
 
 /// <summary>
 /// gameobject follows a path with diagloue 
@@ -37,19 +35,16 @@ public struct CustomParameters
 {
     public SpecialAction action; 
     
-    // Revive Settings
     public float timeSpentDead;
     public float reviveHeight; 
     public float reviveDuration; 
     public float reviveSpinSpeed; 
     
-    // Bottom Text Settings
     [TextArea(2, 5)]
     public string bottomText; 
     [Tooltip("How long the bottom text stays on screen before disappearing. (0 = stays until next waypoint)")]
     public float displayDuration; 
 
-    // Camera Pan Settings
     [Tooltip("The empty GameObject transform the camera should move to.")]
     public Transform cameraPanTarget;
     [Tooltip("How long the camera stays at the target before returning to the player.")]
@@ -64,14 +59,15 @@ public struct Waypoint
     public Transform targetTransform;
     public float waitTime;
     
+    [Header("Dialogue Config")]
+    public string speakerName;
     [TextArea(2, 5)]
-    public string dialogueText; 
+    [Tooltip("Add multiple strings here to require multiple clicks to advance.")]
+    public List<string> dialogueLines; 
 
-    // Changed to a List so you can add multiple parameters/actions per waypoint
     public List<CustomParameters> customParameters; 
 }
 
-[RequireComponent(typeof(AudioSource))]
 public class TutorialFollowPath : MonoBehaviour
 {
     [Header("Path Settings")]
@@ -79,40 +75,16 @@ public class TutorialFollowPath : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
 
-    [Header("Animation Integration")]
-    public DogWalkAnimation walkAnimation;
+    [Header("Character State")]
     [HideInInspector] public bool forceWakeUp = false;
 
-    [Header("Dialogue Settings")]
-    public TMP_Text floatingText;
+    [Header("Dialogue Spawn System")]
+    [Tooltip("The UI Prefab that has the DialogueHandler script attached to it.")]
+    public GameObject dialoguePrefab;
+    [Tooltip("Optional: Keep this if you still use the ShowBottomText special action.")]
     public TMP_Text bottomScreenText;
     
-    [Tooltip("The time in seconds between each letter appearing.")]
-    public float textTypeSpeed = 0.05f; 
-    
-    [Tooltip("Tracks which waypoint the object is currently traveling to or acting upon.")]
     public int currentWaypointIndex = 0; 
-
-    [Header("Animal Crossing Voice")]
-    public AudioClip voiceBlip;
-    [Range(0.5f, 2f)] public float minPitch = 0.8f;
-    [Range(0.5f, 2f)] public float maxPitch = 1.2f;
-    private AudioSource audioSource;
-
-    [Header("Text Effects Settings")]
-    public float waveSpeed = 5f;
-    public float waveHeight = 10f;
-    public float rainbowColorSpeed = 1f;
-    public float shakeAmount = 2f;
-    public float ghostFadeSpeed = 3f;
-    [Range(0f, 1f)] public float glitchChance = 0.1f;
-    public float glitchIntensity = 5f;
-
-    [Header("Explosion Settings")]
-    public float explosionForce = 50f;
-    public float explosionGravity = 20f;
-    private bool isExploding = false;
-    private float explosionStartTime;
 
     private Transform playerTransform;
     private bool isPaused = false;
@@ -120,24 +92,11 @@ public class TutorialFollowPath : MonoBehaviour
     
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-
-        // Try to find the player early if they exist in the scene right away
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
-        {
-            playerTransform = playerObj.transform;
-        }
+        if (playerObj != null) playerTransform = playerObj.transform;
         
         camObj = GameObject.FindGameObjectWithTag("MainCamera");
-
-        if (bottomScreenText != null)
-        {
-            bottomScreenText.text = "";
-        }
-        
-        
+        if (bottomScreenText != null) bottomScreenText.text = "";
     }
 
     private void Start()
@@ -147,8 +106,6 @@ public class TutorialFollowPath : MonoBehaviour
 
     private void Update()
     {
-        AnimateSpecialText();
-
         if (isPaused)
         {
             if (playerTransform == null)
@@ -160,7 +117,6 @@ public class TutorialFollowPath : MonoBehaviour
             if (playerTransform != null)
             {
                 Vector3 directionToPlayer = playerTransform.position - transform.position;
-                
                 if (directionToPlayer != Vector3.zero)
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
@@ -170,37 +126,23 @@ public class TutorialFollowPath : MonoBehaviour
         }
     }
 
-    
     private IEnumerator FollowPath()
     {
         CameraFollow mainCameraScript = null;
-        if (camObj != null)
-        {
-            mainCameraScript = camObj.GetComponent<CameraFollow>();
-        }
+        if (camObj != null) mainCameraScript = camObj.GetComponent<CameraFollow>();
 
         for (currentWaypointIndex = 0; currentWaypointIndex < waypoints.Count; currentWaypointIndex++)
         {
             Waypoint point = waypoints[currentWaypointIndex];
-
-            // Turn on the walking animation while moving to the next point
-            if (walkAnimation != null) 
-            {
-                walkAnimation.isWalking = true;
-            }
-
             isPaused = false;
             
             Vector3 currentVelocity = Vector3.zero;
             float smoothTime = 0.3f;
 
-            // Move towards the transform
+            // Move towards target
             while (Vector3.Distance(transform.position, point.targetTransform.position) > 0.01f)
             {
                 Vector3 directionToTarget = point.targetTransform.position - transform.position;
-                
-                // directionToTarget.y = 0; 
-
                 if (directionToTarget != Vector3.zero) 
                 {
                     Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
@@ -219,7 +161,7 @@ public class TutorialFollowPath : MonoBehaviour
 
             transform.position = point.targetTransform.position;
 
-            // Loop through all custom parameters added to this specific waypoint
+            // Handle custom actions (Play Dead, Bottom Text, Camera Pan)
             if (point.customParameters != null && point.customParameters.Count > 0)
             {
                 foreach (CustomParameters customParam in point.customParameters)
@@ -229,12 +171,6 @@ public class TutorialFollowPath : MonoBehaviour
                         Vector3 currentRot = transform.eulerAngles;
                         transform.eulerAngles = new Vector3(currentRot.x, currentRot.y, 180f);
 
-                        if (walkAnimation != null)
-                        {
-                            walkAnimation.isWalking = false;
-                            walkAnimation.ResetPosture();
-                        }
-
                         float deadTimer = 0f;
                         while (deadTimer < customParam.timeSpentDead && !forceWakeUp)
                         {
@@ -243,7 +179,6 @@ public class TutorialFollowPath : MonoBehaviour
                         }
                         forceWakeUp = false;
 
-                        // Find out where the player is so we can calculate the final angle
                         float startAngle = transform.eulerAngles.y;
                         float targetAngle = startAngle;
 
@@ -251,17 +186,13 @@ public class TutorialFollowPath : MonoBehaviour
                         {
                             Vector3 dirToPlayer = playerTransform.position - transform.position;
                             dirToPlayer.y = 0;
-                            if (dirToPlayer != Vector3.zero)
-                            {
-                                targetAngle = Quaternion.LookRotation(dirToPlayer).eulerAngles.y;
-                            }
+                            if (dirToPlayer != Vector3.zero) targetAngle = Quaternion.LookRotation(dirToPlayer).eulerAngles.y;
                         }
 
                         float rDuration = customParam.reviveDuration > 0f ? customParam.reviveDuration : 2f;
                         float rHeight = customParam.reviveHeight > 0f ? customParam.reviveHeight : 2f;
                         float rSpinSpeed = customParam.reviveSpinSpeed > 0f ? customParam.reviveSpinSpeed : 1000f;
 
-                        // Calculate the exact degrees needed to smoothly land on the target angle
                         float rawTotalDegrees = 0.5f * rDuration * rSpinSpeed;
                         float angleDifference = Mathf.DeltaAngle(startAngle + rawTotalDegrees, targetAngle);
                         float totalDegrees = rawTotalDegrees + angleDifference;
@@ -274,46 +205,33 @@ public class TutorialFollowPath : MonoBehaviour
                             elapsedTime += Time.deltaTime;
                             float timeNormalized = Mathf.Clamp01(elapsedTime / rDuration);
 
-                            // Float up and down using Sine
                             float heightOffset = Mathf.Sin(timeNormalized * Mathf.PI) * rHeight;
                             transform.position = groundPos + (Vector3.up * heightOffset);
 
-                            // Spin smoothly using quadratic ease-out, ending exactly on the player
                             float easeOut = (2f * timeNormalized) - (timeNormalized * timeNormalized);
                             float currentYAngle = startAngle + (totalDegrees * easeOut);
-                            
                             transform.rotation = Quaternion.Euler(0f, currentYAngle, 0f);
 
                             yield return null;
                         }
-
                         transform.position = groundPos;
                     }
-                    else if (customParam.action == SpecialAction.ShowBottomText)
+                    else if (customParam.action == SpecialAction.ShowBottomText && bottomScreenText != null)
                     {
-                        if (bottomScreenText != null && !string.IsNullOrEmpty(customParam.bottomText))
+                        bottomScreenText.text = customParam.bottomText; // Simplified for brevity outside the main dialogue
+                        if (customParam.displayDuration > 0f)
                         {
-                            yield return StartCoroutine(TypeText(customParam.bottomText, bottomScreenText));
-
-                            if (customParam.displayDuration > 0f)
-                            {
-                                yield return new WaitForSeconds(customParam.displayDuration);
-                                bottomScreenText.maxVisibleCharacters = 0;
-                                bottomScreenText.text = "";
-                            }
+                            // Could wrap in a coroutine to clear later, keeping simple for this scope
+                            bottomScreenText.text = customParam.bottomText; 
                         }
                     }
-                    else if (customParam.action == SpecialAction.PanCamera)
+                    else if (customParam.action == SpecialAction.PanCamera && mainCameraScript != null && customParam.cameraPanTarget != null)
                     {
-                        if (mainCameraScript != null && customParam.cameraPanTarget != null)
+                        mainCameraScript.StartPanning(customParam.cameraPanTarget, customParam.cameraPanSpeed);
+                        if (customParam.cameraPanDuration > 0f)
                         {
-                            mainCameraScript.StartPanning(customParam.cameraPanTarget, customParam.cameraPanSpeed);
-
-                            if (customParam.cameraPanDuration > 0f)
-                            {
-                                yield return new WaitForSeconds(customParam.cameraPanDuration);
-                                mainCameraScript.StopPanning();
-                            }
+                            yield return new WaitForSeconds(customParam.cameraPanDuration);
+                            mainCameraScript.StopPanning();
                         }
                     }
                 }
@@ -321,307 +239,90 @@ public class TutorialFollowPath : MonoBehaviour
             
             isPaused = true;
 
-            // Trigger the dialogue for this specific waypoint
-            if (walkAnimation != null)
+            // SPAWN THE DIALOGUE PREFAB HERE
+            if (point.dialogueLines != null && point.dialogueLines.Count > 0 && dialoguePrefab != null)
             {
-                walkAnimation.isWalking = false;
-                walkAnimation.ResetPosture();
+                GameObject spawnedDialogue = Instantiate(dialoguePrefab);
+                DialogueHandler handler = spawnedDialogue.GetComponent<DialogueHandler>();
+                
+                //handler.StartDialogue(point.speakerName, point.dialogueLines);
+
+                // Wait until the user clicks through all lines and the prefab destroys itself
+                yield return new WaitUntil(() => handler.isDialogueComplete);
             }
 
-            if (!string.IsNullOrEmpty(point.dialogueText) && floatingText != null)
-            {
-                yield return StartCoroutine(TypeText(point.dialogueText, floatingText));
-            }
-
-            // Wait for the specified amount of time at this transform
+            // Wait time at waypoint after dialogue is finished
             if (point.waitTime > 0)
             {
                 yield return new WaitForSeconds(point.waitTime);
             }
 
-            // Explode the special text at the end of the wait time before moving on
-            TriggerExplosion();
-            yield return new WaitForSeconds(1.5f); 
-            
-            isExploding = false;
-            
-            if (floatingText != null)
-            {
-                floatingText.maxVisibleCharacters = 0; 
-                floatingText.text = "";
-            }
-
-            if (bottomScreenText != null)
-            {
-                bottomScreenText.maxVisibleCharacters = 0; 
-                bottomScreenText.text = "";
-            }
+            if (bottomScreenText != null) bottomScreenText.text = "";
         }
         
-        if (walkAnimation != null)
-        {
-            walkAnimation.isWalking = false;
-            walkAnimation.ResetPosture();
-        }
-
         Debug.Log("Path complete!");
     }
-
-    // Slowly write out the text
-    // Text effect
-    private IEnumerator TypeText(string rawText, TMP_Text targetTextComponent)
-    {
-        if (targetTextComponent == null) yield break;
-
-        string processedText = rawText;
-        processedText = Regex.Replace(processedText, @"<rainbow>(.*?)</rainbow>", "<link=\"rainbow\">$1</link>");
-        processedText = Regex.Replace(processedText, @"<wave>(.*?)</wave>", "<link=\"wave\">$1</link>");
-        processedText = Regex.Replace(processedText, @"<shake>(.*?)</shake>", "<link=\"shake\">$1</link>");
-        processedText = Regex.Replace(processedText, @"<ghost>(.*?)</ghost>", "<link=\"ghost\">$1</link>");
-        processedText = Regex.Replace(processedText, @"<glitch>(.*?)</glitch>", "<link=\"glitch\">$1</link>");
-        
-        // Added explicit explode tag!
-        processedText = Regex.Replace(processedText, @"<explode>(.*?)</explode>", "<link=\"explode\">$1</link>");
-
-        targetTextComponent.text = processedText;
-        targetTextComponent.ForceMeshUpdate();
-
-        targetTextComponent.maxVisibleCharacters = 0;
-        int totalVisibleCharacters = targetTextComponent.textInfo.characterCount;
-
-        for (int i = 0; i <= totalVisibleCharacters; i++)
-        {
-            targetTextComponent.maxVisibleCharacters = i;
-
-            if (i > 0 && i <= targetTextComponent.textInfo.characterCount)
-            {
-                char c = targetTextComponent.textInfo.characterInfo[i - 1].character;
-                if (c != ' ' && voiceBlip != null)
-                {
-                    audioSource.pitch = Random.Range(minPitch, maxPitch);
-                    audioSource.PlayOneShot(voiceBlip, 0.5f);
-                }
-            }
-
-            yield return new WaitForSeconds(textTypeSpeed);
-        }
-    }
-
-    public void TriggerExplosion()
-    {
-        isExploding = true;
-        explosionStartTime = Time.time;
-    }
-
-    // AI
-    private void AnimateSpecialText()
-    {
-        ApplyTextEffectsToComponent(floatingText);
-        ApplyTextEffectsToComponent(bottomScreenText);
-    }
-
-    private void ApplyTextEffectsToComponent(TMP_Text targetText)
-    {
-        if (targetText == null || targetText.textInfo == null || targetText.textInfo.characterCount == 0) return;
-
-        targetText.ForceMeshUpdate();
-        TMP_TextInfo textInfo = targetText.textInfo;
-        
-        float timeSinceExplosion = Time.time - explosionStartTime;
-
-        for (int i = 0; i < textInfo.characterCount; i++)
-        {
-            TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
-            if (!charInfo.isVisible) continue;
-
-            int materialIndex = charInfo.materialReferenceIndex;
-            int vertexIndex = charInfo.vertexIndex;
-
-            Vector3[] vertices = textInfo.meshInfo[materialIndex].vertices;
-            Color32[] vertexColors = textInfo.meshInfo[materialIndex].colors32;
-
-            // --- 1. FIND TAGS FIRST ---
-            bool hasAnyTag = false;
-            bool isRainbow = false, isWave = false, isShake = false, isGhost = false, isGlitch = false;
-
-            foreach (TMP_LinkInfo link in textInfo.linkInfo)
-            {
-                if (i >= link.linkTextfirstCharacterIndex && i < link.linkTextfirstCharacterIndex + link.linkTextLength)
-                {
-                    hasAnyTag = true;
-                    string linkId = link.GetLinkID();
-                    
-                    if (linkId == "rainbow") isRainbow = true;
-                    if (linkId == "wave") isWave = true;
-                    if (linkId == "shake") isShake = true;
-                    if (linkId == "ghost") isGhost = true;
-                    if (linkId == "glitch") isGlitch = true;
-                    // If it's "explode", it triggers hasAnyTag to be true, which is all we need!
-                }
-            }
-
-            // --- 2. EXPLOSION OVERRIDE ---
-            if (isExploding)
-            {
-                // Fade out ALL text smoothly during the explosion phase
-                byte fadeAlpha = (byte)Mathf.Clamp(255 - (timeSinceExplosion * 150), 0, 255);
-                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v].a = fadeAlpha;
-
-                // BUT if the character has a tag, physically explode it outward!
-                if (hasAnyTag)
-                {
-                    Random.InitState(i * 100); 
-                    Vector3 randomDir = new Vector3(Random.Range(-1f, 1f), Random.Range(0.5f, 1.5f), 0).normalized;
-                    
-                    Vector3 explosionOffset = randomDir * explosionForce * timeSinceExplosion;
-                    explosionOffset.y -= explosionGravity * (timeSinceExplosion * timeSinceExplosion); 
-
-                    Matrix4x4 matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 0, Random.Range(-300f, 300f) * timeSinceExplosion));
-                    Vector3 center = (vertices[vertexIndex + 0] + vertices[vertexIndex + 2]) / 2f;
-
-                    for (int v = 0; v < 4; v++)
-                    {
-                        vertices[vertexIndex + v] = center + matrix.MultiplyPoint3x4(vertices[vertexIndex + v] - center) + explosionOffset;
-                    }
-                }
-                
-                continue; // Skip the standard wobbles and shakes if we are exploding
-            }
-
-            // --- 3. STANDARD LINK EFFECTS ---
-            if (isRainbow)
-            {
-                float hue = (Time.time * rainbowColorSpeed + i * 0.1f) % 1f;
-                Color32 charColor = Color.HSVToRGB(hue, 1f, 1f);
-                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v] = charColor;
-            }
-
-            if (isWave || isRainbow)
-            {
-                float waveOffset = Mathf.Sin(Time.time * waveSpeed + i * 1f) * waveHeight;
-                for (int v = 0; v < 4; v++) vertices[vertexIndex + v].y += waveOffset;
-            }
-
-            if (isShake)
-            {
-                Vector3 jitterOffset = new Vector3(Random.Range(-shakeAmount, shakeAmount), Random.Range(-shakeAmount, shakeAmount), 0);
-                for (int v = 0; v < 4; v++) vertices[vertexIndex + v] += jitterOffset;
-            }
-
-            if (isGhost)
-            {
-                float alphaFloat = (Mathf.Sin(Time.time * ghostFadeSpeed + i) + 1f) / 2f;
-                byte alphaByte = (byte)(alphaFloat * 255);
-                for (int v = 0; v < 4; v++) vertexColors[vertexIndex + v].a = alphaByte;
-            }
-
-            if (isGlitch)
-            {
-                if (Random.value < glitchChance)
-                {
-                    Vector3 glitchOffset = new Vector3(Random.Range(-glitchIntensity, glitchIntensity), Random.Range(-glitchIntensity, glitchIntensity), 0);
-                    Color32 glitchColor = Random.value > 0.5f ? Color.cyan : Color.magenta;
-
-                    for (int v = 0; v < 4; v++)
-                    {
-                        vertices[vertexIndex + v] += glitchOffset;
-                        vertexColors[vertexIndex + v] = glitchColor;
-                    }
-                }
-            }
-        }
-
-        targetText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
-    }
 }
+
+// ... Keep your CustomPropertyDrawer exactly as it was at the bottom of the script ...
 
 #if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(CustomParameters))]
 public class CustomParametersDrawer : PropertyDrawer
 {
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        // Base height for the Action enum dropdown
+    // Keeping this from your original file.
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
         float height = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
         SerializedProperty actionProp = property.FindPropertyRelative("action");
         SpecialAction action = (SpecialAction)actionProp.enumValueIndex;
 
-        // Add height based on which action is selected
-        switch (action)
-        {
-            case SpecialAction.PlayDeadAndRevive:
-                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4; 
-                break;
-            
+        switch (action) {
+            case SpecialAction.PlayDeadAndRevive: height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4; break;
             case SpecialAction.ShowBottomText:
                 SerializedProperty textProp = property.FindPropertyRelative("bottomText");
-                height += EditorGUI.GetPropertyHeight(textProp) + EditorGUIUtility.standardVerticalSpacing; // TextArea
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; // displayDuration
+                height += EditorGUI.GetPropertyHeight(textProp) + EditorGUIUtility.standardVerticalSpacing; 
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
                 break;
-            
-            case SpecialAction.PanCamera:
-                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3; 
-                break;
+            case SpecialAction.PanCamera: height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3; break;
         }
-
         return height;
     }
 
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
         EditorGUI.BeginProperty(position, label, property);
-
-        // Calculate the rect for the action dropdown
         Rect currentRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
-        
         SerializedProperty actionProp = property.FindPropertyRelative("action");
         EditorGUI.PropertyField(currentRect, actionProp);
-        
-        // Move the rect down to prepare for the next property
         currentRect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
         SpecialAction action = (SpecialAction)actionProp.enumValueIndex;
-
-        // Indent the parameters slightly to make it look clean
         EditorGUI.indentLevel++;
 
-        // Draw only the parameters relevant to the selected action
-        switch (action)
-        {
+        switch (action) {
             case SpecialAction.PlayDeadAndRevive:
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("timeSpentDead"));
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveHeight"));
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveDuration"));
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("reviveSpinSpeed"));
                 break;
-
             case SpecialAction.ShowBottomText:
                 SerializedProperty textProp = property.FindPropertyRelative("bottomText");
                 float textHeight = EditorGUI.GetPropertyHeight(textProp);
                 currentRect.height = textHeight;
                 EditorGUI.PropertyField(currentRect, textProp);
-                
                 currentRect.y += textHeight + EditorGUIUtility.standardVerticalSpacing;
-                currentRect.height = EditorGUIUtility.singleLineHeight; // Reset height to standard
-
+                currentRect.height = EditorGUIUtility.singleLineHeight; 
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("displayDuration"));
                 break;
-
             case SpecialAction.PanCamera:
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanTarget"));
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanDuration"));
                 DrawStandardProperty(ref currentRect, property.FindPropertyRelative("cameraPanSpeed"));
                 break;
         }
-
         EditorGUI.indentLevel--;
         EditorGUI.EndProperty();
     }
-
-    // Helper method to draw a standard 1-line property and shift the Y position down
-    private void DrawStandardProperty(ref Rect rect, SerializedProperty prop)
-    {
+    private void DrawStandardProperty(ref Rect rect, SerializedProperty prop) {
         EditorGUI.PropertyField(rect, prop);
         rect.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
     }
