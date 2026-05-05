@@ -41,8 +41,11 @@ public class CameraFollow : MonoBehaviour
     {
         if (panTarget != null)
         {
-            transform.position = Vector3.Lerp(transform.position, panTarget.position, positionSmoothSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, panTarget.rotation, rotationSmoothSpeed * Time.deltaTime);
+            // Now correctly utilizes the currentPanSpeed assigned by StartPanning()
+            float speedToUse = currentPanSpeed > 0f ? currentPanSpeed : positionSmoothSpeed;
+            
+            transform.position = Vector3.Lerp(transform.position, panTarget.position, speedToUse * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, panTarget.rotation, speedToUse * Time.deltaTime);
             return;
         }
 

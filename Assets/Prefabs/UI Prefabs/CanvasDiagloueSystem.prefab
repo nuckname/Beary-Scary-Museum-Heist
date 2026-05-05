@@ -565,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6730138250369445805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -852,6 +852,8 @@ MonoBehaviour:
     text: Alright alright, I like your confidence! Let's get this party started!!Go
       get this thing
   textSpeed: 0.05
+  panSpeed: 1.5
+  waitTimeBeforeReturn: 4
 --- !u!1 &7567106036585576817
 GameObject:
   m_ObjectHideFlags: 0

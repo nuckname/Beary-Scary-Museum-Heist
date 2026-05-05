@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
@@ -34,13 +35,13 @@ public struct DialogueLine
 public class DialogueBox : MonoBehaviour
 {
     [Header("Bear UI")]
-    public GameObject bearDialogueBox; // The parent object/panel for the Bear's text
-    public TextMeshProUGUI bearText;   // The text component inside the Bear's box
+    public GameObject bearDialogueBox; 
+    public TextMeshProUGUI bearText;
 
     [Header("Dog UI")]
-    public GameObject dogDialogueBox;  // The parent object/panel for the Dog's text
-    public TextMeshProUGUI dogText;    // The text component inside the Dog's box
-
+    public GameObject dogDialogueBox; 
+    public TextMeshProUGUI dogText;
+    
     [Header("Bear Emotion Images")]
     public GameObject bearHappy;
     public GameObject bearHelp;
@@ -55,9 +56,21 @@ public class DialogueBox : MonoBehaviour
     public DialogueLine[] lines;
     public float textSpeed;
 
+    [Header("Camera Pan")]
+    private CameraFollow cameraScript; 
+    private Transform panTargetObject;
+    public float panSpeed = 3f;  
+    public float waitTimeBeforeReturn = 2f; // How long to look at the target before returning
+
     private int index;
-    private TextMeshProUGUI currentActiveText; // Tracks which text box is currently typing
-    
+    private TextMeshProUGUI currentActiveText;
+
+    private void Awake()
+    {
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
+        panTargetObject = GameObject.FindGameObjectWithTag("CameraPanTarget").transform;
+    }
+
     void Start()
     {
         if (bearText != null) bearText.text = "";
@@ -108,18 +121,51 @@ public class DialogueBox : MonoBehaviour
         }
         else
         {
-            // End of dialogue, hide everything
-            if (bearDialogueBox != null) bearDialogueBox.SetActive(false);
-            if (dogDialogueBox != null) dogDialogueBox.SetActive(false);
+            // End of dialogue, hide all UI visuals
+            bearDialogueBox.SetActive(false);
+            dogDialogueBox.SetActive(false);
+            
+            if (bearText != null) bearText.text = "";
+            if (dogText != null) dogText.text = "";
             HideAllImages();
-            gameObject.SetActive(false);
+            
+            // Clear text reference so mouse clicks during the wait don't trigger anything
+            currentActiveText = null; 
+
+            // Trigger the camera pan sequence if the variables are assigned
+            if (cameraScript != null && panTargetObject != null)
+            {
+                StartCoroutine(CameraPanSequence());
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
+    }
+
+    private IEnumerator CameraPanSequence()
+    {
+        // 1. Pan to the empty game object
+        cameraScript.StartPanning(panTargetObject, panSpeed);
+
+        // 2. Wait for the specified time
+        yield return new WaitForSeconds(waitTimeBeforeReturn);
+
+        // 3. Stop panning (CameraFollow will automatically lerp back to the player)
+        cameraScript.StopPanning();
+
+        // 4. Now that the sequence is done, disable this dialogue object
+        gameObject.SetActive(false);
     }
 
     private void UpdateSpeakerUI()
     {
         HideAllImages();
 
+        if (bearText != null) bearText.text = "";
+        if (dogText != null) dogText.text = "";
+        
         // Turn off both dialogue boxes initially
         if (bearDialogueBox != null) bearDialogueBox.SetActive(false);
         if (dogDialogueBox != null) dogDialogueBox.SetActive(false);
