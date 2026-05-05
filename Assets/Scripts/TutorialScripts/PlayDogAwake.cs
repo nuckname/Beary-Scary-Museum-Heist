@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class PlayDogAwake : MonoBehaviour
     [SerializeField] private Transform playDeadAnimationOnThisGameObject;
 
     [SerializeField] private GameObject dialoguePrefab;
+
+    private bool hasPlayed;
     
     // Stubs for your custom parameters
     [System.Serializable]
@@ -25,12 +28,17 @@ public class PlayDogAwake : MonoBehaviour
     
     private bool isAnimating = false;
 
+    private void Start()
+    {
+        hasPlayed = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Only trigger if it's the player AND we aren't already playing the animation
         if (other.CompareTag("Player") && !isAnimating)
         {
-            if (playDeadAnimationOnThisGameObject != null)
+            if (playDeadAnimationOnThisGameObject != null && !hasPlayed)
             {
                 // Start the coroutine and pass the player's transform so the dog can look at them
                 StartCoroutine(PlayDogAnimationRoutine(other.transform));
@@ -102,6 +110,8 @@ public class PlayDogAwake : MonoBehaviour
         }
         
         Instantiate(dialoguePrefab);
+
+        hasPlayed = true;
         
         dogTransform.position = groundPos;
         isAnimating = false;
