@@ -473,168 +473,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &5326806377462411866
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5706425520101733496}
-  - component: {fileID: 6022926059677174296}
-  - component: {fileID: 6307031409127192516}
-  m_Layer: 5
-  m_Name: Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &5706425520101733496
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5326806377462411866}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 631861517487788484}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!82 &6022926059677174296
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5326806377462411866}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &6307031409127192516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5326806377462411866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e278f6d5cffd5425d88407cc73eee713, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueHandler
-  speakerNameText: {fileID: 0}
-  dialogueBodyText: {fileID: 6172479540746799912}
-  textTypeSpeed: 0.05
-  voiceBlip: {fileID: 0}
-  minPitch: 0.8
-  maxPitch: 1.2
-  waveSpeed: 5
-  waveHeight: 10
-  rainbowColorSpeed: 1
-  shakeAmount: 2
-  ghostFadeSpeed: 3
-  glitchChance: 0.1
-  glitchIntensity: 5
-  explosionForce: 50
-  explosionGravity: 20
-  isDialogueComplete: 0
 --- !u!1 &5627071088675303798
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +732,6 @@ RectTransform:
   m_Children:
   - {fileID: 7966086392946089017}
   - {fileID: 5845383267263240828}
-  - {fileID: 5706425520101733496}
   - {fileID: 3325335436122602691}
   - {fileID: 6730138250369445805}
   - {fileID: 5846074325239094576}
@@ -980,11 +817,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ec4118d51bc0c4f96e6e4a33dad24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  text: {fileID: 6172479540746799912}
+  bearDialogueBox: {fileID: 6299137043735179139}
+  bearText: {fileID: 6172479540746799912}
+  dogDialogueBox: {fileID: 3169658663652240156}
+  dogText: {fileID: 6172479540746799912}
+  bearHappy: {fileID: 3294123676571957011}
+  bearHelp: {fileID: 1219265804695188576}
+  bearScared: {fileID: 2372702659048126392}
+  dogExplain: {fileID: 6370779675511391137}
+  dogSad: {fileID: 8319803113752521319}
+  dogOpeningHappy: {fileID: 5627071088675303798}
   lines:
-  - 0
-  - 1
-  - 2
+  - speaker: 0
+    emotion: 0
+    text: 0
+  - speaker: 1
+    emotion: 5
+    text: 1
+  - speaker: 0
+    emotion: 3
+    text: 2
   textSpeed: 0.3
 --- !u!1 &7567106036585576817
 GameObject:

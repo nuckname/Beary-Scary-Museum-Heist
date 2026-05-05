@@ -239,17 +239,7 @@ public class TutorialFollowPath : MonoBehaviour
             
             isPaused = true;
 
-            // SPAWN THE DIALOGUE PREFAB HERE
-            if (point.dialogueLines != null && point.dialogueLines.Count > 0 && dialoguePrefab != null)
-            {
-                GameObject spawnedDialogue = Instantiate(dialoguePrefab);
-                DialogueHandler handler = spawnedDialogue.GetComponent<DialogueHandler>();
-                
-                //handler.StartDialogue(point.speakerName, point.dialogueLines);
-
-                // Wait until the user clicks through all lines and the prefab destroys itself
-                yield return new WaitUntil(() => handler.isDialogueComplete);
-            }
+            Instantiate(dialoguePrefab);
 
             // Wait time at waypoint after dialogue is finished
             if (point.waitTime > 0)
