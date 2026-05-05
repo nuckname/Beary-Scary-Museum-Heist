@@ -565,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6730138250369445805
 RectTransform:
   m_ObjectHideFlags: 0
@@ -828,16 +828,30 @@ MonoBehaviour:
   dogSad: {fileID: 8319803113752521319}
   dogOpeningHappy: {fileID: 5627071088675303798}
   lines:
-  - speaker: 0
-    emotion: 0
-    text: 0
   - speaker: 1
     emotion: 5
-    text: 1
+    text: 'WOOHOO!! Its been awhile since I''ve felt so free! What''s up little bear!
+
+'
   - speaker: 0
+    emotion: 0
+    text: Woahhh... Who are you?
+  - speaker: 1
     emotion: 3
-    text: 2
-  textSpeed: 0.3
+    text: The name's John! But you can call me Prof Popper! What are you doing in
+      these dark parts?
+  - speaker: 1
+    emotion: 3
+    text: "I feel like I sent the message for a joy spreading art heister eons ago\u2026"
+  - speaker: 0
+    emotion: 1
+    text: "I have been summoned by\u2026err- Well I\u2019m here to spread joy by
+      sharing art with the world!"
+  - speaker: 1
+    emotion: 3
+    text: Alright alright, I like your confidence! Let's get this party started!!Go
+      get this thing
+  textSpeed: 0.05
 --- !u!1 &7567106036585576817
 GameObject:
   m_ObjectHideFlags: 0
