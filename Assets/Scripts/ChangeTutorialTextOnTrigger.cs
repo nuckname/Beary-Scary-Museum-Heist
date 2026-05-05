@@ -18,6 +18,8 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
     [Header("Settings")]
     public float textSpeed = 0.05f;
 
+    private bool hasBeenTriggered = false;
+    
     [Header("Clear Settings")]
     public float timeBeforeClear = 3f; 
 
@@ -35,7 +37,10 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TriggerTypingEffect(text);
+            if (!hasBeenTriggered)
+            {
+                TriggerTypingEffect(text);
+            }
         }
     }
 
@@ -49,6 +54,8 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
 
         // Start typing the new text
         typingCoroutine = StartCoroutine(TypeLine(_text));
+
+        hasBeenTriggered = true;
     }
 
     private IEnumerator TypeLine(string lineToType)
