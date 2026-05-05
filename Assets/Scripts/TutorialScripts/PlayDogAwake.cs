@@ -9,9 +9,6 @@ public class PlayDogAwake : MonoBehaviour
 
     [SerializeField] private GameObject dialoguePrefab;
     
-    // Optional: If your dialogue prefab doesn't have a Screen Space Canvas built in, drag your scene's main canvas here
-    [SerializeField] private Transform mainCanvas;
-    
     // Stubs for your custom parameters
     [System.Serializable]
     public struct CustomAnimationParams

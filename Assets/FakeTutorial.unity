@@ -9240,7 +9240,6 @@ GameObject:
   - component: {fileID: 1636088101}
   - component: {fileID: 1636088100}
   - component: {fileID: 1636088099}
-  - component: {fileID: 1636088103}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -9361,22 +9360,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636088097}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1636088103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636088097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde7e43009baa47349d9d7356df0dd65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueTrigger
-  sequenceToPlay: {fileID: 11400000, guid: 52cd7028413094430bdeef0b4a9bfd5b, type: 2}
-  existingDialogueUI: {fileID: 0}
-  requireLeftClick: 1
-  mustClickDirectlyOnObject: 1
 --- !u!1001 &1654873107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9793,7 +9776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -46.77
+      value: -46.8
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9813,11 +9796,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 77.6
+      value: 76.6
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.25
+      value: 3.1
       objectReference: {fileID: 0}
     - target: {fileID: 1286666523707157680, guid: ca4aa3829ee88694bacac5e783c9eed6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11024,7 +11007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   playDeadAnimationOnThisGameObject: {fileID: 1788723274}
-  dialoguePrefab: {fileID: 0}
+  dialoguePrefab: {fileID: 6658356989474467463, guid: 963bdfe257ee94287add58bd0f890474, type: 3}
   mainCanvas: {fileID: 0}
   customParam:
     action: 1

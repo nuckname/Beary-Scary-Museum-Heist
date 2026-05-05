@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
+// https://www.youtube.com/watch?v=8oTYabhj248&t=142s
+
 public enum SpeakerType
 {
     Bear,
