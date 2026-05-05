@@ -872,6 +872,7 @@ GameObject:
   - component: {fileID: 3780995656419881690}
   - component: {fileID: 8668483588397746777}
   - component: {fileID: 1231322517750701268}
+  - component: {fileID: 3379863377982551850}
   m_Layer: 5
   m_Name: CanvasDiagloueSystem
   m_TagString: Untagged
@@ -967,6 +968,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3379863377982551850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658356989474467463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ec4118d51bc0c4f96e6e4a33dad24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  text: {fileID: 6172479540746799912}
+  lines:
+  - 0
+  - 1
+  - 2
+  textSpeed: 0.3
 --- !u!1 &7567106036585576817
 GameObject:
   m_ObjectHideFlags: 0
