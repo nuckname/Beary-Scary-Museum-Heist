@@ -10,6 +10,8 @@ public class PlayerStealthController : MonoBehaviour
     public float walkSpeed;
     public float sprintSpeed;
 
+    public bool cannotMove = false;
+    
     [Header("Stamina Settings")]
     public float maxStamina = 5f;
     public float staminaRegenRate = 1.5f;
@@ -52,6 +54,11 @@ public class PlayerStealthController : MonoBehaviour
 
     void Update()
     {
+        if (cannotMove)
+        {
+            return;
+        }
+        
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 

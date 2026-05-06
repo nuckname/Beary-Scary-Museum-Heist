@@ -681,7 +681,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1286666523707157680}
-  - component: {fileID: 3787743137548848637}
   - component: {fileID: 9103317904157298225}
   - component: {fileID: 3512588297325863357}
   - component: {fileID: 9013578140188163653}
@@ -720,60 +719,6 @@ RectTransform:
   m_AnchoredPosition: {x: -39.21, y: 1.14}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3787743137548848637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7252521754438279207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea392e6713ce14b3bb94c00c53735bc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TutorialFollowPath
-  sheetURL: https://docs.google.com/spreadsheets/d/e/2PACX-1vS0_hZ3F0hbX0W6UluFPqagRX76o1_C_MjZRToBaMjkonON9I9fpmpX2pyyf5azqzx6p2Wxh0RwXPUf/pub?output=tsv
-  waypoints:
-  - targetTransform: {fileID: 0}
-    waitTime: 2
-    dialogueText: Hello my name is dog
-  - targetTransform: {fileID: 0}
-    waitTime: 2
-    dialogueText: I have no <size=150%><rainbow>friends</rainbow></size>
-  - targetTransform: {fileID: 0}
-    waitTime: 2
-    dialogueText: good bye
-  - targetTransform: {fileID: 0}
-    waitTime: 1
-    dialogueText: '<wave>Bounce</wave> \n
-
-      <ghost>Spooky</ghost> \n
-
-      <shake>Angry</shake>
-      \n
-
-      <glitch>ERROR</glitch>'
-  - targetTransform: {fileID: 0}
-    waitTime: 0
-    dialogueText: 
-  moveSpeed: 5
-  rotationSpeed: 10
-  walkAnimation: {fileID: 3278259489084542666}
-  floatingText: {fileID: 2635221122884801645}
-  textTypeSpeed: 0.05
-  currentWaypointIndex: 0
-  voiceBlip: {fileID: 0}
-  minPitch: 0.8
-  maxPitch: 1.2
-  waveSpeed: 1
-  waveHeight: 1.5
-  rainbowColorSpeed: 3
-  shakeAmount: 2
-  ghostFadeSpeed: 3
-  glitchChance: 0.1
-  glitchIntensity: 2
-  explosionForce: 15
-  explosionGravity: 10
 --- !u!222 &9103317904157298225
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1294,41 +1239,89 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7924966936676904492, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7658737981499879002, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6711727191822476088, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6556432231425712567, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5756628055800685858, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5684609357346882828, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5097257122259675338, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3289738662922664336, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3001391315882556459, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2295796242653987620, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1083351208243500997, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -945073776107742957, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179770851474791586, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
       propertyPath: m_Name
       value: What pray tell is the canine doing at this present moment in time
       objectReference: {fileID: 0}
+    - target: {fileID: 3739171233880436671, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360476604900713741, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715810415623460481, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875919453801596992, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232809944037476293, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3278259489084542666}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
 --- !u!4 &239823541333905652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
   m_PrefabInstance: {fileID: 350928102635255583}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &585422398720543310 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e1a84cc3535eb483aadcec5e97df88b1, type: 3}
-  m_PrefabInstance: {fileID: 350928102635255583}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3278259489084542666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585422398720543310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d24e3f6652c6454b9b609a85d0649d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  walkSpeed: 5
-  maxZRotation: 35
-  maxYPosition: 3
-  isWalking: 1

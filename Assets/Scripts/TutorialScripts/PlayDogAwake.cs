@@ -11,6 +11,8 @@ public class PlayDogAwake : MonoBehaviour
     [SerializeField] private GameObject dialoguePrefab;
 
     private bool hasPlayed;
+
+    [SerializeField] private GameObject door;
     
     // Stubs for your custom parameters
     [System.Serializable]
@@ -31,6 +33,7 @@ public class PlayDogAwake : MonoBehaviour
     private void Start()
     {
         hasPlayed = false;
+        door.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,6 +53,7 @@ public class PlayDogAwake : MonoBehaviour
         }
     }
 
+    // AI
     private IEnumerator PlayDogAnimationRoutine(Transform playerTransform)
     {
         if (customParam.action != SpecialAction.PlayDeadAndRevive) yield break;
@@ -110,10 +114,15 @@ public class PlayDogAwake : MonoBehaviour
         }
         
         Instantiate(dialoguePrefab);
-
+        
+        door.SetActive(false);
+        
         hasPlayed = true;
         
         dogTransform.position = groundPos;
         isAnimating = false;
+        
+        // freeze player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStealthController>().cannotMove = true;
     }
 }

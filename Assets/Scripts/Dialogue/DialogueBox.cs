@@ -157,6 +157,9 @@ public class DialogueBox : MonoBehaviour
 
         // 4. Now that the sequence is done, disable this dialogue object
         gameObject.SetActive(false);
+        
+        // unfreeze player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStealthController>().cannotMove = false;
     }
 
     private void UpdateSpeakerUI()
