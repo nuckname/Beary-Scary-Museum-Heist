@@ -827,30 +827,27 @@ MonoBehaviour:
   dogExplain: {fileID: 6370779675511391137}
   dogSad: {fileID: 8319803113752521319}
   dogOpeningHappy: {fileID: 5627071088675303798}
-  lines:
+  hasReturnedArtifact: 0
+  IntroLineslines:
+  - speaker: 1
+    emotion: 0
+    text: hi my name is dog
+  - speaker: 1
+    emotion: 0
+    text: get me the artirfact now bitch boy
+  - speaker: 0
+    emotion: 2
+    text: Ok?!
+  haveReturnedTheArtifactlines:
   - speaker: 1
     emotion: 5
-    text: 'WOOHOO!! Its been awhile since I''ve felt so free! What''s up little bear!
-
-'
+    text: Thanks! for the artifact
   - speaker: 0
     emotion: 0
-    text: Woahhh... Who are you?
+    text: no problem
   - speaker: 1
     emotion: 3
-    text: The name's John! But you can call me Prof Popper! What are you doing in
-      these dark parts?
-  - speaker: 1
-    emotion: 3
-    text: "I feel like I sent the message for a joy spreading art heister eons ago\u2026"
-  - speaker: 0
-    emotion: 1
-    text: "I have been summoned by\u2026err- Well I\u2019m here to spread joy by
-      sharing art with the world!"
-  - speaker: 1
-    emotion: 3
-    text: Alright alright, I like your confidence! Let's get this party started!!Go
-      get this thing
+    text: now return that shit to the van.
   textSpeed: 0.05
   panSpeed: 1.5
   waitTimeBeforeReturn: 4
