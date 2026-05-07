@@ -8,7 +8,6 @@ public class DropOffZoneListener : MonoBehaviour
         {
             RoundStateManager.Instance.NotifyTriggerExit(other);
         }
-       
     }
     
     private void OnTriggerEnter(Collider other)
