@@ -4,13 +4,11 @@ public class EnableOnGroundCollision : MonoBehaviour
 {
     private Collider myCollider;
     private Rigidbody myRigidbody;
-    private CanPushObject canPushScript;
 
     void Start()
     {
         myCollider = GetComponent<Collider>();
         myRigidbody = GetComponent<Rigidbody>();
-        canPushScript = GetComponent<CanPushObject>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -26,8 +24,6 @@ public class EnableOnGroundCollision : MonoBehaviour
         myCollider.enabled = true;
 
         myRigidbody.isKinematic = false;
-
-        canPushScript.enabled = true;
   
     }
 }
