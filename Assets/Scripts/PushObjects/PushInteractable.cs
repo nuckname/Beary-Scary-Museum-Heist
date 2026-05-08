@@ -3,76 +3,113 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PushInteractable : MonoBehaviour
 {
-    [Header("Rotation Settings")]
-    public Vector3 rotationAxis = Vector3.up;
-    public float rotationSpeed = 45f;
+    [Header("Tipping / Rotation Settings")]
+    public Vector3 tipAxis = Vector3.right;
+    public float tipSpeed = 25f;
+    public float pointOfNoReturnAngle = 9f;
+    public bool resetIfReleasedEarly = true;
 
-    [Header("Physics Push & Tip Settings")]
+    [Header("Physics Push Settings (Post-Fall)")]
+    [Tooltip("Force applied when using the PhysicsPush interaction.")]
     public float pushForce = 5f;
-    public float timeToTipOver = 1.5f;
-    public float tipTorqueForce = 15f;
-    public float upwardPopForce = 2f;
 
-    // Internal State Variables
-    [HideInInspector] public bool pushPositive = false;
-    [HideInInspector] public bool pushNegative = false;
-    
     private Rigidbody rb;
+    private Quaternion startRotation;
+    
+    // State tracking
+    private bool isTipping = false;
+    private bool hasFallen = false;
+    private float currentTipAngle = 0f;
+    private float activeTipDirection = 1f;
+
     private Transform currentPusher;
-    private float currentPushTime = 0f;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        startRotation = transform.rotation;
+        
+        // Freeze everything so it only moves via our tipping code until it falls
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     private void FixedUpdate()
     {
-        HandleRotation();
+        HandleTipping();
         HandlePhysicsPush();
     }
 
-    private void HandleRotation()
+    private void HandleTipping()
     {
-        float inputDirection = 0f;
-        
-        // Calculate direction, cancelling out if both are true
-        if (pushPositive && !pushNegative) inputDirection = 1f;
-        else if (pushNegative && !pushPositive) inputDirection = -1f;
+        // If it has already fallen, we completely ignore rotation/tipping logic
+        if (hasFallen) return;
 
-        if (inputDirection != 0f)
+        if (isTipping)
         {
-            Vector3 rotationStep = rotationAxis.normalized * (inputDirection * rotationSpeed * Time.fixedDeltaTime);
-            Quaternion deltaRotation = Quaternion.Euler(rotationStep);
-            rb.MoveRotation(rb.rotation * deltaRotation);
+            currentTipAngle += tipSpeed * Time.fixedDeltaTime;
+            
+            if (currentTipAngle >= pointOfNoReturnAngle)
+            {
+                TriggerFallOver();
+                return; 
+            }
         }
+        else if (resetIfReleasedEarly && currentTipAngle > 0f)
+        {
+            currentTipAngle -= tipSpeed * Time.fixedDeltaTime;
+            if (currentTipAngle <= 0f) currentTipAngle = 0f;
+        }
+
+        // Apply the rotation safely using Rigidbody
+        if (!hasFallen)
+        {
+            Quaternion tipRotation = Quaternion.Euler(tipAxis.normalized * (currentTipAngle * activeTipDirection));
+            rb.MoveRotation(startRotation * tipRotation);
+        }
+    }
+
+    private void TriggerFallOver()
+    {
+        hasFallen = true;
+        isTipping = false; // Stop tipping logic
+        
+        // Unfreeze physics so gravity and pushing can take over
+        rb.constraints = RigidbodyConstraints.None;
+
+        // Give it a tiny extra nudge so it falls cleanly
+        Vector3 worldTipAxis = transform.TransformDirection(tipAxis);
+        rb.AddTorque(worldTipAxis * activeTipDirection * 2f, ForceMode.VelocityChange);
     }
 
     private void HandlePhysicsPush()
     {
-        if (currentPusher == null) return;
+        // If no one is pushing, or if it hasn't fallen yet (it's frozen anyway), do nothing
+        if (currentPusher == null || !hasFallen) return;
 
         // Calculate force direction away from the pusher, ignoring Y axis
         Vector3 forceDirection = transform.position - currentPusher.position;
         forceDirection.y = 0;
-        forceDirection.Normalize();
-
-        // Apply standard push force
-        rb.AddForce(forceDirection * pushForce, ForceMode.Force);
-
-        // Tip over logic
-        currentPushTime += Time.fixedDeltaTime;
         
-        if (currentPushTime >= timeToTipOver)
+        if (forceDirection != Vector3.zero) 
         {
-            Vector3 tipAxis = Vector3.Cross(Vector3.up, forceDirection);
-            
-            // Pop up slightly to clear ground friction, then apply torque to tip
-            rb.AddForce(Vector3.up * upwardPopForce, ForceMode.VelocityChange);
-            rb.AddTorque(tipAxis * tipTorqueForce, ForceMode.VelocityChange);
-            
-            currentPushTime = 0f; // Reset timer
+            forceDirection.Normalize();
         }
+
+        // Push the unfrozen Rigidbody across the floor
+        rb.AddForce(forceDirection * pushForce, ForceMode.Force);
+    }
+
+
+    public void StartTipping(float direction)
+    {
+        if (hasFallen) return; // Ignore if already on the floor
+        isTipping = true;
+        activeTipDirection = direction;
+    }
+
+    public void StopTipping()
+    {
+        isTipping = false;
     }
 
     // Called by the detector to start/stop free pushing
@@ -86,7 +123,6 @@ public class PushInteractable : MonoBehaviour
         if (currentPusher == pusher)
         {
             currentPusher = null;
-            currentPushTime = 0f;
         }
     }
 }

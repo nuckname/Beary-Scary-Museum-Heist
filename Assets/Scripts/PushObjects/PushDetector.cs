@@ -1,6 +1,7 @@
 using UnityEngine;
 
 // https://www.youtube.com/watch?v=3BOn2gs7z04
+// https://www.youtube.com/watch?v=HKLwD3NC8Ro
 
 [RequireComponent(typeof(Collider))]
 public class PushDetector : MonoBehaviour
@@ -12,16 +13,12 @@ public class PushDetector : MonoBehaviour
         PhysicsPush 
     }
 
-    public PushInteractable pushInteractable;
+    public PushInteractable mainScript;
 
-    [Tooltip("Choose what happens when an entity walks into this trigger.")]
     public InteractionType interactionType = InteractionType.RotatePositive;
 
     [Header("Filtering")]
-    [Tooltip("Tag of the object allowed to push. Leave empty to rely only on layers.")]
     public string pusherTag = "Player";
-    
-    [Tooltip("Layers that are allowed to push the object.")]
     public LayerMask pushableLayers;
 
     private void Awake()
@@ -36,13 +33,13 @@ public class PushDetector : MonoBehaviour
         switch (interactionType)
         {
             case InteractionType.RotatePositive:
-                pushInteractable.pushPositive = true;
+                mainScript.StartTipping(1f);
                 break;
             case InteractionType.RotateNegative:
-                pushInteractable.pushNegative = true;
+                mainScript.StartTipping(-1f);
                 break;
             case InteractionType.PhysicsPush:
-                pushInteractable.StartPhysicsPush(other.transform);
+                mainScript.StartPhysicsPush(other.transform);
                 break;
         }
     }
@@ -54,13 +51,11 @@ public class PushDetector : MonoBehaviour
         switch (interactionType)
         {
             case InteractionType.RotatePositive:
-                pushInteractable.pushPositive = false;
-                break;
             case InteractionType.RotateNegative:
-                pushInteractable.pushNegative = false;
+                mainScript.StopTipping();
                 break;
             case InteractionType.PhysicsPush:
-                pushInteractable.StopPhysicsPush(other.transform);
+                mainScript.StopPhysicsPush(other.transform);
                 break;
         }
     }
@@ -68,20 +63,10 @@ public class PushDetector : MonoBehaviour
     private bool IsValidPusher(GameObject obj)
     {
         bool matchesTag = !string.IsNullOrEmpty(pusherTag) && obj.CompareTag(pusherTag);
-
-        // Layer check
-        // Get the integer index of the object's layer
-        int objectLayerIndex = obj.layer;
-
-        // Convert that index into a bitmask by shifting '1' to the left by that many spaces
-        int objectLayerMask = 1 << objectLayerIndex;
-
-        // Get the raw integer value of the allowed layers you selected in the Inspector
-        int allowedLayersValue = pushableLayers.value;
-
-        int overlappingBits = allowedLayersValue & objectLayerMask;
-
-        bool matchesLayer = overlappingBits != 0;
+        
+        // AI short hand
+        // Just checks if the object's layer is included in the pushableLayers mask
+        bool matchesLayer = (pushableLayers.value & (1 << obj.layer)) != 0;
         
         return matchesTag || matchesLayer;
     }
