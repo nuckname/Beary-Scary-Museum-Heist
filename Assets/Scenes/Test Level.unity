@@ -240,25 +240,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.088662, y: 1.0000001, z: 1.168636}
   m_Center: {x: -0.000001013279, y: 0.00000017881393, z: 0}
---- !u!114 &111597963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5832352017088761627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1258b6115088f1f4f839192c9419051c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CanPushObject
-  pushForce: 3
-  timeToTipOver: 1.5
-  tipTorqueForce: 150
-  upwardPopForce: 2
-  currentPushTime: 0
-  currentPushedObject: {fileID: 0}
-  lastContactTime: 0
 --- !u!54 &111597964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -540,6 +521,14 @@ PrefabInstance:
     - target: {fileID: 5913769995873533284, guid: 597fe070f34d70249b364ec8c79bff1f, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.76136
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913769995873533284, guid: 597fe070f34d70249b364ec8c79bff1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913769995873533284, guid: 597fe070f34d70249b364ec8c79bff1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.05
       objectReference: {fileID: 0}
     - target: {fileID: 6621927748911796508, guid: 597fe070f34d70249b364ec8c79bff1f, type: 3}
       propertyPath: m_LocalScale.x
@@ -5363,8 +5352,8 @@ Transform:
   m_GameObject: {fileID: 1643492985}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.090011, y: 0, z: 0.45}
+  m_LocalScale: {x: 1.3178, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1656147126}
@@ -6532,13 +6521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1258b6115088f1f4f839192c9419051c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanPushObject
-  pushForce: 3
-  timeToTipOver: 1.5
-  tipTorqueForce: 15
-  upwardPopForce: 2
-  currentPushTime: 0
-  currentPushedObject: {fileID: 0}
-  lastContactTime: 0
 --- !u!1001 &2001049720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7847,7 +7829,6 @@ GameObject:
   - component: {fileID: 6306778851891393885}
   - component: {fileID: 111597959}
   - component: {fileID: 111597964}
-  - component: {fileID: 111597963}
   m_Layer: 9
   m_Name: maindisplaydesk
   m_TagString: Untagged
