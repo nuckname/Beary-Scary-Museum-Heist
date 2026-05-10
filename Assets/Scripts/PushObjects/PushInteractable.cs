@@ -9,12 +9,22 @@ public class PushInteractable : MonoBehaviour
     public float pointOfNoReturnAngle = 9f;
     public bool resetIfReleasedEarly = true;
 
+    [Header("Pivot Points (Assign in Inspector)")]
+    [Tooltip("Empty GameObject placed at the bottom edge you tip TOWARDS (positive).")]
+    public Transform positivePivot;
+    [Tooltip("Empty GameObject placed at the bottom edge you tip AWAY FROM (negative).")]
+    public Transform negativePivot;
+
     [Header("Physics Push Settings (Post-Fall)")]
-    [Tooltip("Force applied when using the PhysicsPush interaction.")]
     public float pushForce = 5f;
 
     private Rigidbody rb;
     private Quaternion startRotation;
+    private Vector3 startPosition;
+    
+    // We store the local offsets of the pivots so they never drift
+    private Vector3 positivePivotLocalOffset;
+    private Vector3 negativePivotLocalOffset;
     
     // State tracking
     private bool isTipping = false;
@@ -28,8 +38,14 @@ public class PushInteractable : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         startRotation = transform.rotation;
+        startPosition = transform.position; 
         
-        // Freeze everything so it only moves via our tipping code until it falls
+        // Calculate where the pivots are relative to the object's center
+        if (positivePivot != null)
+            positivePivotLocalOffset = transform.InverseTransformPoint(positivePivot.position);
+        if (negativePivot != null)
+            negativePivotLocalOffset = transform.InverseTransformPoint(negativePivot.position);
+        
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
@@ -41,7 +57,6 @@ public class PushInteractable : MonoBehaviour
 
     private void HandleTipping()
     {
-        // If it has already fallen, we completely ignore rotation/tipping logic
         if (hasFallen) return;
 
         if (isTipping)
@@ -60,10 +75,25 @@ public class PushInteractable : MonoBehaviour
             if (currentTipAngle <= 0f) currentTipAngle = 0f;
         }
 
-        // Apply the rotation safely using Rigidbody
         if (!hasFallen)
         {
+            // 1. Calculate the raw rotation
             Quaternion tipRotation = Quaternion.Euler(tipAxis.normalized * (currentTipAngle * activeTipDirection));
+            
+            // 2. Identify which pivot we are rotating around based on direction
+            Vector3 activeLocalOffset = activeTipDirection > 0 ? positivePivotLocalOffset : negativePivotLocalOffset;
+            
+            // 3. Find exactly where that pivot point is in the world right now (unrotated base)
+            Vector3 basePivotWorld = startPosition + (startRotation * activeLocalOffset);
+            
+            // 4. Calculate the distance from the pivot to the object's center
+            Vector3 dirFromPivotToCenter = startPosition - basePivotWorld;
+            
+            // 5. Rotate that distance vector by our tipping angle
+            Vector3 rotatedDir = tipRotation * dirFromPivotToCenter;
+            
+            // 6. Apply flawless rotation around the pivot edge
+            rb.MovePosition(basePivotWorld + rotatedDir);
             rb.MoveRotation(startRotation * tipRotation);
         }
     }
@@ -71,22 +101,18 @@ public class PushInteractable : MonoBehaviour
     private void TriggerFallOver()
     {
         hasFallen = true;
-        isTipping = false; // Stop tipping logic
+        isTipping = false; 
         
-        // Unfreeze physics so gravity and pushing can take over
         rb.constraints = RigidbodyConstraints.None;
 
-        // Give it a tiny extra nudge so it falls cleanly
         Vector3 worldTipAxis = transform.TransformDirection(tipAxis);
         rb.AddTorque(worldTipAxis * activeTipDirection * 2f, ForceMode.VelocityChange);
     }
 
     private void HandlePhysicsPush()
     {
-        // If no one is pushing, or if it hasn't fallen yet (it's frozen anyway), do nothing
         if (currentPusher == null || !hasFallen) return;
 
-        // Calculate force direction away from the pusher, ignoring Y axis
         Vector3 forceDirection = transform.position - currentPusher.position;
         forceDirection.y = 0;
         
@@ -95,14 +121,12 @@ public class PushInteractable : MonoBehaviour
             forceDirection.Normalize();
         }
 
-        // Push the unfrozen Rigidbody across the floor
         rb.AddForce(forceDirection * pushForce, ForceMode.Force);
     }
 
-
     public void StartTipping(float direction)
     {
-        if (hasFallen) return; // Ignore if already on the floor
+        if (hasFallen) return; 
         isTipping = true;
         activeTipDirection = direction;
     }
@@ -112,7 +136,6 @@ public class PushInteractable : MonoBehaviour
         isTipping = false;
     }
 
-    // Called by the detector to start/stop free pushing
     public void StartPhysicsPush(Transform pusher)
     {
         currentPusher = pusher;
@@ -124,5 +147,14 @@ public class PushInteractable : MonoBehaviour
         {
             currentPusher = null;
         }
+    }
+
+    // Draws spheres in the editor so you can visually verify your pivot placement
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        if (positivePivot != null) Gizmos.DrawSphere(positivePivot.position, 0.1f);
+        Gizmos.color = Color.red;
+        if (negativePivot != null) Gizmos.DrawSphere(negativePivot.position, 0.1f);
     }
 }
