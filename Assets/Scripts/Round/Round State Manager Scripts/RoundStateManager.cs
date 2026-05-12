@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoundStateManager : MonoBehaviour
 {
@@ -110,6 +112,11 @@ public class RoundStateManager : MonoBehaviour
         }
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
     public void SetUpScoreboard()
     {
         GameObject scoreboard = Instantiate(scoreboardPrefab, Vector3.zero, Quaternion.identity);
