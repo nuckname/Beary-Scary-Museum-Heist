@@ -41,6 +41,8 @@ public class FadeObstacles : MonoBehaviour
 
     private void Awake()
     {
+        _collider = GetComponent<BoxCollider>();
+        
         foreach (GameObject obj in objectsToFade)
         {
             if (obj != null)

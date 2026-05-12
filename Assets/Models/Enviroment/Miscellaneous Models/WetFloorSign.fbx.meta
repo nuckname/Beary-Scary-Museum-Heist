@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 033c931d06c54934c8f0938456c5a680
+guid: e0cc7c503009f4b47a1f6b3c6a0b70eb
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wetFloorSign2
+    second: {fileID: 2100000, guid: 6eae7a75ed93247ca85c5bb6e6908da9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +73,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
