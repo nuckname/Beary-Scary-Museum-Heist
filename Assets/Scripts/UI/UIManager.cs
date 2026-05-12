@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -19,12 +20,22 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-        artifactValueText = GameObject.FindGameObjectWithTag("artifactValueText").GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
+        GameObject textObject = GameObject.FindGameObjectWithTag("artifactValueText");
+        if (textObject != null)
+        {
+            artifactValueText = textObject.GetComponent<TextMeshProUGUI>();
+        }
     }
 
     public void UpdateArtifactDisplay(int current, int total)
     {
-        artifactValueText.text = $"{current} / {total}";
+        if (artifactValueText != null)
+        {
+            artifactValueText.text = $"{current} / {total}";
+        }
     }
 }

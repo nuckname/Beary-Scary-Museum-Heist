@@ -777,10 +777,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -827,30 +827,30 @@ MonoBehaviour:
   dogExplain: {fileID: 6370779675511391137}
   dogSad: {fileID: 8319803113752521319}
   dogOpeningHappy: {fileID: 5627071088675303798}
-  lines:
+  hasReturnedArtifact: 0
+  IntroLineslines:
   - speaker: 1
     emotion: 5
-    text: 'WOOHOO!! Its been awhile since I''ve felt so free! What''s up little bear!
-
-'
+    text: hi my name is dog
+  - speaker: 1
+    emotion: 3
+    text: get me the artirfact now bitch boy
+  - speaker: 0
+    emotion: 2
+    text: Ok?!
   - speaker: 0
     emotion: 0
-    text: Woahhh... Who are you?
+    text: I respect women thanks Emily
+  haveReturnedTheArtifactlines:
   - speaker: 1
-    emotion: 3
-    text: The name's John! But you can call me Prof Popper! What are you doing in
-      these dark parts?
-  - speaker: 1
-    emotion: 3
-    text: "I feel like I sent the message for a joy spreading art heister eons ago\u2026"
+    emotion: 5
+    text: Thanks! for the artifact
   - speaker: 0
-    emotion: 1
-    text: "I have been summoned by\u2026err- Well I\u2019m here to spread joy by
-      sharing art with the world!"
+    emotion: 0
+    text: no problem
   - speaker: 1
     emotion: 3
-    text: Alright alright, I like your confidence! Let's get this party started!!Go
-      get this thing
+    text: now return that shit to the van.
   textSpeed: 0.05
   panSpeed: 1.5
   waitTimeBeforeReturn: 4

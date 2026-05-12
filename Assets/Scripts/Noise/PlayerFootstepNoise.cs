@@ -29,10 +29,11 @@ public class PlayerFootstepNoise : MonoBehaviour
     public float weightToRadiusMultiplier = 0.5f;
 
     private float stepTimer = 0f;
-    
     private float currentHeldWeight = 0f; 
-
     private readonly float maxSpeed = 10f;
+    
+    // Tracks the 3 steps coming out of a sneak
+    private int recoveryStepsRemaining = 0;
     
     private void Start()
     {
@@ -67,10 +68,21 @@ public class PlayerFootstepNoise : MonoBehaviour
     {
         float calculatedRadius = baseNoiseRadius + (speed * speedMultiplier) + (currentHeldWeight * weightToRadiusMultiplier);
 
-        // Shrink the noise radius drastically if the player is sneaking
         if (stealthController != null && stealthController.IsSneaking)
         {
             calculatedRadius *= sneakNoiseMultiplier;
+            
+            // Reset the recovery counter so it's ready for when we stop sneaking
+            recoveryStepsRemaining = 3; 
+        }
+        else if (recoveryStepsRemaining > 0)
+        {
+            // Player just came out of sneaking, step up the volume gradually 
+            if (recoveryStepsRemaining == 3) calculatedRadius *= 0.25f; // 25% etc     
+            else if (recoveryStepsRemaining == 2) calculatedRadius *= 0.50f; 
+            else if (recoveryStepsRemaining == 1) calculatedRadius *= 0.75f; 
+
+            recoveryStepsRemaining--;
         }
 
         noiseEmitter.EmitNoise(calculatedRadius, NoiseType.Player);

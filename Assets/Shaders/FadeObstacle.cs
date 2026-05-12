@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class FadeObstacles : MonoBehaviour
     private bool _isFadedByTrigger = false;
     private bool _isCurrentlyFaded = false; 
 
+    private BoxCollider _collider;
+    
     private class FadeData
     {
         public Material material;
@@ -56,6 +59,12 @@ public class FadeObstacles : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void Start()
+    {
+        // sometimes i forgot to turn it on
+        _collider.isTrigger = true;
     }
 
     public void SetRaycastFade(bool fade)

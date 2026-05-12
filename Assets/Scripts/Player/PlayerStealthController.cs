@@ -16,6 +16,7 @@ public class PlayerStealthController : MonoBehaviour
     public float maxStamina = 5f;
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
+    public float sneakStaminaDepleteRate = 3.5f;
 
     [Header("Footstep Settings")]
     public float walkStepInterval = 0.5f;
@@ -56,6 +57,8 @@ public class PlayerStealthController : MonoBehaviour
     {
         if (cannotMove)
         {
+            rb.linearVelocity = Vector3.zero;
+            animator.SetBool("IsMoving", false);
             return;
         }
         
@@ -109,7 +112,7 @@ public class PlayerStealthController : MonoBehaviour
     {
         bool isMoving = moveDirection.magnitude >= 0.1f;
         bool isTryingToSprint = Input.GetKey(KeyCode.LeftShift) && isMoving && !isExhausted;
-        bool isTryingToSneak = Input.GetKey(KeyCode.LeftControl) && isMoving;
+        bool isTryingToSneak = Input.GetKey(KeyCode.Mouse1) && isMoving && !isExhausted;
 
         if (isTryingToSprint)
         {
@@ -127,7 +130,14 @@ public class PlayerStealthController : MonoBehaviour
         {
             currentSpeed = sneakSpeed;
             IsSneaking = true;
-            RegenStamina();
+            
+            currentStamina -= sneakStaminaDepleteRate * Time.deltaTime;
+
+            if (currentStamina <= 0)
+            {
+                currentStamina = 0;
+                isExhausted = true;
+            }
         }
         else
         {

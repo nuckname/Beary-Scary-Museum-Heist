@@ -53,7 +53,9 @@ public class DialogueBox : MonoBehaviour
     public GameObject dogOpeningHappy;
     
     [Space(10)]
-    public DialogueLine[] lines;
+    public bool hasReturnedArtifact = false;
+    public DialogueLine[] IntroLineslines;
+    public DialogueLine[] haveReturnedTheArtifactlines;
     public float textSpeed;
 
     [Header("Camera Pan")]
@@ -64,6 +66,9 @@ public class DialogueBox : MonoBehaviour
 
     private int index;
     private TextMeshProUGUI currentActiveText;
+    
+    // This private array will hold whichever list of lines we are currently reading
+    private DialogueLine[] currentLines; 
 
     private void Awake()
     {
@@ -83,20 +88,30 @@ public class DialogueBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && currentActiveText != null)
         {
-            if (currentActiveText.text == lines[index].text)
+            if (currentActiveText.text == currentLines[index].text)
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                currentActiveText.text = lines[index].text;
+                currentActiveText.text = currentLines[index].text;
             }
         }
     }
 
     void StartDialogue()
     {
+        // Decide which set of lines to use based
+        if (hasReturnedArtifact)
+        {
+            currentLines = haveReturnedTheArtifactlines;
+        }
+        else
+        {
+            currentLines = IntroLineslines;
+        }
+
         index = 0;
         UpdateSpeakerUI();
         StartCoroutine(TypeLine());
@@ -104,7 +119,7 @@ public class DialogueBox : MonoBehaviour
 
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].text.ToCharArray())
+        foreach (char c in currentLines[index].text.ToCharArray())
         {
             currentActiveText.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -113,7 +128,7 @@ public class DialogueBox : MonoBehaviour
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (index < currentLines.Length - 1)
         {
             index++;
             UpdateSpeakerUI();
@@ -133,7 +148,7 @@ public class DialogueBox : MonoBehaviour
             currentActiveText = null; 
 
             // Trigger the camera pan sequence if the variables are assigned
-            if (cameraScript != null && panTargetObject != null)
+            if (cameraScript != null && panTargetObject != null && !hasReturnedArtifact)
             {
                 StartCoroutine(CameraPanSequence());
             }
@@ -173,8 +188,8 @@ public class DialogueBox : MonoBehaviour
         if (bearDialogueBox != null) bearDialogueBox.SetActive(false);
         if (dogDialogueBox != null) dogDialogueBox.SetActive(false);
 
-        SpeakerType currentSpeaker = lines[index].speaker;
-        Emotion currentEmotion = lines[index].emotion;
+        SpeakerType currentSpeaker = currentLines[index].speaker;
+        Emotion currentEmotion = currentLines[index].emotion;
 
         // Assign the correct UI elements based on the speaker
         if (currentSpeaker == SpeakerType.Bear)

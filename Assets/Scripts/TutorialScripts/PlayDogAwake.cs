@@ -13,6 +13,7 @@ public class PlayDogAwake : MonoBehaviour
     private bool hasPlayed;
 
     [SerializeField] private GameObject door;
+    [SerializeField] private FlashingSpotlight flashingSpotlight;
     
     // Stubs for your custom parameters
     [System.Serializable]
@@ -34,6 +35,7 @@ public class PlayDogAwake : MonoBehaviour
     {
         hasPlayed = false;
         door.SetActive(true);
+        flashingSpotlight.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -113,9 +115,12 @@ public class PlayDogAwake : MonoBehaviour
             yield return null;
         }
         
-        Instantiate(dialoguePrefab);
+        GameObject _dialoguePrefab = Instantiate(dialoguePrefab);
+        // select which dialogue text to show.
+        _dialoguePrefab.GetComponent<DialogueBox>().hasReturnedArtifact = false;
         
         door.SetActive(false);
+        flashingSpotlight.enabled = false;
         
         hasPlayed = true;
         

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoundStateManager : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class RoundStateManager : MonoBehaviour
     [HideInInspector] public Timer timer; 
 
     public static int AmountOfTimesPlayerSpottedByGuards = 0;
+    
+    [SerializeField] private bool isTutorialLevel = false;
     
     public string currentStateName;
     // To complete the level
@@ -41,13 +45,24 @@ public class RoundStateManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        artifactValueText = GameObject.FindGameObjectWithTag("artifactValueText").GetComponent<TextMeshProUGUI>();
     }
 
     void Start()
     {
-        SwitchState(AboutToStartState);
+        GameObject textObject = GameObject.FindGameObjectWithTag("artifactValueText");
+        if (textObject != null)
+        {
+            artifactValueText = textObject.GetComponent<TextMeshProUGUI>();
+        }
+        
+        if (isTutorialLevel)
+        {
+            SwitchState(InProgressState);            
+        }
+        else
+        {
+            SwitchState(AboutToStartState);
+        }
 
         GetAllEnemies();
 
@@ -97,6 +112,11 @@ public class RoundStateManager : MonoBehaviour
         }
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
     public void SetUpScoreboard()
     {
         GameObject scoreboard = Instantiate(scoreboardPrefab, Vector3.zero, Quaternion.identity);

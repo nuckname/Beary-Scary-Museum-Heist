@@ -15,6 +15,9 @@ public class EnemyStunnedState : EnemyBaseState
         manager.agent.isStopped = true;
         manager.agent.velocity = Vector3.zero;
         
+        manager.animator.SetBool("isStunned", true);
+        
+        
         manager.SetStateIcon(EnemyStateIcon.GuardIsStunned);
         
         if (manager.fieldOfViews != null)
@@ -41,6 +44,8 @@ public class EnemyStunnedState : EnemyBaseState
                 }
             }
           
+            manager.animator.SetBool("isStunned", false);
+            
             // Just act confused?
             manager.SwitchState(manager.enemyConfusedState);
         }
