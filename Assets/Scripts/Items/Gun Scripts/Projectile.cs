@@ -5,52 +5,67 @@ public class Projectile : MonoBehaviour
     private float speed;
     private float noiseRadius;
     private float forcedY;
-    private Vector3 direction;
     private LayerMask obstacleLayer;
+    
+   [SerializeField]  private NoiseEmitter emitter;
 
-    // Initialize the bullet properties
-    public void Setup(Vector3 startPos, Vector3 dir, float bulletSpeed, float radius, float yLevel, LayerMask mask)
+    private Vector3[] pathPoints;
+    private int currentPointIndex = 1; 
+
+    public void Setup(Vector3[] points, float bulletSpeed, float radius, float yLevel, LayerMask mask)
     {
-        direction = dir;
+        pathPoints = points;
         speed = bulletSpeed;
         noiseRadius = radius;
         forcedY = yLevel;
         obstacleLayer = mask;
 
-        // Force initial y level
-        transform.position = new Vector3(startPos.x, forcedY, startPos.z);
+        // Start at the exact muzzle position
+        transform.position = new Vector3(pathPoints[0].x, forcedY, pathPoints[0].z);
     }
 
     void Update()
     {
-        // Move the bullet
-        Vector3 moveStep = direction * speed * Time.deltaTime;
-        Vector3 nextPosition = transform.position + moveStep;
-        
-        // Keep it at the fixed Y level
-        nextPosition.y = forcedY;
+        if (pathPoints == null || pathPoints.Length == 0 || currentPointIndex >= pathPoints.Length) return;
 
-        // Check for collision with obstacles
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, moveStep.magnitude, obstacleLayer))
+        Vector3 targetPoint = pathPoints[currentPointIndex];
+        targetPoint.y = forcedY; 
+
+        float moveStep = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, targetPoint, moveStep);
+
+        if (Vector3.Distance(transform.position, targetPoint) < 0.01f)
         {
-            HandleImpact(hit.point);
+            CreateNoise(transform.position);
+
+            currentPointIndex++; 
+
+            if (currentPointIndex >= pathPoints.Length)
+            {
+                Destroy(gameObject);
+            }
         }
-
-        transform.position = nextPosition;
-
-        // Cleanup if it goes too far
-        if (Vector3.Distance(Vector3.zero, transform.position) > 500f) Destroy(gameObject);
+        
+        if (Vector3.Distance(Vector3.zero, transform.position) > 500f) 
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void HandleImpact(Vector3 impactPoint)
+    private void CreateNoise(Vector3 impactPoint)
     {
-        GameObject impactObj = new GameObject("BulletImpactNoise");
-        impactObj.transform.position = impactPoint;
-        
-        NoiseEmitter emitter = impactObj.AddComponent<NoiseEmitter>();
         
         emitter.EmitNoise(noiseRadius, NoiseType.Item); 
-
-        Destroy(gameObject);
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) return;
+        
+        if (other.CompareTag("Enemy"))
+        {
+            CreateNoise(transform.position);
+            Destroy(gameObject);
+        }
     }
 }

@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 4009258880554653775}
   - component: {fileID: 7137494268384775374}
   - component: {fileID: 3292789174107578550}
-  - component: {fileID: 8212258907786603520}
   - component: {fileID: 5045092649953161578}
   - component: {fileID: 4548249134305115679}
   m_Layer: 8
@@ -69,9 +68,11 @@ MonoBehaviour:
   sneakSpeed: 4
   walkSpeed: 5.5
   sprintSpeed: 7
+  cannotMove: 0
   maxStamina: 5
   staminaRegenRate: 0.5
   staminaDepleteRate: 1.5
+  sneakStaminaDepleteRate: 3.5
   walkStepInterval: 0.5
   sprintStepInterval: 0.3
   sneakStepInterval: 0.8
@@ -333,19 +334,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!114 &8212258907786603520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223815211633026717}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea5d19f6f36d9e4cb93070f52b9dee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  cameraFollowScript: {fileID: 0}
 --- !u!114 &5045092649953161578
 MonoBehaviour:
   m_ObjectHideFlags: 0

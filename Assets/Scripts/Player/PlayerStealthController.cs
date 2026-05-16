@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerCameraController))] 
 public class PlayerStealthController : MonoBehaviour
 {
     public float sneakSpeed;

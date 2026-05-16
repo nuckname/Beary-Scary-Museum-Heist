@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CanPickUpItem))] 
-public class Gun : MonoBehaviour 
+[RequireComponent(typeof(LineRenderer))]
+public class Gun : CanPickUpItem
 {
     [Header("Gun Settings")]
     public float bulletSpeed = 50f;
@@ -9,42 +9,110 @@ public class Gun : MonoBehaviour
     public float bulletFixedY = 1.5f;
     public LayerMask obstacleLayer;
 
+    [Header("Laser Sight Settings")]
+    public int maxBounces = 3;
+    public float maxLaserDistance = 50f;
+    public bool force45DegreeBounce = false; 
+
     [Header("References")]
     public GameObject bulletPrefab;
     public Transform muzzlePoint;
 
-    private CanPickUpItem basePickupItem;
+    private LineRenderer lineRenderer;
     private bool hasBeenFired = false;
     private bool isHeld = false;
 
-    private void Awake()
+    protected override void Awake() 
     {
-        basePickupItem = GetComponent<CanPickUpItem>(); 
+        base.Awake(); 
         
-        basePickupItem.SetThrowableState(false); 
+        SetThrowableState(false); 
+
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
+        lineRenderer.positionCount = 0;
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.red;
+        lineRenderer.endColor = Color.red;
     }
 
-    public void OnPickedUp()
+    public override void OnPickedUp()
     {
+        base.OnPickedUp();
+        
         isHeld = true;
+        
+        // Only prevent throwing if the gun hasn't been fired yet
+        if (!hasBeenFired)
+        {
+            SetThrowableState(false);
+            lineRenderer.enabled = true;
+        }
+        else
+        {
+            // Keep it throwable if we pick up an empty gun
+            SetThrowableState(true);
+        }
     }
 
-    public void OnReleased()
+    public override void OnReleased()
     {
+        base.OnReleased(); 
+        
         isHeld = false;
-    }
-
-    public bool IsOnGround()
-    {
-        return basePickupItem.IsOnGround();
+        lineRenderer.enabled = false; 
     }
 
     void Update()
     {
-        // Only shoot if held, not fired yet, and left-click is pressed
-        if (isHeld && !hasBeenFired && Input.GetButtonDown("Fire1"))
+        if (isHeld && !hasBeenFired)
         {
-            Shoot();
+            DrawLaser();
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
+        }
+    }
+
+    private void DrawLaser()
+    {
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0, muzzlePoint.position);
+
+        Vector3 currentPos = muzzlePoint.position;
+        Vector3 currentDir = transform.forward;
+        int positionIndex = 1;
+
+        for (int i = 0; i <= maxBounces; i++)
+        {
+            if (Physics.Raycast(currentPos, currentDir, out RaycastHit hit, maxLaserDistance, obstacleLayer))
+            {
+                lineRenderer.positionCount = positionIndex + 1;
+                lineRenderer.SetPosition(positionIndex, hit.point);
+
+                if (force45DegreeBounce)
+                {
+                    Vector3 cross = Vector3.Cross(hit.normal, Vector3.up);
+                    currentDir = Quaternion.AngleAxis(45f, cross) * hit.normal;
+                }
+                else
+                {
+                    currentDir = Vector3.Reflect(currentDir, hit.normal);
+                }
+
+                currentPos = hit.point + (currentDir * 0.01f);
+                positionIndex++;
+            }
+            else
+            {
+                lineRenderer.positionCount = positionIndex + 1;
+                lineRenderer.SetPosition(positionIndex, currentPos + (currentDir * maxLaserDistance));
+                break; 
+            }
         }
     }
 
@@ -52,10 +120,12 @@ public class Gun : MonoBehaviour
     {
         GameObject bulletObj = Instantiate(bulletPrefab, muzzlePoint.position, Quaternion.identity);
         Projectile projectile = bulletObj.GetComponent<Projectile>();
-        
+    
+        Vector3[] pathPoints = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(pathPoints);
+
         projectile.Setup(
-            muzzlePoint.position, 
-            transform.forward, 
+            pathPoints, 
             bulletSpeed, 
             noiseRadius, 
             bulletFixedY, 
@@ -63,8 +133,8 @@ public class Gun : MonoBehaviour
         );
 
         hasBeenFired = true;
-        
-        // Tell the PickupItem that the gun is now empty and can be thrown!
-        basePickupItem.SetThrowableState(true); 
+        lineRenderer.enabled = false;
+    
+        SetThrowableState(true); 
     }
 }
