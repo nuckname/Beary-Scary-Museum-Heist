@@ -1328,8 +1328,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2516891222845001522, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2516891222845001522, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
       propertyPath: m_Lightmapping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3315446747296538436, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243959723237266307, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7012138863151957873, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
       propertyPath: m_Name
@@ -1764,7 +1776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29c4a48cb4058f84b9a5121bca95f6b5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3048136
+      value: 0.4810873
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29c4a48cb4058f84b9a5121bca95f6b5, type: 3}
       propertyPath: m_LocalScale.z
@@ -1776,7 +1788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29c4a48cb4058f84b9a5121bca95f6b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.357585
+      value: 6.26
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 29c4a48cb4058f84b9a5121bca95f6b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3036,15 +3048,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3178680276067352359, guid: f275a8c7bfe7b714787474b0d6115e01, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 43.19
+      value: 42.84
       objectReference: {fileID: 0}
     - target: {fileID: 3178680276067352359, guid: f275a8c7bfe7b714787474b0d6115e01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.42
+      value: 3.64
       objectReference: {fileID: 0}
     - target: {fileID: 3178680276067352359, guid: f275a8c7bfe7b714787474b0d6115e01, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.22
+      value: 6.43
       objectReference: {fileID: 0}
     - target: {fileID: 3178680276067352359, guid: f275a8c7bfe7b714787474b0d6115e01, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3812,6 +3824,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2516891222845001522, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3315446747296538436, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243959723237266307, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7012138863151957873, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
       propertyPath: m_Name
       value: Lights 1 (1)
@@ -4007,7 +4031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3507534948545649058, guid: 8451f503a240db54798e21b1742fd36b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.24
+      value: 2.38
       objectReference: {fileID: 0}
     - target: {fileID: 3507534948545649058, guid: 8451f503a240db54798e21b1742fd36b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5259,6 +5283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MouseItem Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7185953390664511952, guid: 18fd8f490ba16bb48b25f1e5ebd73a3f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7713648792993709877, guid: 18fd8f490ba16bb48b25f1e5ebd73a3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.59
@@ -5580,6 +5608,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2516891222845001522, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3315446747296538436, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243959723237266307, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
+      propertyPath: m_Intensity
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7012138863151957873, guid: d98bcca98cd9e284baa2ff4e758316c1, type: 3}
       propertyPath: m_Name
       value: Lights 1
@@ -7260,6 +7300,26 @@ PrefabInstance:
     - target: {fileID: 2207204159110247818, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: m_Name
       value: Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: maxScale
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: minScale
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: maxRotationZ
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: minRotationZ
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: positionOffsetRadius
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2560152419120309657, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: impactPrefabs.Array.size

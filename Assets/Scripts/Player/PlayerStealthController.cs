@@ -15,7 +15,7 @@ public class PlayerStealthController : MonoBehaviour
     public float maxStamina = 5f;
     public float staminaRegenRate = 1.5f;
     public float staminaDepleteRate = 1f;
-    public float sneakStaminaDepleteRate = 3.5f;
+    public float sneakStaminaDepleteRate = 2f;
 
     [Header("Footstep Settings")]
     public float walkStepInterval = 0.5f;
