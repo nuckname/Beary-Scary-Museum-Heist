@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
     private void CreateNoise(Vector3 impactPoint)
     {
         
-        emitter.EmitNoise(noiseRadius, NoiseType.Item); 
+        //emitter.EmitNoise(noiseRadius, NoiseType.Item); 
     }
     
     private void OnTriggerEnter(Collider other)

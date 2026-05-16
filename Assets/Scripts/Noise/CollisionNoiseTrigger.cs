@@ -55,7 +55,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
 
         float noiseRadius = rb.mass * finalMultiplier;
         
-        // --- NEW: Calculate the pitch, then send it to the AudioManager ---
         float targetPitch = 1f;
 
         if (usePitchScaling)
@@ -69,7 +68,6 @@ public class CollisionNoiseTrigger : MonoBehaviour
         {
             AudioManager.instance.PlaySFXWithExactPitch(impactClip, targetPitch);
         }
-        // ------------------------------------------------------------------
         
         noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
     }
