@@ -74,12 +74,18 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
         else if (isActivated)
         {
             ContactPoint contact = collision.GetContact(0);
-            Vector3 reflectedDirection = Vector3.Reflect(transform.forward, contact.normal);
-            reflectedDirection.y = 0f;
-
-            if (reflectedDirection != Vector3.zero)
+            
+            // FIX 2: Ignore the floor! 
+            // If the normal is pointing mostly UP (y > 0.5f), it's the ground. We only bounce off walls.
+            if (contact.normal.y < 0.5f) 
             {
-                transform.rotation = Quaternion.LookRotation(reflectedDirection.normalized);
+                Vector3 reflectedDirection = Vector3.Reflect(transform.forward, contact.normal);
+                reflectedDirection.y = 0f;
+
+                if (reflectedDirection != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(reflectedDirection.normalized);
+                }
             }
         }
     }
@@ -88,8 +94,7 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
     {
         if (!isActivated) return;
 
-        transform.Translate(Vector3.forward * (moveSpeed * Time.deltaTime));
-
+        // Keep non-physics logic (like timers) in Update
         timer -= Time.deltaTime;
 
         if (timer <= 0f)
@@ -99,8 +104,19 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (!isActivated || rb == null) return;
+
+        Vector3 newPosition = rb.position + transform.forward * (moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(newPosition);
+    }
+
     private void TriggerNoise()
     {
-        noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
+        if (noiseEmitter != null)
+        {
+            noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
+        }
     }
 }

@@ -65,7 +65,7 @@ public class Gun : CanPickUpItem
         lineRenderer.enabled = false; 
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (isHeld && !hasBeenFired)
         {
