@@ -75,8 +75,7 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
         {
             ContactPoint contact = collision.GetContact(0);
             
-            // FIX 2: Ignore the floor! 
-            // If the normal is pointing mostly UP (y > 0.5f), it's the ground. We only bounce off walls.
+            // AI
             if (contact.normal.y < 0.5f) 
             {
                 Vector3 reflectedDirection = Vector3.Reflect(transform.forward, contact.normal);
