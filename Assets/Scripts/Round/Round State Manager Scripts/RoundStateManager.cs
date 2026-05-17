@@ -128,7 +128,7 @@ public class RoundStateManager : MonoBehaviour
         
         // Get data from our updated ScoreCalculator
         int score = scoreCalculator.CalculateRawScore();
-        float starsEarned = scoreCalculator.CalculateFinalStars(score);
+        float starsEarned = scoreCalculator.CalculateFinalStars();
 
         scoreboardUi.PopulateScoreboard(targetTime, penalties, score, starsEarned);
    

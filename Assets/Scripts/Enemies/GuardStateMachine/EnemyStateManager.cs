@@ -338,6 +338,12 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            SwitchState(EnemyStunnedState);
+            return;
+        }
+        
         EnemyCurrentState?.OnCollisionEnter(this, collision);
     }
 

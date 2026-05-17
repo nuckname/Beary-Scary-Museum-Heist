@@ -15,8 +15,8 @@ public class CameraSweepState : CameraBaseState
         leftRotation = startRot * Quaternion.Euler(0, camera.leftAngle, 0);
         rightRotation = startRot * Quaternion.Euler(0, camera.rightAngle, 0);
 
-        // Pick a direction to start
-        targetRotation = rightRotation;
+        targetRotation = camera.startTurningRight ? rightRotation : leftRotation;
+        
         isWaiting = false;
         pauseTimer = 0f;
     }

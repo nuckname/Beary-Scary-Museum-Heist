@@ -6,6 +6,8 @@ public class CameraAlarmState : CameraBaseState
     {
         Debug.Log("Camera Alarm Triggered!");
         
+        
+        
         // Trigger the alarm on the reusable component
         if (camera.alarmComponent != null)
         {

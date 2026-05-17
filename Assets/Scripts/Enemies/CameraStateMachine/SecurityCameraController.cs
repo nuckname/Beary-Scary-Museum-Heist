@@ -18,6 +18,8 @@ public class SecurityCameraController : MonoBehaviour
     public float alarmNoiseRadius = 15f;
     public float alarmBeepInterval = 3f;
     
+    public bool startTurningRight = true;
+    
     // State Machine Instances
     [HideInInspector] public CameraBaseState currentState;
     public readonly CameraSweepState SweepState = new CameraSweepState();
