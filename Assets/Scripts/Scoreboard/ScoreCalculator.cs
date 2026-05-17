@@ -18,8 +18,6 @@ public class ScoreCalculator : MonoBehaviour
     [Tooltip("Order these from Highest Score (Best) to Lowest Score (Worst).")]
     public List<ScoreThreshold> scoreThresholds;
 
-    [Header("References")]
-    [Tooltip("Drag the GameObject with your Timer script here")]
     public Timer timer;
 
     [Header("Scoring Rules")]

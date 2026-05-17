@@ -187,16 +187,19 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     {
         agent.speed = guardPatrollSpeed;
         agent.isStopped = false;
+        animator.SetBool("isMoving", true);
     }
 
     public void GuardStopMoving()
     {
         agent.isStopped = true;
+        animator.SetBool("isMoving", false);
     }
     
     public void GuardStartMoving()
     {
         agent.isStopped = false;
+        animator.SetBool("isMoving", true);
     }
 
     public void SetUpGuardPathingLines()

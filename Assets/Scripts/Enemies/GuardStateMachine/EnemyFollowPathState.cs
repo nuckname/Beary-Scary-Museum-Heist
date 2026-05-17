@@ -136,7 +136,7 @@ public class EnemyFollowPathState : EnemyBaseState
     }
     
     // Check which waypoint is closer: the current one or the next one. 
-    // This prevents weird pathing where the guard will go backs when they get off their path.
+    // This prevents weird pathing where the guard will go backwards when they get off their path.
     private void CheckWhichWaypointToGoTo(EnemyStateManager manager)
     {
         int currentIndex = manager.currentWaypointIndex;
@@ -144,6 +144,14 @@ public class EnemyFollowPathState : EnemyBaseState
 
         float distanceToCurrent = Vector3.Distance(manager.transform.position, manager.waypoints[currentIndex]);
         float distanceToNext = Vector3.Distance(manager.transform.position, manager.waypoints[nextIndex]);
+
+        // If the guard is already standing exactly on the current waypoint (like at the start of the game),
+        // instantly target the next waypoint so they bypass the wait timer.
+        if (distanceToCurrent <= manager.agent.stoppingDistance + 5f)
+        {
+            manager.currentWaypointIndex = nextIndex;
+            return;
+        }
 
         // Check if the +1 waypoint is closer than the current one
         if (distanceToNext < distanceToCurrent)
@@ -153,7 +161,6 @@ public class EnemyFollowPathState : EnemyBaseState
     }
     
     // AI
-    // https://gemini.google.com/share/93d7d274a35c
     public void RotateTowards(EnemyStateManager manager, Vector3 targetPos)
     {
         Vector3 direction = (targetPos - manager.transform.position).normalized;
