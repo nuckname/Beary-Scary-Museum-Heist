@@ -25,6 +25,9 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
 
     private Coroutine typingCoroutine;
 
+    // A static variable shared across ALL instances of this script.
+    private static int globalTextActionID = 0;
+
     private void Start()
     {
         if(useStartingText)
@@ -46,25 +49,36 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
 
     public void TriggerTypingEffect(string _text)
     {
-        // Stop the current typing effect if one is already running
+        // Increment the global ID because a new typing event is starting
+        globalTextActionID++;
+        
+        // Save the current global ID as this specific action's ID
+        int myActionID = globalTextActionID;
+
+        // Stop the current typing effect if one is already running (on this specific instance)
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);
         }
 
-        // Start typing the new text
-        typingCoroutine = StartCoroutine(TypeLine(_text));
+        // Start typing the new text, passing our unique ID into the coroutine
+        typingCoroutine = StartCoroutine(TypeLine(_text, myActionID));
 
         hasBeenTriggered = true;
     }
 
-    private IEnumerator TypeLine(string lineToType)
+    private IEnumerator TypeLine(string lineToType, int actionID)
     {
         currentActiveText.text = "";
 
         // Loop through each character in the passed string
         foreach (char c in lineToType.ToCharArray())
         {
+            if (globalTextActionID != actionID)
+            {
+                yield break; 
+            }
+
             currentActiveText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
@@ -73,7 +87,12 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
         if (timeBeforeClear > 0f)
         {
             yield return new WaitForSeconds(timeBeforeClear);
-            currentActiveText.text = "";
+            
+            // NEW: Before clearing, make sure another trigger hasn't taken over the UI!
+            if (globalTextActionID == actionID)
+            {
+                currentActiveText.text = "";
+            }
         }
     }
 }
