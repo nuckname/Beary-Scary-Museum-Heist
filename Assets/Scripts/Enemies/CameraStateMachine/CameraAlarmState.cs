@@ -6,12 +6,31 @@ public class CameraAlarmState : CameraBaseState
     {
         Debug.Log("Camera Alarm Triggered!");
         
-        
-        
         // Trigger the alarm on the reusable component
         if (camera.alarmComponent != null)
         {
             camera.alarmComponent.StartAlarm();
+        }
+
+        GameObject[] guards = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        foreach (GameObject guard in guards)
+        {
+            EnemyStateManager enemyManager = guard.GetComponent<EnemyStateManager>();
+            
+            if (enemyManager != null)
+            {
+                // Only send the guard to investigate if they aren't already busy chasing the player or stunned
+                if (enemyManager.EnemyCurrentState != enemyManager.EnemyChasePlayerState && 
+                    enemyManager.EnemyCurrentState != enemyManager.EnemyStunnedState)
+                {
+                    // Set the target to the camera's location and switch to investigate state
+                    enemyManager.investigateTargetPosition = camera.transform.position;
+                    enemyManager.SwitchState(enemyManager.EnemyInvestigateState);
+                    
+                    camera.SwitchState(camera.SweepState);
+                }
+            }
         }
     }
 

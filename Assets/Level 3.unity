@@ -3607,7 +3607,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372062438631642018, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: viewRadius
-      value: 25
+      value: 30.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280131184714761953, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
+      propertyPath: leftAngle
+      value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8280131184714761953, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
+      propertyPath: rightAngle
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 8280131184714761953, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: alarmComponent
