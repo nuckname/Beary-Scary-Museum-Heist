@@ -11,10 +11,6 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
     [TextArea(2, 5)]
     public string text;
     
-    // Called on start
-    public bool useStartingText = false;
-    public string startingText;
-    
     [Header("Settings")]
     public float textSpeed = 0.05f;
 
@@ -27,14 +23,6 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
 
     // A static variable shared across ALL instances of this script.
     private static int globalTextActionID = 0;
-
-    private void Start()
-    {
-        if(useStartingText)
-        {
-            TriggerTypingEffect(startingText);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {

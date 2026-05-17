@@ -112,6 +112,8 @@ public class DialogueBox : MonoBehaviour
             currentLines = IntroLineslines;
         }
 
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStealthController>().cannotMove = true;
+        
         index = 0;
         UpdateSpeakerUI();
         StartCoroutine(TypeLine());
@@ -130,6 +132,7 @@ public class DialogueBox : MonoBehaviour
     {
         if (index < currentLines.Length - 1)
         {
+            
             index++;
             UpdateSpeakerUI();
             StartCoroutine(TypeLine());
@@ -137,6 +140,8 @@ public class DialogueBox : MonoBehaviour
         else
         {
             // End of dialogue, hide all UI visuals
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStealthController>().cannotMove = false;
+            
             bearDialogueBox.SetActive(false);
             dogDialogueBox.SetActive(false);
             
@@ -150,6 +155,7 @@ public class DialogueBox : MonoBehaviour
             // Trigger the camera pan sequence if the variables are assigned
             if (cameraScript != null && panTargetObject != null && !hasReturnedArtifact)
             {
+                
                 StartCoroutine(CameraPanSequence());
             }
             else

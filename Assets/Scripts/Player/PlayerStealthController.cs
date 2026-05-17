@@ -57,6 +57,7 @@ public class PlayerStealthController : MonoBehaviour
         if (cannotMove)
         {
             rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
             animator.SetBool("IsMoving", false);
             return;
         }
