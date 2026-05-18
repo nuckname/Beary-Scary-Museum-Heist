@@ -36,6 +36,7 @@ public class NoiseEmitter : MonoBehaviour
         myCollider = GetComponent<Collider>();
     }
 
+    // Kept exactly the same so other scripts don't break
     public void EmitNoise(float noiseRadius, NoiseType noiseType)
     {
         editorGizmoRadius = noiseRadius;
@@ -46,6 +47,22 @@ public class NoiseEmitter : MonoBehaviour
             emissionPoint = myCollider.bounds.center;
             emissionPoint.y -= myCollider.bounds.extents.y;
         }
+
+        if (showVisibleRadius)
+        {
+            ShowRadiusInGame(noiseRadius, emissionPoint);
+        }
+
+        BroadcastToAI(noiseRadius, emissionPoint, noiseType);
+    }
+
+    // Used by the delayed footstep script
+    public void EmitNoise(float noiseRadius, NoiseType noiseType, Vector3 customPosition)
+    {
+        editorGizmoRadius = noiseRadius;
+
+        // Use the exact custom position passed in (e.g., where the footstep happened)
+        Vector3 emissionPoint = customPosition;
 
         if (showVisibleRadius)
         {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(NoiseEmitter))]
 public class PlayerFootstepNoise : MonoBehaviour
@@ -27,6 +28,10 @@ public class PlayerFootstepNoise : MonoBehaviour
 
     [Tooltip("How much each unit of weight adds to the footstep noise radius.")]
     public float weightToRadiusMultiplier = 0.5f;
+
+    [Header("Delay Settings")]
+    [Tooltip("Custom delay in seconds before the footstep noise is actually emitted at the previous location.")]
+    public float footstepDelay = 1.5f;
 
     private float stepTimer = 0f;
     private float currentHeldWeight = 0f; 
@@ -85,6 +90,17 @@ public class PlayerFootstepNoise : MonoBehaviour
             recoveryStepsRemaining--;
         }
 
-        noiseEmitter.EmitNoise(calculatedRadius, NoiseType.Player);
+        // Capture the exact position where the step happened
+        Vector3 stepPosition = transform.position;
+
+        StartCoroutine(EmitDelayedNoise(stepPosition, calculatedRadius));
+    }
+
+    private IEnumerator EmitDelayedNoise(Vector3 position, float radius)
+    {
+        // Wait for the custom delay
+        yield return new WaitForSeconds(footstepDelay);
+
+        noiseEmitter.EmitNoise(radius, NoiseType.Player, position);
     }
 }
