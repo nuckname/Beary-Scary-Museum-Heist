@@ -48,6 +48,8 @@ public class FieldOfView : MonoBehaviour {
     private float originalViewRadius;
 
     private float originalViewAngle;
+
+    [SerializeField] private GameObject flashLightSource;
     
     private void Awake()
     {
@@ -228,6 +230,11 @@ public class FieldOfView : MonoBehaviour {
 
     public void DisableVision()
     {
+       if (flashLightSource.gameObject.activeSelf)
+       {
+          flashLightSource.gameObject.SetActive(false);
+       }
+       
        viewRadius = 0f;
        visibleTargets.Clear(); 
        currentlySeeingPlayer = false;
@@ -236,6 +243,11 @@ public class FieldOfView : MonoBehaviour {
 
     public void RestoreVision()
     {
+       if (flashLightSource.gameObject.activeSelf)
+       {
+          flashLightSource.gameObject.SetActive(false);
+       }
+       
        viewRadius = originalViewRadius;
        viewAngle = originalViewAngle;
     }
