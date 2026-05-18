@@ -76,10 +76,7 @@ public class PlayerThrowController : MonoBehaviour
                 return;
             }
             
-
-            print("Animating throw false");
             //animator.SetBool("HasThrown", false);
-         
 
             isCharging = true;
             currentThrowForce = minThrowForce;
@@ -96,8 +93,6 @@ public class PlayerThrowController : MonoBehaviour
 
         if (isCharging && Input.GetMouseButtonUp(0))
         {
-            print("Animating throw false");
-            
             //animator.SetBool("HasThrown", false);
             ThrowObject();
         }

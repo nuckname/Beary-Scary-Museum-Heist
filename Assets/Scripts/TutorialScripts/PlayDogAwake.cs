@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayDogAwake : MonoBehaviour
@@ -12,8 +13,7 @@ public class PlayDogAwake : MonoBehaviour
 
     private bool hasPlayed;
 
-    [SerializeField] private GameObject door;
-    [SerializeField] private FlashingSpotlight flashingSpotlight;
+    [SerializeField] private List<GameObject> gameobjetsToTurnOff;
     
     // Stubs for your custom parameters
     [System.Serializable]
@@ -34,8 +34,15 @@ public class PlayDogAwake : MonoBehaviour
     private void Start()
     {
         hasPlayed = false;
-        door.SetActive(true);
-        flashingSpotlight.enabled = true;
+        TurnOffObjects(true);
+    }
+
+    private void TurnOffObjects(bool turnOn)
+    {
+        foreach (GameObject gameobj in gameobjetsToTurnOff)
+        {
+            gameobj.SetActive(turnOn);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -134,9 +141,8 @@ public class PlayDogAwake : MonoBehaviour
         // select which dialogue text to show.
         _dialoguePrefab.GetComponent<DialogueBox>().hasReturnedArtifact = false;
         
-        door.SetActive(false);
-        flashingSpotlight.enabled = false;
-        
+        TurnOffObjects(false);
+
         hasPlayed = true;
         
         dogTransform.position = groundPos;
