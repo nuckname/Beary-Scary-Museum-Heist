@@ -3967,11 +3967,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3507534948545649058, guid: 8451f503a240db54798e21b1742fd36b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.53
+      value: 3.1
       objectReference: {fileID: 0}
     - target: {fileID: 3507534948545649058, guid: 8451f503a240db54798e21b1742fd36b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -186.71
+      value: -182.1
       objectReference: {fileID: 0}
     - target: {fileID: 3507534948545649058, guid: 8451f503a240db54798e21b1742fd36b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6951,23 +6951,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].maxTimeAllowed
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
-      propertyPath: scoreThresholds.Array.data[2].maxTimeAllowed
       value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: scoreThresholds.Array.data[2].maxTimeAllowed
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[3].maxTimeAllowed
-      value: 50
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[4].maxTimeAllowed
-      value: 55
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[5].maxTimeAllowed
-      value: 60
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].minScoreRequired

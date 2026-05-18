@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ScoreboardUi : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class ScoreboardUi : MonoBehaviour
     public GameObject[] fullStars = new GameObject[3];
     public GameObject[] halfStars = new GameObject[3];
 
+    [SerializeField] private Button nextlevelButton;
+    
+    // Variables for level progression logic
+    private bool canProceed;
+    private bool isShaking = false;
+
     public void PopulateScoreboard(float targetTime, int penalties, int score, float starRating)
     {
         timeText.gameObject.SetActive(false);
@@ -33,6 +40,18 @@ public class ScoreboardUi : MonoBehaviour
         {
             fullStars[i].SetActive(false);
             halfStars[i].SetActive(false);
+        }
+
+        // Determine if the player can proceed (more than 1 star)
+        canProceed = starRating > 1.0f;
+        
+        // Update the button color
+        if (nextlevelButton != null)
+        {
+            if (ColorUtility.TryParseHtmlString(canProceed ? "#FFFFFF" : "#7E7E7E", out Color btnColor))
+            {
+                nextlevelButton.image.color = btnColor;
+            }
         }
 
         StartCoroutine(AnimateScoreSequence(targetTime, penalties, score, starRating));
@@ -185,6 +204,15 @@ public class ScoreboardUi : MonoBehaviour
     // Called on button click
     public void LoadNextLevel()
     {
+        if (!canProceed)
+        {
+            if (!isShaking && nextlevelButton != null)
+            {
+                StartCoroutine(ShakeButtonSequence());
+            }
+            return;
+        }
+
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
 
@@ -192,5 +220,33 @@ public class ScoreboardUi : MonoBehaviour
         {
             SceneManager.LoadScene(nextSceneIndex);
         }
+    }
+
+    private IEnumerator ShakeButtonSequence()
+    {
+        isShaking = true;
+        
+        RectTransform rectTransform = nextlevelButton.GetComponent<RectTransform>();
+        Vector2 originalPosition = rectTransform.anchoredPosition;
+        
+        float shakeDuration = 0.3f;
+        float shakeSpeed = 50f;
+        float shakeAmount = 10f;
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            elapsed += Time.deltaTime;
+            
+            // Generate a rapid side-to-side shake using Sin wave
+            float offsetX = Mathf.Sin(elapsed * shakeSpeed) * shakeAmount;
+            rectTransform.anchoredPosition = originalPosition + new Vector2(offsetX, 0f);
+            
+            yield return null;
+        }
+
+        // Restore original position once done
+        rectTransform.anchoredPosition = originalPosition;
+        isShaking = false;
     }
 }

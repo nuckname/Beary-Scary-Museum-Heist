@@ -1989,8 +1989,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   currentActiveText: {fileID: 1537793598}
   text: Hold Left Mouse Button to throw!
-  useStartingText: 0
-  startingText: 
   textSpeed: 0.05
   timeBeforeClear: 5
 --- !u!65 &1139168732
@@ -3200,27 +3198,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].maxTimeAllowed
-      value: 27
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].maxTimeAllowed
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[2].maxTimeAllowed
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
-      propertyPath: scoreThresholds.Array.data[3].maxTimeAllowed
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: scoreThresholds.Array.data[3].maxTimeAllowed
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[4].maxTimeAllowed
-      value: 50
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[5].maxTimeAllowed
-      value: 60
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].minScoreRequired
