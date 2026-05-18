@@ -1585,7 +1585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6415842
+      value: 0.69759446
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1597,7 +1597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.54
+      value: 7.58
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5690,6 +5690,10 @@ PrefabInstance:
       value: Enemy (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
+      propertyPath: turnAngle
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383171293565527006, guid: af0f899726c944114b2b34a7e72b3574, type: 3}
       propertyPath: pathHolder
       value: 
       objectReference: {fileID: 1209369246}
@@ -9476,7 +9480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.8
+      value: -8.71
       objectReference: {fileID: 0}
     - target: {fileID: 7071758014444306211, guid: 07316befafb4df84f8ecaf04acac0db1, type: 3}
       propertyPath: m_LocalRotation.w
