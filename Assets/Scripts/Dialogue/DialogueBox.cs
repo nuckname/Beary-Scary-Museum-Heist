@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
 
 // https://www.youtube.com/watch?v=8oTYabhj248&t=142s
-
+// https://gemini.google.com/share/a39faa31283b
 public enum SpeakerType
 {
     Bear,
@@ -64,6 +63,11 @@ public class DialogueBox : MonoBehaviour
     public float panSpeed = 3f;  
     public float waitTimeBeforeReturn = 2f; // How long to look at the target before returning
 
+    [Header("Text Animation Settings")]
+    public float waveSpeed = 8f;
+    public float waveHeight = 5f;
+    public float rainbowSpeed = 2f;
+
     private int index;
     private TextMeshProUGUI currentActiveText;
     
@@ -88,15 +92,23 @@ public class DialogueBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && currentActiveText != null)
         {
-            if (currentActiveText.text == currentLines[index].text)
+            // Check if the current visible characters match the total characters
+            if (currentActiveText.maxVisibleCharacters >= currentActiveText.textInfo.characterCount)
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                currentActiveText.text = currentLines[index].text;
+                // Reveal all characters instantly
+                currentActiveText.maxVisibleCharacters = currentActiveText.textInfo.characterCount;
             }
+        }
+
+        // Animate the text every frame if there is active text
+        if (currentActiveText != null && currentActiveText.maxVisibleCharacters > 0)
+        {
+            AnimateText();
         }
     }
 
@@ -121,9 +133,18 @@ public class DialogueBox : MonoBehaviour
 
     IEnumerator TypeLine()
     {
-        foreach (char c in currentLines[index].text.ToCharArray())
+        // Set the full text immediately, but hide it
+        currentActiveText.text = currentLines[index].text;
+        currentActiveText.maxVisibleCharacters = 0;
+        
+        // Force the mesh to update so we can accurately get the character count
+        currentActiveText.ForceMeshUpdate();
+        int totalCharacters = currentActiveText.textInfo.characterCount;
+
+        // Reveal one character at a time using maxVisibleCharacters to preserve rich text tags
+        while (currentActiveText.maxVisibleCharacters < totalCharacters)
         {
-            currentActiveText.text += c;
+            currentActiveText.maxVisibleCharacters++;
             yield return new WaitForSeconds(textSpeed);
         }
     }
@@ -258,5 +279,64 @@ public class DialogueBox : MonoBehaviour
         if (dogExplain != null) dogExplain.SetActive(false);
         if (dogSad != null) dogSad.SetActive(false);
         if (dogOpeningHappy != null) dogOpeningHappy.SetActive(false);
+    }
+    
+    // Parses TMP Links to apply custom vertex animations (Wave, Rainbow)
+    private void AnimateText()
+    {
+        // Regenerate the mesh cleanly so animations don't infinitely compound every frame
+        currentActiveText.ForceMeshUpdate();
+        TMP_TextInfo textInfo = currentActiveText.textInfo;
+
+        // Loop through all custom links in the text
+        for (int i = 0; i < textInfo.linkCount; i++)
+        {
+            TMP_LinkInfo linkInfo = textInfo.linkInfo[i];
+            string linkID = linkInfo.GetLinkID().ToLower();
+            
+            bool isWave = linkID.Contains("wave");
+            bool isRainbow = linkID.Contains("rainbow");
+
+            if (!isWave && !isRainbow) continue;
+
+            // Loop through all characters contained within the link tags
+            for (int j = 0; j < linkInfo.linkTextLength; j++)
+            {
+                int charIndex = linkInfo.linkTextfirstCharacterIndex + j;
+                
+                // Skip invisible characters like spaces
+                if (!textInfo.characterInfo[charIndex].isVisible) continue;
+
+                int materialIndex = textInfo.characterInfo[charIndex].materialReferenceIndex;
+                int vertexIndex = textInfo.characterInfo[charIndex].vertexIndex;
+                
+                Vector3[] sourceVertices = textInfo.meshInfo[materialIndex].vertices;
+                Color32[] vertexColors = textInfo.meshInfo[materialIndex].colors32;
+
+                // Apply Wave effect
+                if (isWave)
+                {
+                    Vector3 offset = new Vector3(0, Mathf.Sin(Time.time * waveSpeed + charIndex) * waveHeight, 0);
+                    for (int v = 0; v < 4; v++)
+                    {
+                        sourceVertices[vertexIndex + v] += offset;
+                    }
+                }
+
+                // Apply Rainbow color effect
+                if (isRainbow)
+                {
+                    // Generate color based on time and character index to get a moving rainbow
+                    Color32 rainbowColor = Color.HSVToRGB(Mathf.Repeat(Time.time * rainbowSpeed + charIndex * 0.1f, 1f), 1f, 1f);
+                    for (int v = 0; v < 4; v++)
+                    {
+                        vertexColors[vertexIndex + v] = rainbowColor;
+                    }
+                }
+            }
+        }
+
+        // Push all vertex and color changes back to the text mesh
+        currentActiveText.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices | TMP_VertexDataUpdateFlags.Colors32);
     }
 }

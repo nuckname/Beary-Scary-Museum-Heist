@@ -831,29 +831,32 @@ MonoBehaviour:
   IntroLineslines:
   - speaker: 1
     emotion: 5
-    text: hi my name is dog
+    text: hi my name is <link="wave">dog</link>
   - speaker: 1
     emotion: 3
-    text: get me the artirfact now bitch boy
+    text: get me the artirfact now <link="wave,rainbow">bitch boy</link>
   - speaker: 0
     emotion: 2
-    text: Ok?!
+    text: <link="wave">Ok?!</link>
   - speaker: 0
     emotion: 0
-    text: I respect women!
+    text: I <size=150%>respect</size> women!
   haveReturnedTheArtifactlines:
   - speaker: 1
     emotion: 5
-    text: Thanks! for the artifact
+    text: <link="wave">Thanks!</link> for the artifact
   - speaker: 0
     emotion: 0
     text: no problem
   - speaker: 1
     emotion: 3
-    text: now return that shit to the van.
+    text: now return that shit to the <link="wave,rainbow"><size=150%>van</size></link>.
   textSpeed: 0.05
   panSpeed: 1.5
   waitTimeBeforeReturn: 4
+  waveSpeed: 8
+  waveHeight: 5
+  rainbowSpeed: 2
 --- !u!1 &7567106036585576817
 GameObject:
   m_ObjectHideFlags: 0
