@@ -45,8 +45,8 @@ public class PlayDogAwake : MonoBehaviour
         {
             if (playDeadAnimationOnThisGameObject != null && !hasPlayed)
             {
-                // Start the coroutine and pass the player's transform so the dog can look at them
-                StartCoroutine(PlayDogAnimationRoutine(other.transform));
+                // Start the coroutine (we now find the player inside the coroutine)
+                StartCoroutine(PlayDogAnimationRoutine());
             }
             else
             {
@@ -56,11 +56,15 @@ public class PlayDogAwake : MonoBehaviour
     }
 
     // AI
-    private IEnumerator PlayDogAnimationRoutine(Transform playerTransform)
+    private IEnumerator PlayDogAnimationRoutine()
     {
         if (customParam.action != SpecialAction.PlayDeadAndRevive) yield break;
 
         isAnimating = true;
+
+        // Find the player using GameObject.Find
+        GameObject playerObj = GameObject.Find("Player");
+        Transform playerTransform = playerObj != null ? playerObj.transform : null;
 
         // Use a local variable to make the code cleaner
         Transform dogTransform = playDeadAnimationOnThisGameObject;
@@ -113,6 +117,17 @@ public class PlayDogAwake : MonoBehaviour
             dogTransform.rotation = Quaternion.Euler(0f, currentYAngle, 0f);
 
             yield return null;
+        }
+        
+        // Ensure the dog is perfectly facing the player at the end of the spin
+        if (playerTransform != null)
+        {
+            Vector3 finalDirToPlayer = playerTransform.position - dogTransform.position;
+            finalDirToPlayer.y = 0; // Ignore height differences
+            if (finalDirToPlayer != Vector3.zero)
+            {
+                dogTransform.rotation = Quaternion.LookRotation(finalDirToPlayer);
+            }
         }
         
         GameObject _dialoguePrefab = Instantiate(dialoguePrefab);
