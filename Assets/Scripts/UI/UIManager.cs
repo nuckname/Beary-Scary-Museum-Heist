@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
     // Singleton Instance
     public static UIManager Instance { get; private set; }
 
+    [SerializeField] private GameObject InGameUi;
+    
     private TextMeshProUGUI artifactValueText;
 
     private void Awake()
@@ -29,6 +31,8 @@ public class UIManager : MonoBehaviour
         {
             artifactValueText = textObject.GetComponent<TextMeshProUGUI>();
         }
+        
+        InGameUi = GameObject.FindGameObjectWithTag("InGameUi");
     }
 
     public void UpdateArtifactDisplay(int current, int total)
@@ -37,5 +41,10 @@ public class UIManager : MonoBehaviour
         {
             artifactValueText.text = $"{current} / {total}";
         }
+    }
+
+    public void TurnOnInGameUi(bool turnOn)
+    {
+        InGameUi.SetActive(turnOn);
     }
 }

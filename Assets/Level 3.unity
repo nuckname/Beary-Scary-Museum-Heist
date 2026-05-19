@@ -5758,6 +5758,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5062545703129098276, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5062545703129098276, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: m_TagString
+      value: InGameUi
+      objectReference: {fileID: 0}
     - target: {fileID: 6759983722705597752, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_TagString
       value: SprintBarFill
@@ -6029,7 +6037,7 @@ GameObject:
   - component: {fileID: 2149432955633394333}
   - component: {fileID: 7458404856581573750}
   - component: {fileID: 8851138284055886468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: entry
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -33,6 +33,8 @@ public class RoundStateManager : MonoBehaviour
     public GameObject scoreboardPrefab;
     public ScoreCalculator scoreCalculator;
     
+    
+    
     private void Awake()
     {
         // Standard Singleton pattern
@@ -63,6 +65,8 @@ public class RoundStateManager : MonoBehaviour
             SwitchState(AboutToStartState);
         }
 
+        UIManager.Instance.TurnOnInGameUi(true);
+        
         GetAllEnemies();
 
         UpdateUI();
@@ -118,6 +122,8 @@ public class RoundStateManager : MonoBehaviour
     
     public void SetUpScoreboard()
     {
+        UIManager.Instance.TurnOnInGameUi(false);
+        
         GameObject scoreboard = Instantiate(scoreboardPrefab, Vector3.zero, Quaternion.identity);
         ScoreboardUi scoreboardUi = scoreboard.GetComponent<ScoreboardUi>();
         
