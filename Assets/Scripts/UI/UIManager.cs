@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     // Singleton Instance
     public static UIManager Instance { get; private set; }
 
-    [SerializeField] private GameObject InGameUi;
+    private GameObject InGameUi;
     
     private TextMeshProUGUI artifactValueText;
 
@@ -45,6 +45,9 @@ public class UIManager : MonoBehaviour
 
     public void TurnOnInGameUi(bool turnOn)
     {
-        InGameUi.SetActive(turnOn);
+        if (InGameUi != null)
+        {
+            InGameUi.SetActive(turnOn);
+        }
     }
 }
