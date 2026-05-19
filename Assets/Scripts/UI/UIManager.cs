@@ -45,6 +45,9 @@ public class UIManager : MonoBehaviour
 
     public void TurnOnInGameUi(bool turnOn)
     {
-        InGameUi.SetActive(turnOn);
+        if (InGameUi != null)
+        {
+            InGameUi.SetActive(turnOn);
+        }
     }
 }
