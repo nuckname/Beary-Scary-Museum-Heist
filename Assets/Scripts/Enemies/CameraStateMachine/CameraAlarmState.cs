@@ -24,8 +24,10 @@ public class CameraAlarmState : CameraBaseState
                 if (enemyManager.EnemyCurrentState != enemyManager.EnemyChasePlayerState && 
                     enemyManager.EnemyCurrentState != enemyManager.EnemyStunnedState)
                 {
-                    // Set the target to the camera's location and switch to investigate state
-                    enemyManager.investigateTargetPosition = camera.transform.position;
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    
+                    // Set the target to the players' location and switch to investigate state
+                    enemyManager.investigateTargetPosition = player.transform.position;
                     enemyManager.SwitchState(enemyManager.EnemyInvestigateState);
                     
                     camera.SwitchState(camera.SweepState);
