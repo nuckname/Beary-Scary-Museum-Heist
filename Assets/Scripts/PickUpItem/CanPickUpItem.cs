@@ -12,6 +12,8 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
     [SerializeField] protected bool canBeThrown = true; 
     public ItemType typeOfItem = ItemType.None;
     
+    private ItemImage itemImage;
+    
     protected Rigidbody rb;
     protected Collider col;
     
@@ -27,6 +29,7 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        itemImage = GetComponent<ItemImage>();
     }
 
     public virtual void OnPickedUp()
@@ -36,6 +39,8 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+        
+        itemImage.spriteRenderer.enabled = false;
         
         isAirborne = false; 
     }
@@ -92,6 +97,11 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
         {
             if (!hitInfo.collider.isTrigger && !hitInfo.collider.CompareTag("Player"))
             {
+                // We want to show the icon again if we hit the ground.
+                if (itemImage != null)
+                {
+                    itemImage.allowImageToShow = true;
+                }
                 return true;
             }
         }

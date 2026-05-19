@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5522966862455197228}
   - component: {fileID: 2519119033967843050}
-  - component: {fileID: 7632212504812127375}
   - component: {fileID: 6222647849801143489}
   m_Layer: 10
   m_Name: Image
@@ -93,18 +92,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &7632212504812127375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5345641586640339}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b9114580ee3aab46ada38e3da9b4ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LockRotation
 --- !u!114 &6222647849801143489
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8430622584522496057}
   - component: {fileID: 2679273713518980412}
   - component: {fileID: 4657543837702301226}
+  - component: {fileID: 3218020711118640189}
   m_Layer: 13
   m_Name: Item_BasePrefab
   m_TagString: CanPickUp
@@ -254,10 +255,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335e8e99d75fc4aae92bd0e7da314e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropSound
+  impactClip: {fileID: 0}
   dropSoundMultiplier: 0.5
   useVelocityScaling: 1
   velocityScale: 0.5
   minVelocityThreshold: 0.5
+  usePitchScaling: 1
+  maxPitch: 1.2
+  minPitch: 0.4
+  maxExpectedRadius: 30
+  dontMakeSoundOnFirstDrop: 0
 --- !u!114 &8430622584522496057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +286,6 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: 2b6d1bfaad13e934fb564b7a69fc5411, type: 2}
-  meshHeightOffset: 1.5
   showOutline: 1
   outlineMaterial: {fileID: 2100000, guid: fca9c2d7c422d1940b0c6639e9db4dc6, type: 2}
   outlineWidth: 0.1
@@ -321,3 +327,15 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &3218020711118640189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534125092866860444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66ceae2002f413249ae0988ac07f7b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
