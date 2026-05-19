@@ -25,6 +25,7 @@ public class ScoreboardUi : MonoBehaviour
     public GameObject[] halfStars = new GameObject[3];
 
     [SerializeField] private Button nextlevelButton;
+    [SerializeField] private Button failLevelButton;
     
     // Variables for level progression logic
     private bool canProceed;
@@ -45,13 +46,15 @@ public class ScoreboardUi : MonoBehaviour
         // Determine if the player can proceed (more than 1 star)
         canProceed = starRating > 1.0f;
         
-        // Update the button color
-        if (nextlevelButton != null)
+        if (canProceed)
         {
-            if (ColorUtility.TryParseHtmlString(canProceed ? "#FFFFFF" : "#7E7E7E", out Color btnColor))
-            {
-                nextlevelButton.image.color = btnColor;
-            }
+            nextlevelButton.enabled = true;
+            failLevelButton.enabled = false;
+        }
+        else
+        {
+            nextlevelButton.enabled = false;
+            failLevelButton.enabled = true;
         }
 
         StartCoroutine(AnimateScoreSequence(targetTime, penalties, score, starRating));
