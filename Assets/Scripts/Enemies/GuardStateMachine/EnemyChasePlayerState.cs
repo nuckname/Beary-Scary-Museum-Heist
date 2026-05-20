@@ -26,7 +26,28 @@ public class EnemyChasePlayerState : EnemyBaseState
         {
             // Hit animation
             manager.animator.SetBool("isHitPlayer", true);
-
+       
+            /*
+            if (manager.isTutorial)
+            {
+                Vector3 spawnpoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
+                
+                // Teleport the player
+                other.transform.position = spawnpoint;
+                
+                manager.agent.ResetPath();
+                
+                manager.animator.SetBool("isHitPlayer", false);
+                manager.animator.SetBool("isChasing", false);
+                
+                manager.SwitchState(manager.EnemyFollowPathState); 
+                
+                // Move guard to orginal positon
+                manager.GetComponent<Transform>().position = new Vector3(113.010002f,2.51999998f,-68.7699966f);
+                
+                return;
+            }
+            */
             
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

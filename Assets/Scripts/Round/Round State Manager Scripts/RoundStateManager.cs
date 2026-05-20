@@ -32,8 +32,10 @@ public class RoundStateManager : MonoBehaviour
 
     public GameObject scoreboardPrefab;
     public ScoreCalculator scoreCalculator;
-    
-    
+
+    private Transform spawnPoint;
+
+    [SerializeField] private GameObject playerPrefab;
     
     private void Awake()
     {
@@ -46,6 +48,10 @@ public class RoundStateManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+        
     }
 
     void Start()

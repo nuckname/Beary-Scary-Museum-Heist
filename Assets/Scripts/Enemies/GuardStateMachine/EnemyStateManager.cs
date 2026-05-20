@@ -105,6 +105,9 @@ public class EnemyStateManager : MonoBehaviour, ISoundListener
     [Header("Debug")]
     public string currentStateName;
 
+    public bool isTutorial = false;
+    
+    
     private void OnEnable()
     {
         if (fieldOfViews != null)
