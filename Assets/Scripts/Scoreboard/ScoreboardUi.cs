@@ -48,13 +48,13 @@ public class ScoreboardUi : MonoBehaviour
         
         if (canProceed)
         {
-            nextlevelButton.enabled = true;
-            failLevelButton.enabled = false;
+            nextlevelButton.gameObject.SetActive(true);
+            failLevelButton.gameObject.SetActive(false);
         }
         else
         {
-            nextlevelButton.enabled = false;
-            failLevelButton.enabled = true;
+            nextlevelButton.gameObject.SetActive(false); 
+            failLevelButton.gameObject.SetActive(true);
         }
 
         StartCoroutine(AnimateScoreSequence(targetTime, penalties, score, starRating));
