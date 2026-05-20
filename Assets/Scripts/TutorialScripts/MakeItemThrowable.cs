@@ -1,14 +1,21 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MakeItemThrowable : MonoBehaviour
 {
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponentInChildren<CanPickUpItem>().SetThrowableState(true);
+            CanPickUpItem pickUpComponent = other.GetComponentInChildren<CanPickUpItem>();
+
+            if (pickUpComponent != null)
+            {
+                pickUpComponent.SetThrowableState(true);
+            }
+            else
+            {
+                Debug.LogWarning("Error");
+            }
         }
     }
 }
