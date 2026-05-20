@@ -5732,6 +5732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 6
+  meshRadiusOffset: 0
   viewAngle: 131
   yDetectionRadius: 3
   targetMask:
@@ -14356,6 +14357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 19.16
+  meshRadiusOffset: 0
   viewAngle: 51
   yDetectionRadius: 3
   targetMask:
@@ -19902,6 +19904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 11.99
+  meshRadiusOffset: 0.5
   viewAngle: 119
   yDetectionRadius: 3
   targetMask:
@@ -21144,7 +21147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4193d9e5e1eea1947be0b509c90a0a2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
-  viewRadius: 6
+  viewRadius: 5.25
+  meshRadiusOffset: 1
   viewAngle: 360
   yDetectionRadius: 3
   targetMask:

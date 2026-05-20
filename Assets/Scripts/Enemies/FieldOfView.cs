@@ -7,6 +7,8 @@ using System.Collections.Generic;
 public class FieldOfView : MonoBehaviour {
 
     public float viewRadius;
+    public float meshRadiusOffset = 0.5f; // NEW: How much further out the mesh draws compared to the actual viewRadius
+
     [Range(0,360)]
     public float viewAngle;
     public float yDetectionRadius = 3f;
@@ -294,11 +296,15 @@ public class FieldOfView : MonoBehaviour {
     ViewCastInfo ViewCast(float globalAngle) {
        Vector3 dir = DirFromAngle (globalAngle, true);
        RaycastHit hit;
+       
+       // NEW: Calculate the larger radius solely for visual casting
+       float visualRadius = viewRadius + meshRadiusOffset;
 
-       if (Physics.Raycast (transform.position, dir, out hit, viewRadius, obstacleMask)) {
+       // NEW: Pass visualRadius into the raycast and the return structure instead of viewRadius
+       if (Physics.Raycast (transform.position, dir, out hit, visualRadius, obstacleMask)) {
           return new ViewCastInfo (true, hit.point, hit.distance, globalAngle);
        } else {
-          return new ViewCastInfo (false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+          return new ViewCastInfo (false, transform.position + dir * visualRadius, visualRadius, globalAngle);
        }
     }
 
