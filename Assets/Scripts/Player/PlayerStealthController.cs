@@ -24,7 +24,7 @@ public class PlayerStealthController : MonoBehaviour
     private float stepTimer;
 
     [Header("UI Settings")]
-    public Image staminaBarFill; 
+    private Image staminaBarFill; 
 
     private float currentStamina;
     private bool isExhausted = false;
