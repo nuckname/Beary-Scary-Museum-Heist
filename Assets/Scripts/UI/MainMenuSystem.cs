@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuSystem : MonoBehaviour
 {
@@ -67,5 +68,11 @@ public class MainMenuSystem : MonoBehaviour
             }
         }
         currentActiveLevel = null;
+    }
+
+
+    public void LoadLevel(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 }
