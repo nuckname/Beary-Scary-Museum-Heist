@@ -77,7 +77,6 @@ MonoBehaviour:
   walkStepInterval: 0.5
   sprintStepInterval: 0.3
   sneakStepInterval: 0.8
-  staminaBarFill: {fileID: 0}
   rb: {fileID: 3292789174107578550}
   animator: {fileID: 9102284141675805480}
 --- !u!23 &3106409119693640108
@@ -547,7 +546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2208696689726385067
 Transform:
   m_ObjectHideFlags: 0
@@ -602,11 +601,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFootstepNoise
   rb: {fileID: 3292789174107578550}
-  stepInterval: 0.5
   baseNoiseRadius: 2
   speedMultiplier: 0.75
   sneakNoiseMultiplier: 0.2
-  weightToDurationMultiplier: 0
   weightToRadiusMultiplier: 0
   footstepDelay: 0.25
 --- !u!82 &5544120613485267522
@@ -973,10 +970,65 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2055873986606625269}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2058394969238998152}
     - targetCorrespondingSourceObject: {fileID: -9101836590829714730, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 326614576311503710}
   m_SourcePrefab: {fileID: 100100000, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+--- !u!1 &2592440934642514920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}
+  m_PrefabInstance: {fileID: 3403413563405059769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2055873986606625269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592440934642514920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745a72bba8ba2f343af7853bc127edfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NoiseEmitter
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  showVisibleRadius: 1
+  visualDuration: 1.5
+  radiusMaterial: {fileID: 2100000, guid: 2b6d1bfaad13e934fb564b7a69fc5411, type: 2}
+  showOutline: 0
+  outlineMaterial: {fileID: 2100000, guid: fca9c2d7c422d1940b0c6639e9db4dc6, type: 2}
+  outlineWidth: 0.1
+  outlineHeightOffset: 0.05
+  meshResolution: 2
+--- !u!114 &2058394969238998152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592440934642514920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b015d5270392324d913ac5e4b84249a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootstepNoise
+  rb: {fileID: 3292789174107578550}
+  baseNoiseRadius: 2
+  speedMultiplier: 0.75
+  sneakNoiseMultiplier: 0.2
+  weightToRadiusMultiplier: 0
+  footstepDelay: 0
 --- !u!4 &2932375417568108882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e7b0ab4b67eb42f4d8a4602a51f91b7a, type: 3}

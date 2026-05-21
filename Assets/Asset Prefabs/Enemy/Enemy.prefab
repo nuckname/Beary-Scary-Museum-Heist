@@ -3589,6 +3589,7 @@ MonoBehaviour:
   animator: {fileID: 2252722163308240699}
   playerLeftTheGuardsFovOnRightSide: 0
   currentStateName: 
+  isTutorial: 0
 --- !u!114 &1398979885939180627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21148,7 +21149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 5.25
-  meshRadiusOffset: 1
+  meshRadiusOffset: -0.5
   viewAngle: 360
   yDetectionRadius: 3
   targetMask:
