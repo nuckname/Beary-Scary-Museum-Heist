@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(NoiseEmitter))]
@@ -21,11 +22,18 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
     [SerializeField] private bool isArmed = false;
     [SerializeField] private bool isActivated = false;
 
+    [SerializeField] private GameObject objectSpawner;
+    
     protected override void Awake()
     {
         // Grabs the Rigidbody and Collider from the parent script
         base.Awake(); 
         noiseEmitter = GetComponent<NoiseEmitter>();
+    }
+
+    private void Start()
+    {
+        objectSpawner.SetActive(false);
     }
 
     public override void OnPickedUp()
@@ -54,26 +62,33 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player")) return;
-
+        
         if (isArmed)
         {
-            isArmed = false;
-            isActivated = true;
-            timer = 0f; 
-
-            if (rb != null)
+            // if is ground layer
+            if (IsOnGround())
             {
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
-            }
+                
+                isArmed = false;
+                isActivated = true;
+                timer = 0f; 
 
-            Vector3 flatEuler = transform.eulerAngles;
-            flatEuler.x = 0;
-            flatEuler.z = 0;
-            transform.eulerAngles = flatEuler;
+                if (rb != null)
+                {
+                    rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+                }
+
+                Vector3 flatEuler = transform.eulerAngles;
+                flatEuler.x = 0;
+                flatEuler.z = 0;
+                transform.eulerAngles = flatEuler;
+            }
         }
         else if (isActivated)
         {
             ContactPoint contact = collision.GetContact(0);
+            
+            objectSpawner.SetActive(true);
             
             // AI
             if (contact.normal.y < 0.5f) 
