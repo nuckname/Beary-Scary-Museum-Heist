@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// AI help
+
 [System.Serializable]
 public struct ScoreThreshold
 {
