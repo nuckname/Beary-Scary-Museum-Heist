@@ -24,13 +24,31 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
     // A static variable shared across ALL instances of this script.
     private static int globalTextActionID = 0;
 
+
+    [SerializeField] private bool triggerOnPlayer = true;
+    [SerializeField] private bool triggerOnArtifact = false;
+    
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && triggerOnPlayer)
         {
             if (!hasBeenTriggered)
             {
                 TriggerTypingEffect(text);
+            }
+        }
+        
+        if (other.CompareTag("Player") && triggerOnArtifact)
+        {
+            CanPickUpItem canPickUpItem = other.GetComponentInChildren<CanPickUpItem>();
+
+            if (canPickUpItem != null) 
+            {
+                if (!hasBeenTriggered)
+                {
+                    TriggerTypingEffect(text);
+                }
             }
         }
     }
