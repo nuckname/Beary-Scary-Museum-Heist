@@ -1449,7 +1449,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 6
-  meshRadiusOffset: 0.5
   viewAngle: 360
   yDetectionRadius: 3
   targetMask:
@@ -3780,7 +3779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 6
-  meshRadiusOffset: 0.5
   viewAngle: 131
   yDetectionRadius: 3
   targetMask:
@@ -5372,7 +5370,7 @@ Transform:
   m_GameObject: {fileID: 2299888732479972102}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 87, y: 0, z: 0}
+  m_LocalPosition: {x: 87.7, y: 2.33, z: -72.259995}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5464,7 +5462,6 @@ MonoBehaviour:
   animator: {fileID: 8908187448241184563}
   playerLeftTheGuardsFovOnRightSide: 0
   currentStateName: 
-  isTutorial: 0
 --- !u!114 &4437692445948485831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9550,7 +9547,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 17.09
-  meshRadiusOffset: 0.5
   viewAngle: 66
   yDetectionRadius: 3
   targetMask:
@@ -9926,7 +9922,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 11.99
-  meshRadiusOffset: 0.5
   viewAngle: 119
   yDetectionRadius: 3
   targetMask:
