@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 57b5993b22208a24784852741377f0e2
+guid: 8bf5b36963531c5479feb1c1fc2ee74c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: itemtexture2
+    second: {fileID: 2100000, guid: 02d8aca212af6aa4b9454db11fa1f670, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +73,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
