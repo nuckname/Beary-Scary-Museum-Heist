@@ -862,14 +862,23 @@ MonoBehaviour:
     text: its over here
   haveReturnedTheArtifactlines:
   - speaker: 1
-    emotion: 5
-    text: <link="wave">Thanks!</link> for the artifact
+    emotion: 3
+    text: w0w you actually did it
+  - speaker: 1
+    emotion: 4
+    text: you normally just follow instructions blindly given by strangers?
   - speaker: 0
-    emotion: 0
-    text: no problem
+    emotion: 2
+    text: Yeah, well I thought I might just sell this so i can feed my family
   - speaker: 1
     emotion: 3
-    text: now return that shit to the <link="wave,rainbow"><size=150%>van</size></link>.
+    text: Didnt ask but just return that shit to the van <size=350%>NOW</size></link>.
+  - speaker: 1
+    emotion: 3
+    text: 'Its to your right my left, wait no, my left... '
+  - speaker: 1
+    emotion: 4
+    text: I dont have opposable thumbs I cant check...
   textSpeed: 0.05
   panSpeed: 1.5
   waitTimeBeforeReturn: 4
