@@ -6355,7 +6355,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: WASD to move
   textSpeed: 0.1
-  timeBeforeClear: 100
+  timeBeforeClear: 7
   triggerOnPlayer: 1
   triggerOnArtifact: 0
 --- !u!65 &716783343
@@ -7863,11 +7863,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: gem 4 display
       objectReference: {fileID: 0}
+    - target: {fileID: 4581421025680418911, guid: 8286b4ecca92e4cdfaa42c716623b06f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4581421025680418911, guid: 8286b4ecca92e4cdfaa42c716623b06f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1313097863}
   m_SourcePrefab: {fileID: 100100000, guid: 8286b4ecca92e4cdfaa42c716623b06f, type: 3}
+--- !u!1 &1313097862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4581421025680418911, guid: 8286b4ecca92e4cdfaa42c716623b06f, type: 3}
+  m_PrefabInstance: {fileID: 1313097861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1313097863
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313097862}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0071024, y: 13.478081, z: 1.0307811}
+  m_Center: {x: -0.003551126, y: 2.5351558, z: -7.954667e-11}
 --- !u!1 &1317305389
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,7 +8746,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.33333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 6535b191d07337e42816da3312743a7d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 39138fdf6b5b445e2b38147373f7199f, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1604294479
 Transform:
@@ -11205,7 +11238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_text
-      value: WASD to move
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_fontSize
