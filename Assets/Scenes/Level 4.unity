@@ -4147,6 +4147,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3793384000883948838, guid: 24938d3ff10032b43915c1f8230fb14c, type: 3}
+      propertyPath: pathHolder
+      value: 
+      objectReference: {fileID: 667128416}
     - target: {fileID: 7441588045756278529, guid: 24938d3ff10032b43915c1f8230fb14c, type: 3}
       propertyPath: m_Name
       value: Special Soldier
@@ -4154,7 +4158,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1636455795133221130, guid: 24938d3ff10032b43915c1f8230fb14c, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 537840522735518738, guid: 24938d3ff10032b43915c1f8230fb14c, type: 3}
+      insertIndex: 10
+      addedObject: {fileID: 1587651132}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24938d3ff10032b43915c1f8230fb14c, type: 3}
 --- !u!4 &1056448308 stripped
@@ -4663,6 +4670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shinier new enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5479687629948238113, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: pathHolder
+      value: 
+      objectReference: {fileID: 1209369246}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5170,6 +5181,76 @@ Transform:
   - {fileID: 1209369246}
   m_Father: {fileID: 1372617713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1587651131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1056448308}
+    m_Modifications:
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7497636729361993972, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+      propertyPath: m_Name
+      value: FloatingImagePopUpOnlyMusicNotes
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+--- !u!4 &1587651132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 236152170567471032, guid: 87867677979fa904987acc752bf9c88e, type: 3}
+  m_PrefabInstance: {fileID: 1587651131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1591455628
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5801,6 +5882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shinier new enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5479687629948238113, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: pathHolder
+      value: 
+      objectReference: {fileID: 1810826818}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -78.2
