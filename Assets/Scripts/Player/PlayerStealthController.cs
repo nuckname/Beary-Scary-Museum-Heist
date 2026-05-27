@@ -37,7 +37,7 @@ public class PlayerStealthController : MonoBehaviour
 
     [SerializeField] private Animator animator;
     
-    private float lockedY;
+    [SerializeField] private float lockedY;
     private Camera playerCamera;
 
     private void Awake()
