@@ -23,18 +23,28 @@ public class PlayerGrabController : MonoBehaviour
         playerFootstepNoise = GetComponentInChildren<PlayerFootstepNoise>(); 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        TryPickUpItem(other.gameObject);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
+        TryPickUpItem(other.gameObject);
+    }
+
+    private void TryPickUpItem(GameObject obj)
+    {
         // Make sure we only pick it up if it's not already in our stack
-        if (other.gameObject.CompareTag("CanPickUp") && !HeldObjects.Contains(other.gameObject))
+        if (obj.CompareTag("CanPickUp") && !HeldObjects.Contains(obj))
         {
-            IPickable[] pickables = other.gameObject.GetComponents<IPickable>();
-        
+            IPickable[] pickables = obj.GetComponents<IPickable>();
+    
             if (pickables.Length > 0)
             {
                 if (pickables[0].CanBePickedUp && pickables[0].IsOnGround())
                 {
-                    PickUpObject(other.gameObject, pickables);
+                    PickUpObject(obj, pickables);
                 }
             }
             else
@@ -43,6 +53,8 @@ public class PlayerGrabController : MonoBehaviour
             }
         }
     }
+
+
 
     private void PickUpObject(GameObject obj, IPickable[] pickables)
     {
