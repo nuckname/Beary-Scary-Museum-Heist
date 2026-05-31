@@ -44,11 +44,6 @@ public class RoundInProgressState : RoundBaseState
             {
                 ProcessArtifacts(manager, heldArtifacts);
             }
-            else
-            {
-                // Restart the game when the player enters the green zone we want to restart.
-                manager.RestartGame();
-            }
         }
     }
 

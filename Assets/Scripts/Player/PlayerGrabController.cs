@@ -12,8 +12,8 @@ public class PlayerGrabController : MonoBehaviour
     
     private PlayerStealthController playerStealthController;
     private PlayerFootstepNoise playerFootstepNoise;
-    
-    public List<GameObject> HeldObjects { get; private set; } = new List<GameObject>();
+
+    public GameObject heldObject = null;
 
     private float currentHeldWeight = 0f;
     
@@ -35,37 +35,27 @@ public class PlayerGrabController : MonoBehaviour
 
     private void TryPickUpItem(GameObject obj)
     {
-        // Make sure we only pick it up if it's not already in our stack
-        if (obj.CompareTag("CanPickUp") && !HeldObjects.Contains(obj))
+        if (obj.CompareTag("CanPickUp"))
         {
-            IPickable[] pickables = obj.GetComponents<IPickable>();
+            IPickable pickable = obj.GetComponent<IPickable>();
     
-            if (pickables.Length > 0)
+            if (pickable.CanBePickedUp && pickable.IsOnGround() && heldObject == null)
             {
-                if (pickables[0].CanBePickedUp && pickables[0].IsOnGround())
-                {
-                    PickUpObject(obj, pickables);
-                }
+                PickUpObject(obj, pickable);
             }
-            else
-            {
-                Debug.LogError("pickables length is 0");
-            }
+ 
         }
     }
 
 
 
-    private void PickUpObject(GameObject obj, IPickable[] pickables)
+    private void PickUpObject(GameObject obj, IPickable pickable)
     {
         // Add item to our stack tracking
-        HeldObjects.Add(obj);
+        heldObject = obj;
 
-        foreach (IPickable pickable in pickables)
-        {
-            pickable.OnPickedUp();
-        }
-        
+        pickable.OnPickedUp();
+     
         DestroyGameobjects(obj);
 
         CheckAlarm(obj, true);
@@ -87,12 +77,9 @@ public class PlayerGrabController : MonoBehaviour
         // Attach to hand
         obj.transform.SetParent(playerHand);
         
-        // Stack the object higher depending on how many items we are currently holding
-        float heightOffset = (HeldObjects.Count - 1) * stackHeightOffset;
-        obj.transform.localPosition = new Vector3(0, heightOffset, 0);
-        obj.transform.localRotation = Quaternion.identity;
-        
         // Re-apply the scale so it doesn't distort
+        
+        // not working -> maybe because the parent has a different scale?
         obj.transform.localScale = originalScale;
 
         // Cumulatively subtract speed for every item
@@ -160,38 +147,25 @@ public class PlayerGrabController : MonoBehaviour
             }
         }
     }
-    
-    public GameObject GetTopObject()
+
+    public GameObject GetCurrentHeldItem()
     {
-        if (HeldObjects.Count == 0) return null;
-        
-        // The last object added to the list
-        return HeldObjects[HeldObjects.Count - 1]; 
+        return heldObject;
     }
 
     public void ReleaseTopObject()
     {
-        if (HeldObjects.Count == 0) return;
+        IPickable pickable = heldObject.GetComponent<IPickable>();
 
-        GameObject objectToDrop = HeldObjects[HeldObjects.Count - 1];
-        IPickable[] pickables = objectToDrop.GetComponents<IPickable>();
-
-        if (pickables != null)
-        {
-            foreach (IPickable pickable in pickables)
-            {
-                pickable.OnReleased();
-            }
-        }
+        pickable.OnReleased();
         
-        CheckAlarm(objectToDrop, false);
+        CheckAlarm(heldObject, false);
         
-
         float droppedWeight = 0f;
 
         // Maybe use a method to do this
         // Re-enable physics before dropping/throwing
-        Rigidbody rb = objectToDrop.GetComponent<Rigidbody>();
+        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             droppedWeight = rb.mass;
@@ -202,13 +176,13 @@ public class PlayerGrabController : MonoBehaviour
         }
 
         // Re-enable colliders so it can bounce off the floor/walls again
-        Collider[] colliders = objectToDrop.GetComponentsInChildren<Collider>();
+        Collider[] colliders = heldObject.GetComponentsInChildren<Collider>();
         foreach (Collider col in colliders)
         {
             col.enabled = true;
         }
 
-        objectToDrop.transform.SetParent(null);
+        heldObject.transform.SetParent(null);
         
         // Re-add the individual object's weight back to our speed
         currentHeldWeight -= droppedWeight;
@@ -220,8 +194,7 @@ public class PlayerGrabController : MonoBehaviour
         }
   
         playerFootstepNoise.SetWeightModifier(currentHeldWeight);
-      
-        // Finally remove it from the stack
-        HeldObjects.RemoveAt(HeldObjects.Count - 1);
+        
+        heldObject = null;
     }
 }
