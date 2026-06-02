@@ -69,26 +69,19 @@ public class PlayerGrabController : MonoBehaviour
         SetUpPlayerHand(obj, addedWeight);
     }
 
-    private void SetUpPlayerHand(GameObject obj, float addedWeight)
-    {
-        // Store the object's original world scale before parenting
-        Vector3 originalScale = obj.transform.localScale;
-        
-        // Attach to hand
-        obj.transform.SetParent(playerHand);
-        
-        // Re-apply the scale so it doesn't distort
-        
-        // not working -> maybe because the parent has a different scale?
-        obj.transform.localScale = originalScale;
+   	private void SetUpPlayerHand(GameObject obj, float addedWeight)
+	{
+    	obj.transform.SetParent(playerHand, true);
+    
+    	obj.transform.localPosition = Vector3.zero;
+    	obj.transform.localRotation = Quaternion.identity;
 
-        // Cumulatively subtract speed for every item
         if (allowWeightToAffectPlayerSpeed)
         {
             playerStealthController.walkSpeed -= addedWeight;
             playerStealthController.sprintSpeed -= addedWeight;
         }
-    }
+	}
 
     private float AddWeight(GameObject obj)
     {
