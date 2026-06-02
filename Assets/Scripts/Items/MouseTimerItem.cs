@@ -65,10 +65,8 @@ public class MouseTimerItem : CanPickUpItem, IThrowableItem
         
         if (isArmed)
         {
-            // if is ground layer
             if (IsOnGround())
             {
-                
                 isArmed = false;
                 isActivated = true;
                 timer = 0f; 

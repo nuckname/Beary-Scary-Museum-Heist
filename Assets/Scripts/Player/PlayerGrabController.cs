@@ -37,25 +37,29 @@ public class PlayerGrabController : MonoBehaviour
     {
         if (obj.CompareTag("CanPickUp"))
         {
-            IPickable pickable = obj.GetComponent<IPickable>();
-    
-            if (pickable.CanBePickedUp && pickable.IsOnGround() && heldObject == null)
+            IPickable[] pickables = obj.GetComponents<IPickable>();
+
+            if (pickables[0].CanBePickedUp && pickables[0].IsOnGround() && heldObject == null)
             {
-                PickUpObject(obj, pickable);
+                PickUpObject(obj, pickables);
             }
- 
         }
     }
 
 
 
-    private void PickUpObject(GameObject obj, IPickable pickable)
+    private void PickUpObject(GameObject obj, IPickable[] pickables)
     {
         // Add item to our stack tracking
         heldObject = obj;
 
-        pickable.OnPickedUp();
-     
+        // An item can have mutiple pick up effects or conditions so it needs to be called multiple times. 
+        foreach (IPickable pickable in pickables)
+        {
+            pickable.OnPickedUp();
+        }
+        
+
         DestroyGameobjects(obj);
 
         CheckAlarm(obj, true);
