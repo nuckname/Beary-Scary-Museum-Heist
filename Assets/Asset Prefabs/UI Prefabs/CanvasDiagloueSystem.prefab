@@ -831,28 +831,30 @@ MonoBehaviour:
   IntroLineslines:
   - speaker: 1
     emotion: 5
-    text: Hey There, you Pink Piece Of Poo
+    text: bro. . . you woke me up
+  - speaker: 1
+    emotion: 5
+    text: you Pink Piece Of Poo
   - speaker: 0
     emotion: 2
-    text: Oh Hi<link="wave">?!</link>
+    text: Sorry<link="wave">?!</link>
   - speaker: 1
     emotion: 3
-    text: 'Names Doggy Dog but you can call me Sir
+    text: 'Nevermind, names Doggy Dog but you can call me Sir
 
 '
+  - speaker: 1
+    emotion: 3
+    text: Who Are you?
   - speaker: 0
     emotion: 0
-    text: Right. Names Mamma Bear, but you can call me Mum for short.
+    text: Names Mamma Bear, but you can call me Mum for short.
   - speaker: 1
     emotion: 3
     text: 'Awesome, I''ve never meet my mum before. '
   - speaker: 0
     emotion: 2
     text: <link="wave">...</link>
-  - speaker: 1
-    emotion: 3
-    text: Thanks waking me up, its been a restless slumber, no REM sleep what so
-      ever.
   - speaker: 1
     emotion: 3
     text: Listen just get me the artifact now <link="rainbow">bitch boy</link> and
@@ -863,7 +865,7 @@ MonoBehaviour:
   haveReturnedTheArtifactlines:
   - speaker: 1
     emotion: 3
-    text: w0w you actually did it
+    text: <link="wave">w0w</link> you actually did it
   - speaker: 1
     emotion: 4
     text: Do you normally just follow instructions blindly given by strangers?
