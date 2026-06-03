@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI; 
 using System.Collections; 
 
+// https://gemini.google.com/share/b383687aeffd
+// AI helped with black screen 
 public class MainMenuSystem : MonoBehaviour
 {
     [Header("UI Elements")]
