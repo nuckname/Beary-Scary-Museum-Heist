@@ -15,8 +15,11 @@ public class PickUpRadius : MonoBehaviour
             {
                 itemImage.spriteRenderer.enabled = true;
             }
-            
-            itemImage.allowImageToShow = false;
+
+            if (itemImage != null)
+            {
+                itemImage.allowImageToShow = false;
+            }
         }
     }
 
