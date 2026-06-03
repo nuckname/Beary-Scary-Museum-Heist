@@ -10,6 +10,7 @@ public class MainMenuSystem : MonoBehaviour
     [Header("UI Elements")]
     public GameObject backgroundImage;
     public GameObject mainMenuImage;
+    public GameObject scoreText;
     
     [Header("Transition Settings")]
     public Image fadeImage;       // Assign a full-screen black image here
@@ -25,6 +26,7 @@ public class MainMenuSystem : MonoBehaviour
         DisableAllLevels();
         mainMenuImage.SetActive(true);
         backgroundImage.SetActive(false);
+        scoreText.SetActive(false);
         
         // Ensure the fade image starts fully transparent and inactive
         if (fadeImage != null)
@@ -34,13 +36,6 @@ public class MainMenuSystem : MonoBehaviour
             fadeImage.color = c;
             fadeImage.gameObject.SetActive(false);
         }
-    }
-
-    public void LoadLevelSelect()
-    {
-        mainMenuImage.SetActive(false);
-        SelectLevel(0); 
-        backgroundImage.SetActive(true);
     }
 
     public void SelectLevel(int levelIndex)
