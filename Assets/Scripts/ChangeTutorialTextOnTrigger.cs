@@ -13,6 +13,7 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
     
     [Header("Settings")]
     public float textSpeed = 0.05f;
+    public float delayBeforeStart = 0f; 
 
     private bool hasBeenTriggered = false;
     
@@ -35,7 +36,14 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
         {
             if (!hasBeenTriggered)
             {
-                TriggerTypingEffect(text);
+                if (delayBeforeStart > 0f)
+                {
+                    StartCoroutine(ExecuteAfterDelay(delayBeforeStart, text));
+                }
+                else
+                {
+                    TriggerTypingEffect(text);
+                }
             }
         }
         
@@ -51,6 +59,13 @@ public class ChangeTutorialTextOnTrigger : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator ExecuteAfterDelay(float delay, string textToType)
+    {
+        hasBeenTriggered = true;
+        yield return new WaitForSeconds(delay);
+        TriggerTypingEffect(textToType);
     }
 
     public void TriggerTypingEffect(string _text)

@@ -161,15 +161,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -36
+      value: -25.237482
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.5
+      value: 26.729986
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -208.3
+      value: -203.49388
       objectReference: {fileID: 0}
     - target: {fileID: 7592926191092342797, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5141,6 +5141,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: HOLD right mouse button to sneak
   textSpeed: 0.05
+  delayBeforeStart: 0
   timeBeforeClear: 5
   triggerOnPlayer: 1
   triggerOnArtifact: 0
@@ -6243,6 +6244,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: Bring back the artifact to the dog!
   textSpeed: 0.05
+  delayBeforeStart: 0
   timeBeforeClear: 5
   triggerOnPlayer: 1
   triggerOnArtifact: 0
@@ -6324,6 +6326,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: WASD to move
   textSpeed: 0.1
+  delayBeforeStart: 2
   timeBeforeClear: 7
   triggerOnPlayer: 1
   triggerOnArtifact: 0
@@ -7580,6 +7583,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: Shift to sprint
   textSpeed: 0.05
+  delayBeforeStart: 0
   timeBeforeClear: 3
   triggerOnPlayer: 0
   triggerOnArtifact: 1
@@ -9495,6 +9499,7 @@ MonoBehaviour:
   currentActiveText: {fileID: 1522312800}
   text: Left Mouse Button to throw!
   textSpeed: 0.05
+  delayBeforeStart: 0
   timeBeforeClear: 3
   triggerOnPlayer: 1
   triggerOnArtifact: 0
@@ -11432,6 +11437,10 @@ PrefabInstance:
     - target: {fileID: 3744755321799249806, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: isTutorial
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744755321799249806, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
+      propertyPath: fadeDuration
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4315832543177760977, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_IsActive
