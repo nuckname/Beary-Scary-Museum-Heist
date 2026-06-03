@@ -369,6 +369,7 @@ MonoBehaviour:
   playerHand: {fileID: 3579593975554375172}
   stackHeightOffset: 0.75
   allowWeightToAffectPlayerSpeed: 0
+  heldObject: {fileID: 0}
 --- !u!114 &4009258880554653775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +423,7 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 1600
-  animator: {fileID: 0}
+  animator: {fileID: 9102284141675805480}
 --- !u!120 &7137494268384775374
 LineRenderer:
   serializedVersion: 3

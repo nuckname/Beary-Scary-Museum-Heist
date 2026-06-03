@@ -76,7 +76,6 @@ public class PlayerThrowController : MonoBehaviour
                 return;
             }
             
-            //animator.SetBool("HasThrown", false);
 
             isCharging = true;
             currentThrowForce = minThrowForce;
@@ -195,9 +194,7 @@ public class PlayerThrowController : MonoBehaviour
             throwable.OnThrown(calculatedVelocity);
         }
 
-        print("Animating throw true");
-            //animator.SetBool("HasThrown", true);
-       
+        animator.SetTrigger("HasThrown");
         
         isCharging = false;
         currentThrowForce = minThrowForce;
