@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2158862937387790462}
   - component: {fileID: 7519654748551696328}
   - component: {fileID: 1933529018202167233}
-  - component: {fileID: 832512643574552811}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -182,55 +181,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &832512643574552811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515910704897066457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f511553ec2c6a7c44bb6ad2d1cd71fb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraPanTool
-  panSpeed: 20
-  enableEdgeScrolling: 0
-  edgeScrollSize: 20
-  enableDragPan: 1
-  dragKey: 325
-  dragSpeed: 1
-  enableZoom: 1
-  zoomSpeed: 10
-  minZoomSize: 5
-  maxZoomSize: 20
-  enableLimits: 1
-  limitX: {x: -50, y: 50}
-  limitZ: {x: -50, y: 50}
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
-  autoPanDuration: 1.5
-  panCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4

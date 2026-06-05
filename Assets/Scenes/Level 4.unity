@@ -1104,22 +1104,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 832512643574552811, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
-      propertyPath: targetA
-      value: 
-      objectReference: {fileID: 128284603}
-    - target: {fileID: 832512643574552811, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
-      propertyPath: targetB
-      value: 
-      objectReference: {fileID: 198174186}
-    - target: {fileID: 832512643574552811, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
-      propertyPath: panSpeed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 832512643574552811, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
-      propertyPath: enableEdgeScrolling
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1209205944605973866, guid: 04e162e020bd91446ba8510a712ccbf3, type: 3}
       propertyPath: m_ClearFlags
       value: 2
@@ -1510,37 +1494,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 312214972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &128284602
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 128284603}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &128284603
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128284602}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.6, y: 18.4, z: -210.24591}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &130828681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,37 +1629,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5541e7ce763f4d0790e30c888c1364d, type: 3}
---- !u!1 &198174185
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 198174186}
-  m_Layer: 0
-  m_Name: GameObject (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &198174186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 198174185}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 110.3, y: 18.4, z: -210.24591}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &215408707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4691,7 +4613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7372062438631642018, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: meshResolution
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8280131184714761953, guid: f3dd3519a282d4ce690ff0f8b6b505f0, type: 3}
       propertyPath: leftAngle
@@ -6234,10 +6156,6 @@ PrefabInstance:
     - target: {fileID: 2299888732479972102, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_Name
       value: Shinier new enemy (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3100416060616695095, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
-      propertyPath: meshResolution
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5479687629948238113, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: waitTime
@@ -7827,5 +7745,3 @@ SceneRoots:
   - {fileID: 689975378}
   - {fileID: 848485734}
   - {fileID: 78074286}
-  - {fileID: 128284603}
-  - {fileID: 198174186}
