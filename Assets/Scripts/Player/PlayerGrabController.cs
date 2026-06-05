@@ -39,9 +39,13 @@ public class PlayerGrabController : MonoBehaviour
         {
             IPickable[] pickables = obj.GetComponents<IPickable>();
 
-            if (pickables[0].CanBePickedUp && pickables[0].IsOnGround() && heldObject == null)
+            if (pickables.Length > 0 && pickables[0].CanBePickedUp && pickables[0].IsOnGround() && heldObject == null)
             {
                 PickUpObject(obj, pickables);
+            }
+            else if (pickables.Length == 0)
+            {
+                UnityEngine.Debug.LogWarning($"GameObject '{obj.name}' is tagged 'CanPickUp' but is missing an IPickable script!");
             }
         }
     }
