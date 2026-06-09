@@ -14987,9 +14987,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1370785669}
     m_Modifications:
+    - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: pathHolder
+      value: 
+      objectReference: {fileID: 748312512}
     - target: {fileID: 2299888732479972102, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_Name
       value: Shinier new enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374042728446790454, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: playerTransform
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5479687629948238113, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: pathHolder
@@ -15404,6 +15412,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1370785669}
     m_Modifications:
+    - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: pathHolder
+      value: 
+      objectReference: {fileID: 1806020145}
+    - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: alwaysTurnRight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2299888732479972102, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -15812,7 +15828,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player (This is used to fast access the prefab)
       objectReference: {fileID: 0}
     - target: {fileID: 223815211633026717, guid: d7ed918aec005054d9da23475d91c1ad, type: 3}
       propertyPath: m_IsActive

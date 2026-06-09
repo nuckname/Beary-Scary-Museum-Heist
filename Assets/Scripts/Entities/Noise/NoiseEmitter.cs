@@ -84,10 +84,10 @@ public class NoiseEmitter : MonoBehaviour
         {
             EnemyStateManager guard = entity.GetComponentInParent<EnemyStateManager>();
             
-            if (guard != null && guard.hearingFOV != null)
+            if (guard != null && guard.sensors.hearingFOV != null)
             {
                 float distanceToGuard = Vector3.Distance(originPosition, entity.transform.position);
-                float guardHearingRadius = guard.hearingFOV.viewRadius;
+                float guardHearingRadius = guard.sensors.hearingFOV.viewRadius;
 
                 // Are they close enough to hear?
                 if (distanceToGuard <= (noiseRadius + guardHearingRadius))
