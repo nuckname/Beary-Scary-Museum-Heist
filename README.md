@@ -1,3 +1,6 @@
+Gameplay walk through
+https://youtu.be/N0c3hUMXVH8
+
 Sam's Reference
 
 How to make a Mesh in Unity (Dynamic, Vertices, UVs, Triangles)
