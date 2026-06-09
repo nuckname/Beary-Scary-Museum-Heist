@@ -33,6 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9186906956041269025}
   - {fileID: 4491018867253880691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,7 +79,6 @@ MonoBehaviour:
   showVisibleRadius: 1
   visualDuration: 1.5
   radiusMaterial: {fileID: 2100000, guid: fb6edeed8baef49819750585acae98b1, type: 2}
-  meshHeightOffset: 1
   showOutline: 1
   outlineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
   outlineWidth: 0.1
@@ -106,6 +106,7 @@ MonoBehaviour:
   pauseTimeAtEdges: 1.5
   alarmNoiseRadius: 100
   alarmBeepInterval: 3
+  startTurningRight: 1
   alarmComponent: {fileID: 0}
   currentStateName: 
 --- !u!114 &3949548190309273348
@@ -270,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
   viewRadius: 19.16
+  meshRadiusOffset: 0.5
   viewAngle: 51
   yDetectionRadius: 3
   targetMask:
@@ -288,6 +290,7 @@ MonoBehaviour:
   edgeLineMaterial: {fileID: 2100000, guid: 2bff8de6f89dacf4793ec3fe1666f73d, type: 2}
   edgeLineColor: {r: 1, g: 0, b: 0, a: 1}
   edgeLineWidth: 0.05
+  flashLightSource: {fileID: 0}
 --- !u!120 &985012477903487400
 LineRenderer:
   serializedVersion: 3
@@ -488,3 +491,65 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &8715813618410244298
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8779069409812356271}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.7768936
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.83800995
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.7640076
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+      propertyPath: m_Name
+      value: camera
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+--- !u!4 &9186906956041269025 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 70b9d2844ce9f1242a035ee977b0259f, type: 3}
+  m_PrefabInstance: {fileID: 8715813618410244298}
+  m_PrefabAsset: {fileID: 0}
