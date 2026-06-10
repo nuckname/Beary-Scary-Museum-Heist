@@ -5893,6 +5893,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 2144196108}
     m_Modifications:
     - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: waitTime
+      value: 9000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: pathHolder
       value: 
       objectReference: {fileID: 1819650078}
@@ -11471,7 +11475,7 @@ PrefabInstance:
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: b96091997825a8d438815074392ba09f, type: 2}
+      objectReference: {fileID: 11400000, guid: b6f10022b2fa27b4397c68bc6514c236, type: 2}
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_fontSizeBase
       value: 50
@@ -11479,7 +11483,7 @@ PrefabInstance:
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -1120023331107578135, guid: b96091997825a8d438815074392ba09f, type: 2}
+      objectReference: {fileID: -313343221250934270, guid: b6f10022b2fa27b4397c68bc6514c236, type: 2}
     - target: {fileID: 670510441683610219, guid: 18bfb2fb1ffcd3c4fbb0480b797c2c74, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -13579,7 +13583,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].baseStars
@@ -13611,7 +13615,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].starsAwarded
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].starsAwarded
@@ -13619,7 +13623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].maxTimeAllowed
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].maxTimeAllowed
@@ -13655,7 +13659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].maxSpottedAllowed
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].maxSpottedAllowed
