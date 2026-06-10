@@ -1,7 +1,7 @@
 Gameplay walk through
 https://youtu.be/N0c3hUMXVH8
 
-there is a Sam Lucarelli References and Acknowledging the use of AI.pdf
+there is a Sam Lucarelli References and Acknowledging the use of AI txt
 
 Sam's Playtest - Note are in video's description.
 
