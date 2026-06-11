@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Rotate the physical model alined with the max and min angles specified in the SecurityCameraController.
+/// </summary>
 public class CameraModelRotator : MonoBehaviour
 {
     public SecurityCameraController controller;

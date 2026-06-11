@@ -78,7 +78,7 @@ public class PlayerFootstepNoise : MonoBehaviour
         }
         else
         {
-            // Emit instantly for 1:1 animation sync
+            // Emit instantly for 1:1 animation sync, check OnFootstepEvent()
             noiseEmitter.EmitNoise(calculatedRadius, NoiseType.Player, stepPosition);
         }
     }

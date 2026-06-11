@@ -13,8 +13,6 @@ public class RoundStateManager : MonoBehaviour
     [HideInInspector] public RoundInProgressState InProgressState = new RoundInProgressState();
     [HideInInspector] public RoundGameOverState GameOverState = new RoundGameOverState();
 
-    private TextMeshProUGUI artifactValueText;
-    
     // dragged in from the inspector
     [HideInInspector] public Timer timer; 
 
@@ -56,12 +54,6 @@ public class RoundStateManager : MonoBehaviour
 
     void Start()
     {
-        GameObject textObject = GameObject.FindGameObjectWithTag("artifactValueText");
-        if (textObject != null)
-        {
-            artifactValueText = textObject.GetComponent<TextMeshProUGUI>();
-        }
-        
         if (isTutorialLevel)
         {
             SwitchState(InProgressState);            

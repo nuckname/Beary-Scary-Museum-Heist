@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// Handles collision events to generate dynamic sound effects, emit noise for AI detection, 
+/// and spawn visual impact pop-ups. Calculates impact force based on the object's mass 
+/// and collision velocity to scale audio pitch and noise radius dynamically.
+/// </summary>
 [RequireComponent(typeof(NoiseEmitter), typeof(Rigidbody))]
 public class CollisionNoiseTrigger : MonoBehaviour
 {
