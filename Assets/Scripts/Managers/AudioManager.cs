@@ -18,6 +18,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] footstepClips = new AudioClip[2]; // Slot 0 = Left, Slot 1 = Right
     private int footstepIndex = 0;
     
+    [Header("Collisions")]
+    [SerializeField] private AudioClip[] collisionClips; // Assign your collision sounds in the inspector
+    
     private void Awake()
     {
         if (instance == null)
@@ -41,27 +44,16 @@ public class AudioManager : MonoBehaviour
             footstepIndex = 1 - footstepIndex; 
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public void PlayRandomCollisionSound()
+    {
+        if (collisionClips != null && collisionClips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, collisionClips.Length);
+            PlaySFXRandomPitch(collisionClips[randomIndex], 0.85f, 1.15f);
+        }
+    }
+
     private float currentMusicVolume;
 
     public void PlaySFX(AudioClip clip)
@@ -81,7 +73,6 @@ public class AudioManager : MonoBehaviour
             sfxSource.pitch = 1f; // reset so it doesn’t affect future sounds
         }
     }
-
 
     public void PlayMusic(AudioClip clip)
     {
@@ -138,44 +129,4 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = startVolume; // Reset for future use
     }
 
-    public void FadeToMusic(AudioClip newClip, float duration)
-    {
-        StartCoroutine(FadeToMusicCoroutine(newClip, duration));
-    }
-
-    private IEnumerator FadeToMusicCoroutine(AudioClip newClip, float duration)
-    {
-        if (musicSource.clip == newClip)
-            yield break; // Already playing this clip, no fade needed
-
-        float startVolume = musicSource.volume;
-        float halfDuration = duration / 2f;
-
-        // Fade out current music
-        float elapsed = 0f;
-        if (musicSource.isPlaying)
-        {
-            while (elapsed < halfDuration)
-            {
-                elapsed += Time.deltaTime;
-                musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / halfDuration);
-                yield return null;
-            }
-        }
-
-        // Switch clip
-        musicSource.clip = newClip;
-        musicSource.Play();
-
-        // Fade in new music
-        elapsed = 0f;
-        while (elapsed < halfDuration)
-        {
-            elapsed += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(0f, startVolume, elapsed / halfDuration);
-            yield return null;
-        }
-
-        musicSource.volume = startVolume;
-    }
 }
