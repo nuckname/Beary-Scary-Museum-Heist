@@ -371,6 +371,7 @@ MonoBehaviour:
   stackHeightOffset: 0.75
   allowWeightToAffectPlayerSpeed: 0
   heldObject: {fileID: 0}
+  allowDistanceToItem: 4
 --- !u!114 &4009258880554653775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,7 +901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3454721136219945325}
   - component: {fileID: 8892536769740911811}
-  - component: {fileID: 7279656608441568978}
+  - component: {fileID: 6360160643750792568}
   m_Layer: 8
   m_Name: PickUpRadius
   m_TagString: Untagged
@@ -931,8 +932,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812721908215014119}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!135 &7279656608441568978
-SphereCollider:
+--- !u!65 &6360160643750792568
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -950,8 +951,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.14709744
-  m_Center: {x: 0.001277992, y: -0.014754105, z: 0}
+  m_Size: {x: 0.24032544, y: 1, z: 0.24292344}
+  m_Center: {x: 0.0032557433, y: 0, z: 0.011293068}
 --- !u!1 &872488176051858068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,7 +1858,7 @@ GameObject:
   - component: {fileID: 8089069273338839424}
   m_Layer: 8
   m_Name: ShowIconRadius
-  m_TagString: Untagged
+  m_TagString: ShowIconRadius
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
