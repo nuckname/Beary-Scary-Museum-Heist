@@ -3,7 +3,12 @@ guid: a15654ab796dcd54998db24d4b53a7cd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: paintingMAT
+    second: {fileID: 2100000, guid: 2e5e3fa2d79e5e54f8e27ff687e83210, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,12 @@ guid: 61de8f3cb26fcbc4f82f9a794f60a40d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plaqueMAT
+    second: {fileID: 2100000, guid: e9aae57f5baca5643b28f0367274be04, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
