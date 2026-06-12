@@ -25,7 +25,7 @@ public class PlayerGrabController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        TryPickUpItem(other.gameObject);
+        //TryPickUpItem(other.gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -45,7 +45,7 @@ public class PlayerGrabController : MonoBehaviour
             }
             else if (pickables.Length == 0)
             {
-                UnityEngine.Debug.LogWarning($"GameObject '{obj.name}' is tagged 'CanPickUp' but is missing an IPickable script!");
+                Debug.LogWarning($"GameObject '{obj.name}' is tagged 'CanPickUp' but is missing an IPickable script!");
             }
         }
     }
