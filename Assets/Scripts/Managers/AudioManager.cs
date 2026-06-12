@@ -18,8 +18,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] footstepClips = new AudioClip[2]; // Slot 0 = Left, Slot 1 = Right
     private int footstepIndex = 0;
     
-    [Header("Collisions")]
-    [SerializeField] private AudioClip[] collisionClips; // Assign your collision sounds in the inspector
+    [Header("Global Collisions")]
+    [SerializeField] private AudioClip[] collisionClips;
     
     private void Awake()
     {
@@ -39,8 +39,6 @@ public class AudioManager : MonoBehaviour
         if (footstepClips.Length >= 2 && footstepClips[footstepIndex] != null)
         {
             PlaySFXRandomPitch(footstepClips[footstepIndex], 0.95f, 1.05f);
-
-            // If it's 0, (1 - 0) = 1. If it's 1, (1 - 1) = 0.
             footstepIndex = 1 - footstepIndex; 
         }
     }
@@ -51,6 +49,15 @@ public class AudioManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, collisionClips.Length);
             PlaySFXRandomPitch(collisionClips[randomIndex], 0.85f, 1.15f);
+        }
+    }
+
+    public void PlayRandomClipWithExactPitch(AudioClip[] clips, float exactPitch)
+    {
+        if (clips != null && clips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, clips.Length);
+            PlaySFXWithExactPitch(clips[randomIndex], exactPitch);
         }
     }
 
@@ -97,11 +104,6 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.UnPause();
     }
-
-    public void FadeOutAndStopMusic(float fadeDuration = 1.5f)
-    {
-        StartCoroutine(FadeOutCoroutine(fadeDuration));
-    }
     
     public void PlaySFXWithExactPitch(AudioClip clip, float exactPitch)
     {
@@ -112,21 +114,4 @@ public class AudioManager : MonoBehaviour
             sfxSource.pitch = 1f; // reset so it doesn’t affect future sounds
         }
     }
-
-    private IEnumerator FadeOutCoroutine(float duration)
-    {
-        float startVolume = musicSource.volume;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
-            yield return null;
-        }
-
-        musicSource.Stop();
-        musicSource.volume = startVolume; // Reset for future use
-    }
-
 }
