@@ -5018,6 +5018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadeObject (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7489093861054706541, guid: 18dcc96298d444865b68839f92d092b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.8328681
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5660,7 +5664,7 @@ Transform:
   m_GameObject: {fileID: 1276619861}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.37, y: -2.23, z: -6.98}
+  m_LocalPosition: {x: 6.25, y: -2.23, z: -3.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5674,6 +5678,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1728125887}
     m_Modifications:
+    - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
+      propertyPath: waitTime
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 451787516847651130, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: pathHolder
       value: 
@@ -5692,7 +5700,7 @@ PrefabInstance:
       objectReference: {fileID: 1209369246}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5700,7 +5708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5.32
       objectReference: {fileID: 0}
     - target: {fileID: 9212613729991704597, guid: bc770542bb7a82a488acd6e4d0fee08c, type: 3}
       propertyPath: m_LocalRotation.w
