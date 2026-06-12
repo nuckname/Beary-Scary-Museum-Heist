@@ -1,5 +1,5 @@
 Gameplay walk through
-https://youtu.be/N0c3hUMXVH8
+[https://youtu.be/N0c3hUMXVH8](https://youtu.be/kqQvHIKeEww)
 
 there is a Sam Lucarelli References and Acknowledging the use of AI txt
 
