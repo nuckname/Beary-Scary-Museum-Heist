@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     
     [Header("Global Collisions")]
     [SerializeField] private AudioClip[] collisionClips;
+
+    [Header("Guard Sounds")]
+    [SerializeField] private AudioClip[] guardShoutClips;
     
     private void Awake()
     {
@@ -49,6 +52,15 @@ public class AudioManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, collisionClips.Length);
             PlaySFXRandomPitch(collisionClips[randomIndex], 0.85f, 1.15f);
+        }
+    }
+
+    public void PlayRandomGuardShout()
+    {
+        if (guardShoutClips != null && guardShoutClips.Length > 0)
+        {
+            int randomIndex = Random.Range(0, guardShoutClips.Length);
+            PlaySFXRandomPitch(guardShoutClips[randomIndex], 0.95f, 1.05f);
         }
     }
 

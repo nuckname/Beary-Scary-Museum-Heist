@@ -13,6 +13,11 @@ public class EnemyChasePlayerState : EnemyBaseState
         manager.GuardStartMoving();
         manager.animator.SetBool("isChasing", true);
         manager.agent.speed = manager.guardChaseSpeed;
+
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayRandomGuardShout();
+        }
     }
 
     public override void UpdateState(EnemyStateManager manager)
