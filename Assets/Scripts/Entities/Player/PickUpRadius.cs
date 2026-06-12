@@ -10,6 +10,11 @@ public class PickUpRadius : MonoBehaviour
         {
             ItemImage itemImage = other.gameObject.GetComponent<ItemImage>();
             
+            IPickable pickable = other.gameObject.GetComponent<IPickable>();
+            if (pickable != null && !pickable.CanBePickedUp)
+            {
+                return; 
+            }
             
             if (itemImage != null && itemImage.allowImageToShow)
             {

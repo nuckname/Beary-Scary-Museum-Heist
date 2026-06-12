@@ -66,6 +66,13 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
             return; 
         }
 
+        if (itemImage != null)
+        {
+            itemImage.spriteRenderer.enabled = false;
+            itemImage.allowImageToShow = false;
+        }
+        
+            
         rb.isKinematic = false;
         rb.useGravity = true;
         rb.linearVelocity = velocity; 
@@ -81,7 +88,26 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
         {
             if (!collision.gameObject.CompareTag("Player"))
             {
-                isAirborne = false;
+                if (IsOnGround())
+                {
+                    isAirborne = false;
+                }
+            }
+        }
+    }
+
+    protected virtual void OnCollisionStay(Collision collision)
+    {
+        // Safety net, if the item hit a wall and slid down, OnCollisionEnter 
+        // won't fire again for the floor. This ensures we catch it when it settles.
+        if (isAirborne)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+            {
+                if (IsOnGround())
+                {
+                    isAirborne = false;
+                }
             }
         }
     }
