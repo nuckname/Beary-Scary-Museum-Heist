@@ -84,6 +84,11 @@ public class CanPickUpItem : MonoBehaviour, IPickable, IThrowableItem
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
+        if (AudioManager.instance != null && collision.relativeVelocity.magnitude > 1f)
+        {
+            AudioManager.instance.PlayRandomCollisionSound();
+        }
+
         if (isAirborne)
         {
             if (!collision.gameObject.CompareTag("Player"))

@@ -23,9 +23,7 @@ public class PlayerStealthController : MonoBehaviour
     public float sneakStepInterval = 0.8f;
     private float stepTimer;
 
-    [Header("Audio Settings")]
-    public AudioClip[] footstepSounds;
-    public AudioSource audioSource;
+    // Audio Settings replaced with AudioManager singleton
 
     [Header("UI Settings")]
     private Image staminaBarFill; 
@@ -48,11 +46,6 @@ public class PlayerStealthController : MonoBehaviour
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         staminaBarFill = GameObject.FindGameObjectWithTag("SprintBarFill").GetComponent<Image>();
-
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
     }
 
     void Start()
@@ -98,10 +91,10 @@ public class PlayerStealthController : MonoBehaviour
             
             if (stepTimer <= 0f)
             {
-                if (footstepSounds != null && footstepSounds.Length > 0 && audioSource != null)
+                // Play footstep using the global AudioManager
+                if (AudioManager.instance != null)
                 {
-                    int randomIndex = UnityEngine.Random.Range(0, footstepSounds.Length);
-                    audioSource.PlayOneShot(footstepSounds[randomIndex]);
+                    AudioManager.instance.PlayFootstep();
                 }
 
                 if (currentSpeed == sprintSpeed)
