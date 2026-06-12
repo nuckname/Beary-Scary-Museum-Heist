@@ -9,7 +9,7 @@ using UnityEngine;
 public class CollisionNoiseTrigger : MonoBehaviour
 {
     [Header("Collision Sound Settings")]
-    [SerializeField] private AudioClip impactClip; 
+    [SerializeField] private AudioClip[] impactClips; 
     [SerializeField] private float dropSoundMultiplier = 1f;
     [SerializeField] private bool useVelocityScaling = true;
     [SerializeField] private float velocityScale = 0.5f; 
@@ -69,9 +69,10 @@ public class CollisionNoiseTrigger : MonoBehaviour
         }
 
         // Send the clip and the specific pitch to the global manager
-        if (AudioManager.instance != null && impactClip != null)
+        if (AudioManager.instance != null && impactClips != null && impactClips.Length > 0)
         {
-            AudioManager.instance.PlaySFXWithExactPitch(impactClip, targetPitch);
+            int randomIndex = Random.Range(0, impactClips.Length);
+            AudioManager.instance.PlaySFXWithExactPitch(impactClips[randomIndex], targetPitch);
         }
         
         noiseEmitter.EmitNoise(noiseRadius, NoiseType.Item);
