@@ -3,7 +3,17 @@ guid: 14060d9a33204e043bcd2801f08327df
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FurnitureItems
+    second: {fileID: 2100000, guid: ca61935998d776947b6b13ab4d8e70f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: itemsTexture
+    second: {fileID: 2100000, guid: 94bad6e5f197d1140a909b981a17c18f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +78,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
