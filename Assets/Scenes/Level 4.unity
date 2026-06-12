@@ -8208,7 +8208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[0].baseStars
@@ -8244,22 +8244,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].starsAwarded
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[2].starsAwarded
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[3].starsAwarded
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[4].starsAwarded
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[5].starsAwarded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: scoreThresholds.Array.data[6].starsAwarded
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
@@ -8268,26 +8272,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[1].maxTimeAllowed
-      value: 85
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[2].maxTimeAllowed
-      value: 100
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[3].maxTimeAllowed
-      value: 130
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[4].maxTimeAllowed
-      value: 140
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[5].maxTimeAllowed
-      value: 160
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[6].maxTimeAllowed
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: scoreThresholds.Array.data[7].maxTimeAllowed
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
@@ -8320,11 +8328,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[2].maxSpottedAllowed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[3].maxSpottedAllowed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[4].maxSpottedAllowed
@@ -8336,6 +8344,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
       propertyPath: scoreThresholds.Array.data[6].maxSpottedAllowed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 297760625094623853, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
+      propertyPath: scoreThresholds.Array.data[7].maxSpottedAllowed
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2207204159110247818, guid: e4575d6f1a1dc694cbb305a7fbf524e9, type: 3}
