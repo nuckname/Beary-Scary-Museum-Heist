@@ -53,8 +53,7 @@ public class EnemyLocomotion : MonoBehaviour
         SetupPatrolRoute();
 
         // Freeze guards until we want them to start moving called in RoundStateManager
-        agent.isStopped = true;
-        agent.speed = 0;
+        GuardStopMoving();
     }
 
     private void Update()
@@ -70,6 +69,7 @@ public class EnemyLocomotion : MonoBehaviour
             waypoints[i] = pathHolder.GetChild(i).position;    
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
+
     }
 
     private void IncreaseGuardSpeedOverTime()
@@ -96,6 +96,8 @@ public class EnemyLocomotion : MonoBehaviour
         agent.speed = guardPatrollSpeed;
         agent.isStopped = false;
         visuals.animator.SetBool("isMoving", true);
+        
+        manager.SwitchState(manager.EnemyFollowPathState);
     }
 
     public void GuardStopMoving()

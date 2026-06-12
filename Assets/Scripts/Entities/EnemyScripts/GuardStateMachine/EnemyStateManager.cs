@@ -71,7 +71,6 @@ public class EnemyStateManager : MonoBehaviour
 
     void Start()
     {
-        SwitchState(EnemyFollowPathState);
         enemyConfusedState.lookAngle = turnAngle;
     }
 
