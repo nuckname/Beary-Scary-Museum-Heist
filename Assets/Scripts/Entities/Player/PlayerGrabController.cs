@@ -25,7 +25,7 @@ public class PlayerGrabController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //TryPickUpItem(other.gameObject);
+        TryPickUpItem(other.gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -33,10 +33,19 @@ public class PlayerGrabController : MonoBehaviour
         TryPickUpItem(other.gameObject);
     }
 
+    [SerializeField]
+    private float allowDistanceToItem = 4f;
     private void TryPickUpItem(GameObject obj)
     {
         if (obj.CompareTag("CanPickUp"))
         {
+            // Need this here so that icon raidus doenst pick up items for us.
+            float distanceToItem = Vector3.Distance(transform.position, obj.transform.position);
+            if (distanceToItem > allowDistanceToItem) 
+            {
+                return; 
+            }
+
             IPickable[] pickables = obj.GetComponents<IPickable>();
 
             if (pickables.Length > 0 && pickables[0].CanBePickedUp && pickables[0].IsOnGround() && heldObject == null)
