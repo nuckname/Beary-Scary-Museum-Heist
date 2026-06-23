@@ -1,3 +1,6 @@
+Itch Page:
+https://nuckname.itch.io/beary-scary-museum-heist
+
 Gameplay walk through
 [https://youtu.be/N0c3hUMXVH8](https://youtu.be/kqQvHIKeEww)
 
